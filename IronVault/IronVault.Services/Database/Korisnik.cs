@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace IronVault.Services.Database;
+
+public partial class Korisnik
+{
+    public int Id { get; set; }
+
+    public string Ime { get; set; } = null!;
+
+    public string Prezime { get; set; } = null!;
+
+    public string? Slika { get; set; }
+
+    public string BrojTelefona { get; set; } = null!;
+
+    public float Visina { get; set; }
+
+    public float Tezina { get; set; }
+
+    public int GradId { get; set; }
+
+    public int SpolId { get; set; }
+
+    public int TeretanaId { get; set; }
+
+    public virtual Grad Grad { get; set; } = null!;
+
+    public virtual KorisnickiNalog IdNavigation { get; set; } = null!;
+
+    public virtual ICollection<KorisnikClanarina> KorisnikClanarinas { get; set; } = new List<KorisnikClanarina>();
+
+    public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
+
+    public virtual ICollection<KorisnikSuplement> KorisnikSuplements { get; set; } = new List<KorisnikSuplement>();
+
+    public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
+
+    public virtual Spol Spol { get; set; } = null!;
+
+    public virtual Teretana Teretana { get; set; } = null!;
+}
