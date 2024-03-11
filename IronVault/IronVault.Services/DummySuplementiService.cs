@@ -7,21 +7,20 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class DummySuplementiService : SuplementiService
+    public class DummySuplementiService : ISuplementiService
     {
 
-        public new List<Suplementi> List = new List<Suplementi>()
+        public new List<Suplement> List = new List<Suplement>()
         {
-            new Suplementi()
+            new Suplement()
             {
-                SuplementId = 1,
-                Naziv = "100% Whey Protein",
-                Cijena = 139
+                Id = 1,
+                Naziv = "Whey",
+                Cijena = 5
             }
         };
 
-
-        public override List<Suplementi> GetList()
+        public List<Suplement> GetList()
         {
             return List;
         }

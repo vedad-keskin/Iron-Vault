@@ -1,4 +1,5 @@
-﻿using IronVault.Model;
+﻿
+using IronVault.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,6 @@ namespace IronVault.Services
 {
     public interface ISuplementiService
     {
-        List<Suplementi> GetList();
+        List<Suplement> GetList();
     }
 }
