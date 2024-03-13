@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Nutricionist
 {
-    public int Id { get; set; }
+    public int NutricionistId { get; set; }
 
     public string Ime { get; set; } = null!;
 

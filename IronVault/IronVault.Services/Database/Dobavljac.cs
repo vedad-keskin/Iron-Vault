@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Dobavljac
 {
-    public int Id { get; set; }
+    public int DobavljacId { get; set; }
 
     public string Naziv { get; set; } = null!;
 

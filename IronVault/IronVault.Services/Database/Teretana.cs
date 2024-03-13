@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Teretana
 {
-    public int Id { get; set; }
+    public int TeretanaId { get; set; }
 
     public string Naziv { get; set; } = null!;
 

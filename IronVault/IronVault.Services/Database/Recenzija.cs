@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Recenzija
 {
-    public int Id { get; set; }
+    public int RecenzijaId { get; set; }
 
     public string Ime { get; set; } = null!;
 

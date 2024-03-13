@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Seminar
 {
-    public int Id { get; set; }
+    public int SeminarId { get; set; }
 
     public string Tema { get; set; } = null!;
 

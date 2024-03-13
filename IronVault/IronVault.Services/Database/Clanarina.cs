@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Clanarina
 {
-    public int Id { get; set; }
+    public int ClanarinaId { get; set; }
 
     public string Naziv { get; set; } = null!;
 

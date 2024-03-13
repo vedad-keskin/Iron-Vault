@@ -5,11 +5,15 @@ namespace IronVault.Services.Database;
 
 public partial class Administrator
 {
-    public int Id { get; set; }
+    public int AdministratorId { get; set; }
 
     public string Ime { get; set; } = null!;
 
     public string Prezime { get; set; } = null!;
 
-    public virtual KorisnickiNalog IdNavigation { get; set; } = null!;
+    public string KorisnickoIme { get; set; } = null!;
+
+    public string LozinkaHash { get; set; } = null!;
+
+    public string LozinkaSalt { get; set; } = null!;
 }

@@ -17,8 +17,6 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<Administrator> Administrators { get; set; }
 
-    public virtual DbSet<AutentifikacijaToken> AutentifikacijaTokens { get; set; }
-
     public virtual DbSet<Clanarina> Clanarinas { get; set; }
 
     public virtual DbSet<Dobavljac> Dobavljacs { get; set; }
@@ -29,8 +27,6 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<Kategorija> Kategorijas { get; set; }
 
-    public virtual DbSet<KorisnickiNalog> KorisnickiNalogs { get; set; }
-
     public virtual DbSet<Korisnik> Korisniks { get; set; }
 
     public virtual DbSet<KorisnikClanarina> KorisnikClanarinas { get; set; }
@@ -40,8 +36,6 @@ public partial class GmsDbContext : DbContext
     public virtual DbSet<KorisnikSuplement> KorisnikSuplements { get; set; }
 
     public virtual DbSet<KorisnikTrener> KorisnikTreners { get; set; }
-
-    public virtual DbSet<LogKretanjePoSistemu> LogKretanjePoSistemus { get; set; }
 
     public virtual DbSet<Nutricionist> Nutricionists { get; set; }
 
@@ -67,73 +61,42 @@ public partial class GmsDbContext : DbContext
         {
             entity.ToTable("Administrator");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Administrator)
-                .HasForeignKey<Administrator>(d => d.Id)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
-        modelBuilder.Entity<AutentifikacijaToken>(entity =>
-        {
-            entity.ToTable("AutentifikacijaToken");
-
-            entity.HasIndex(e => e.KorisnickiNalogId, "IX_AutentifikacijaToken_KorisnickiNalogId");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.IpAdresa).HasColumnName("ipAdresa");
-            entity.Property(e => e.TwoFkey).HasColumnName("TwoFKey");
-            entity.Property(e => e.Vrijednost).HasColumnName("vrijednost");
-            entity.Property(e => e.VrijemeEvidentiranja).HasColumnName("vrijemeEvidentiranja");
-
-            entity.HasOne(d => d.KorisnickiNalog).WithMany(p => p.AutentifikacijaTokens)
-                .HasForeignKey(d => d.KorisnickiNalogId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
+            entity.Property(e => e.AdministratorId).HasColumnName("AdministratorID");
         });
 
         modelBuilder.Entity<Clanarina>(entity =>
         {
             entity.ToTable("Clanarina");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.ClanarinaId).HasColumnName("ClanarinaID");
         });
 
         modelBuilder.Entity<Dobavljac>(entity =>
         {
             entity.ToTable("Dobavljac");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.DobavljacId).HasColumnName("DobavljacID");
         });
 
         modelBuilder.Entity<Faq>(entity =>
         {
             entity.ToTable("FAQ");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.Faqid).HasColumnName("FAQID");
         });
 
         modelBuilder.Entity<Grad>(entity =>
         {
             entity.ToTable("Grad");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.GradId).HasColumnName("GradID");
         });
 
         modelBuilder.Entity<Kategorija>(entity =>
         {
             entity.ToTable("Kategorija");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
-        });
-
-        modelBuilder.Entity<KorisnickiNalog>(entity =>
-        {
-            entity.ToTable("KorisnickiNalog");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.Is2Factive).HasColumnName("is2FActive");
+            entity.Property(e => e.KategorijaId).HasColumnName("KategorijaID");
         });
 
         modelBuilder.Entity<Korisnik>(entity =>
@@ -146,19 +109,13 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.TeretanaId, "IX_Korisnik_TeretanaID");
 
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("ID");
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.GradId).HasColumnName("GradID");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
             entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
 
             entity.HasOne(d => d.Grad).WithMany(p => p.Korisniks)
                 .HasForeignKey(d => d.GradId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.IdNavigation).WithOne(p => p.Korisnik)
-                .HasForeignKey<Korisnik>(d => d.Id)
                 .OnDelete(DeleteBehavior.ClientSetNull);
 
             entity.HasOne(d => d.Spol).WithMany(p => p.Korisniks)
@@ -250,25 +207,11 @@ public partial class GmsDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<LogKretanjePoSistemu>(entity =>
-        {
-            entity.ToTable("LogKretanjePoSistemu");
-
-            entity.HasIndex(e => e.KorisnikId, "IX_LogKretanjePoSistemu_KorisnikID");
-
-            entity.Property(e => e.Id).HasColumnName("ID");
-            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
-
-            entity.HasOne(d => d.Korisnik).WithMany(p => p.LogKretanjePoSistemus)
-                .HasForeignKey(d => d.KorisnikId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
         modelBuilder.Entity<Nutricionist>(entity =>
         {
             entity.ToTable("Nutricionist");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Nutricionists)
                 .UsingEntity<Dictionary<string, object>>(
@@ -293,21 +236,21 @@ public partial class GmsDbContext : DbContext
         {
             entity.ToTable("Recenzija");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.RecenzijaId).HasColumnName("RecenzijaID");
         });
 
         modelBuilder.Entity<Seminar>(entity =>
         {
             entity.ToTable("Seminar");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SeminarId).HasColumnName("SeminarID");
         });
 
         modelBuilder.Entity<Spol>(entity =>
         {
             entity.ToTable("Spol");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SpolId).HasColumnName("SpolID");
         });
 
         modelBuilder.Entity<Suplement>(entity =>
@@ -318,7 +261,7 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.KategorijaId, "IX_Suplement_KategorijaID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
             entity.Property(e => e.DobavljacId).HasColumnName("DobavljacID");
             entity.Property(e => e.KategorijaId).HasColumnName("KategorijaID");
 
@@ -337,7 +280,7 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.GradId, "IX_Teretana_GradID");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
             entity.Property(e => e.GradId).HasColumnName("GradID");
 
             entity.HasOne(d => d.Grad).WithMany(p => p.Teretanas)
@@ -349,7 +292,7 @@ public partial class GmsDbContext : DbContext
         {
             entity.ToTable("Trener");
 
-            entity.Property(e => e.Id).HasColumnName("ID");
+            entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Treners)
                 .UsingEntity<Dictionary<string, object>>(

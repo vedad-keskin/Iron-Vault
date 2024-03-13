@@ -5,7 +5,7 @@ namespace IronVault.Services.Database;
 
 public partial class Trener
 {
-    public int Id { get; set; }
+    public int TrenerId { get; set; }
 
     public string Ime { get; set; } = null!;
 
