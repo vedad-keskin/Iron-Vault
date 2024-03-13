@@ -1,5 +1,6 @@
 using IronVault.Services;
 using IronVault.Services.Database;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddTransient<ISuplementiService, SuplementiService>();
 //builder.Services.AddTransient<ISuplementiService, DummySuplementiService>();
+builder.Services.AddTransient<IKorisniciService, KorisniciService>();
 
 
 builder.Services.AddControllers();
@@ -18,7 +20,7 @@ var connectionString = builder.Configuration.GetConnectionString("IronVaultConne
 builder.Services.AddDbContext<GmsDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-
+builder.Services.AddMapster();
 
 var app = builder.Build();
 
