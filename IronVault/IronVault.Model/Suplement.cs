@@ -6,7 +6,7 @@ namespace IronVault.Model
 {
     public class Suplement
     {
-        public int Id { get; set; }
+        public int SuplementId { get; set; }
         public string Naziv { get; set; }
         public float Cijena { get; set; }
         public float Gramaza { get; set; }

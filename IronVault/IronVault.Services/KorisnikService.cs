@@ -35,7 +35,7 @@ namespace IronVault.Services
 
         public Model.Korisnik Insert(KorisnikInsertRequest request)
         {
-            if (request.Password != request.Password)
+            if (request.Lozinka != request.LozinkaPotvrda)
             {
                 throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
             }
@@ -43,8 +43,8 @@ namespace IronVault.Services
             Database.Korisnik entity = new Database.Korisnik();
             Mapper.Map(request, entity);
 
-            //entity.LozinkaSalt = GenerateSalt();
-            //entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
 
             Context.Add(entity);
             Context.SaveChanges();

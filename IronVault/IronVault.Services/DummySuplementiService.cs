@@ -14,9 +14,12 @@ namespace IronVault.Services
         {
             new Suplement()
             {
-                Id = 1,
+                SuplementId = 1,
                 Naziv = "Whey",
-                Cijena = 5
+                Cijena = 5,
+                Gramaza = 100,
+                Opis = "Opis",
+                Slika = "slika"
             }
         };
 

@@ -6,9 +6,15 @@ namespace IronVault.Model.Requests
 {
     public class KorisnikInsertRequest
     {
+
         public string Ime { get; set; }
 
         public string Prezime { get; set; }
+
+        public string KorisnickoIme { get; set; }
+        public string Lozinka { get; set; }
+        public string LozinkaPotvrda { get; set; }
+
 
         public string? Slika { get; set; }
 
@@ -23,11 +29,5 @@ namespace IronVault.Model.Requests
         public int SpolId { get; set; }
 
         public int TeretanaId { get; set; }
-        public string Username { get; set; }
-
-        public string Password { get; set; }
-        public string PasswordPotvrda { get; set; }
-
-        public bool Is2Factive { get; set; }
     }
 }
