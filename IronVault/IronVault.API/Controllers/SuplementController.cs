@@ -8,11 +8,11 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SuplementiController : ControllerBase
+    public class SuplementController : ControllerBase
     {
         protected ISuplementiService _service;
 
-        public SuplementiController(ISuplementiService service)
+        public SuplementController(ISuplementiService service)
         {
             _service = service;
         }
