@@ -1,5 +1,6 @@
 ﻿using IronVault.Model;
 using IronVault.Services.Database;
+using MapsterMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,26 +13,21 @@ namespace IronVault.Services
     {
 
         public GmsDbContext Context { get; set; }
-        public SuplementiService(GmsDbContext context)
+        public IMapper Mapper { get; set; }
+        public SuplementiService(GmsDbContext context, IMapper mapper)
         {
             Context = context;
+            Mapper = mapper;
         }
 
         public virtual List<Model.Suplement> GetList()
         {
+            List<Model.Suplement> result = new List<Model.Suplement>();
+
             var list = Context.Suplements.ToList();
-            var result = new List<Model.Suplement>();
-            list.ForEach(item => {
-                result.Add(new Model.Suplement()
-                {
-                    Id = item.Id,
-                    Naziv = item.Naziv,
-                    Gramaza = item.Gramaza,
-                    Cijena = item.Cijena,
-                    Opis = item.Opis,
-                    Slika = item.Slika
-                });
-            });
+
+            result = Mapper.Map(list, result);
+
             return result;
         }
     }
