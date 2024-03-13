@@ -26,7 +26,7 @@ namespace IronVault.Services
 
             var list = Context.Suplements.ToList();
 
-            result = Mapper.Map(list, result);
+            result = Mapper.Map(list, result); 
 
             return result;
         }

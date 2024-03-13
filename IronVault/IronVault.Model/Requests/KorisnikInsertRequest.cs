@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IronVault.Model
+namespace IronVault.Model.Requests
 {
-    public class Korisnik
+    public class KorisnikInsertRequest
     {
-        public int Id { get; set; }
-
         public string Ime { get; set; }
 
         public string Prezime { get; set; }
@@ -28,6 +26,7 @@ namespace IronVault.Model
         public string Username { get; set; }
 
         public string Password { get; set; }
+        public string PasswordPotvrda { get; set; }
 
         public bool Is2Factive { get; set; }
     }

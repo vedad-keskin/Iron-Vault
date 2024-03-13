@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Services;
 using IronVault.Services.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -10,9 +11,9 @@ namespace IronVault.API.Controllers
     [Route("[controller]")]
     public class KorisniciController : ControllerBase
     {
-        protected IKorisniciService _service;
+        protected IKorisnikService _service;
 
-        public KorisniciController(IKorisniciService service)
+        public KorisniciController(IKorisnikService service)
         {
             _service = service;
         }
@@ -20,8 +21,15 @@ namespace IronVault.API.Controllers
         [HttpGet]
         public List<Model.Korisnik> GetList()
         {
-            return _service.GetList(); 
+            return _service.GetList();
         }
+
+        [HttpPost]
+        public Model.Korisnik Insert(KorisnikInsertRequest request)
+        {
+            return _service.Insert(request);
+        }
+
 
     }
 }
