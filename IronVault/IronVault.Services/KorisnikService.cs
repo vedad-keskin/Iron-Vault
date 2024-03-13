@@ -75,6 +75,27 @@ namespace IronVault.Services
             return Convert.ToBase64String(inArray);
         }
 
+        public Model.Korisnik Update(int id, KorisnikUpdateRequest request)
+        {
+            var entity = Context.Korisniks.Find(id);
 
+            Mapper.Map(request, entity);
+
+            if (request.Lozinka != null)
+            {
+                if (request.Lozinka != request.LozinkaPotvrda)
+                {
+                    throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
+                }
+
+                entity.LozinkaSalt = GenerateSalt();
+                entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
+            }
+
+            Context.SaveChanges();
+
+            return Mapper.Map<Model.Korisnik>(entity);
+        }
     }
 }
+

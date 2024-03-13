@@ -9,11 +9,11 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class KorisniciController : ControllerBase
+    public class KorisnikController : ControllerBase
     {
         protected IKorisnikService _service;
 
-        public KorisniciController(IKorisnikService service)
+        public KorisnikController(IKorisnikService service)
         {
             _service = service;
         }
@@ -30,6 +30,11 @@ namespace IronVault.API.Controllers
             return _service.Insert(request);
         }
 
+        [HttpPut("{id}")]
+        public Model.Korisnik Update(int id, KorisnikUpdateRequest request)
+        {
+            return _service.Update(id, request);
+        }
 
     }
 }

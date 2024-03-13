@@ -14,5 +14,6 @@ namespace IronVault.Services
         List<Korisnik> GetList();
 
         Korisnik Insert(KorisnikInsertRequest request);
+        Korisnik Update(int id, KorisnikUpdateRequest request);
     }
 }
