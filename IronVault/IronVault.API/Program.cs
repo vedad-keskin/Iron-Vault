@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddTransient<ISuplementiService, SuplementiService>();
+builder.Services.AddTransient<ISuplementService, SuplementService>();
 //builder.Services.AddTransient<ISuplementiService, DummySuplementiService>();
 builder.Services.AddTransient<IKorisnikService, KorisnikService>();
 

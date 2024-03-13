@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public interface ISuplementiService
+    public interface ISuplementService
     {
         List<Suplement> GetList();
     }

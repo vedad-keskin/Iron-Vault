@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class SuplementiService : ISuplementiService
+    public class SuplementService : ISuplementService
     {
 
         public GmsDbContext Context { get; set; }
         public IMapper Mapper { get; set; }
-        public SuplementiService(GmsDbContext context, IMapper mapper)
+        public SuplementService(GmsDbContext context, IMapper mapper)
         {
             Context = context;
             Mapper = mapper;

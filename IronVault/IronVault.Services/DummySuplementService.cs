@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class DummySuplementiService : ISuplementiService
+    public class DummySuplementService : ISuplementService
     {
 
         public new List<Suplement> List = new List<Suplement>()
