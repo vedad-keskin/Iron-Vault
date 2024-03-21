@@ -34,7 +34,7 @@ namespace IronVault.Services
             }
 
 
-            var list = Context.Suplements.ToList();
+            var list = query.ToList();
 
             result = Mapper.Map(list, result); 
 
