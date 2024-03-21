@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.SearchObjects;
 using IronVault.Services;
 using IronVault.Services.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -18,9 +19,9 @@ namespace IronVault.API.Controllers
         }
 
         [HttpGet]
-        public List<Model.Suplement> GetList()
+        public List<Model.Suplement> GetList([FromQuery] SuplementSearchObject searchObject)
         {
-            return _service.GetList(); 
+            return _service.GetList(searchObject); 
         }
 
     }

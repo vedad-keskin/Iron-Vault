@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
 using System;
@@ -20,9 +21,18 @@ namespace IronVault.Services
             Mapper = mapper;
         }
 
-        public virtual List<Model.Suplement> GetList()
+        public virtual List<Model.Suplement> GetList(SuplementSearchObject searchObject)
         {
             List<Model.Suplement> result = new List<Model.Suplement>();
+
+
+            var query = Context.Suplements.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchObject?.FTS))
+            {
+                query = query.Where(x => x.Naziv.Contains(searchObject.FTS) || x.Opis.Contains(searchObject.FTS));
+            }
+
 
             var list = Context.Suplements.ToList();
 

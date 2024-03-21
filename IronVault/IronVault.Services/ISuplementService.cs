@@ -1,5 +1,6 @@
 ﻿
 using IronVault.Model;
+using IronVault.Model.SearchObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,6 @@ namespace IronVault.Services
 {
     public interface ISuplementService
     {
-        List<Suplement> GetList();
+        List<Suplement> GetList(SuplementSearchObject searchObject);
     }
 }
