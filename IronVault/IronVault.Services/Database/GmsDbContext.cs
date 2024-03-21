@@ -15,8 +15,6 @@ public partial class GmsDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Administrator> Administrators { get; set; }
-
     public virtual DbSet<Clanarina> Clanarinas { get; set; }
 
     public virtual DbSet<Dobavljac> Dobavljacs { get; set; }
@@ -37,6 +35,8 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<KorisnikTrener> KorisnikTreners { get; set; }
 
+    public virtual DbSet<KorisnikUloga> KorisnikUlogas { get; set; }
+
     public virtual DbSet<Nutricionist> Nutricionists { get; set; }
 
     public virtual DbSet<Recenzija> Recenzijas { get; set; }
@@ -51,19 +51,14 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<Trener> Treners { get; set; }
 
+    public virtual DbSet<Uloga> Ulogas { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=GMS_db;Trusted_Connection=True;User ID=gms;Password=gms2023; TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Administrator>(entity =>
-        {
-            entity.ToTable("Administrator");
-
-            entity.Property(e => e.AdministratorId).HasColumnName("AdministratorID");
-        });
-
         modelBuilder.Entity<Clanarina>(entity =>
         {
             entity.ToTable("Clanarina");
@@ -110,7 +105,6 @@ public partial class GmsDbContext : DbContext
             entity.HasIndex(e => e.TeretanaId, "IX_Korisnik_TeretanaID");
 
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
-            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
             entity.Property(e => e.GradId).HasColumnName("GradID");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
             entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
@@ -208,12 +202,32 @@ public partial class GmsDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
+        modelBuilder.Entity<KorisnikUloga>(entity =>
+        {
+            entity.HasKey(e => new { e.KorisnikId, e.UlogaId, e.KorisnikUlogaId });
+
+            entity.ToTable("Korisnik_Uloga");
+
+            entity.HasIndex(e => e.UlogaId, "IX_Korisnik_Uloga_UlogaID");
+
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+            entity.Property(e => e.UlogaId).HasColumnName("UlogaID");
+            entity.Property(e => e.KorisnikUlogaId).HasColumnName("Korisnik_UlogaID");
+
+            entity.HasOne(d => d.Korisnik).WithMany(p => p.KorisnikUlogas)
+                .HasForeignKey(d => d.KorisnikId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Uloga).WithMany(p => p.KorisnikUlogas)
+                .HasForeignKey(d => d.UlogaId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
         modelBuilder.Entity<Nutricionist>(entity =>
         {
             entity.ToTable("Nutricionist");
 
             entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
-            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Nutricionists)
                 .UsingEntity<Dictionary<string, object>>(
@@ -295,7 +309,6 @@ public partial class GmsDbContext : DbContext
             entity.ToTable("Trener");
 
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
-            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Treners)
                 .UsingEntity<Dictionary<string, object>>(
@@ -314,6 +327,13 @@ public partial class GmsDbContext : DbContext
                         j.IndexerProperty<int>("TrenerId").HasColumnName("TrenerID");
                         j.IndexerProperty<int>("SeminarId").HasColumnName("SeminarID");
                     });
+        });
+
+        modelBuilder.Entity<Uloga>(entity =>
+        {
+            entity.ToTable("Uloga");
+
+            entity.Property(e => e.UlogaId).HasColumnName("UlogaID");
         });
 
         OnModelCreatingPartial(modelBuilder);

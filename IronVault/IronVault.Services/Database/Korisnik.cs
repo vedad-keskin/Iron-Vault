@@ -13,6 +13,8 @@ public partial class Korisnik
 
     public string KorisnickoIme { get; set; } = null!;
 
+    public string Email { get; set; } = null!;
+
     public string LozinkaHash { get; set; } = null!;
 
     public string LozinkaSalt { get; set; } = null!;
@@ -31,8 +33,6 @@ public partial class Korisnik
 
     public int TeretanaId { get; set; }
 
-    public string Email { get; set; } = null!;
-
     public virtual Grad Grad { get; set; } = null!;
 
     public virtual ICollection<KorisnikClanarina> KorisnikClanarinas { get; set; } = new List<KorisnikClanarina>();
@@ -42,6 +42,8 @@ public partial class Korisnik
     public virtual ICollection<KorisnikSuplement> KorisnikSuplements { get; set; } = new List<KorisnikSuplement>();
 
     public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
+
+    public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
 
     public virtual Spol Spol { get; set; } = null!;
 

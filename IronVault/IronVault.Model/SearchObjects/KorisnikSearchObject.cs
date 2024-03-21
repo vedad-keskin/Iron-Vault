@@ -10,5 +10,6 @@ namespace IronVault.Model.SearchObjects
         public string? PrezimeGTE { get; set; }
         public string? KorisnickoIme { get; set; }
         public string? Email { get; set; }
+        public bool? IsKorisnikUlogaIncluded { get; set; }
     }
 }

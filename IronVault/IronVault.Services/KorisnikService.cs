@@ -3,6 +3,7 @@ using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,6 +50,10 @@ namespace IronVault.Services
                 query = query.Where(x => x.KorisnickoIme == searchObject.KorisnickoIme);
             }
 
+            if (searchObject.IsKorisnikUlogaIncluded == true)
+            {
+                query = query.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
+            }
 
 
             var list = query.ToList();

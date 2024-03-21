@@ -11,11 +11,11 @@ public partial class Nutricionist
 
     public string Prezime { get; set; } = null!;
 
+    public string Email { get; set; } = null!;
+
     public string BrojTelefona { get; set; } = null!;
 
     public string? Slika { get; set; }
-
-    public string Email { get; set; } = null!;
 
     public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
 
