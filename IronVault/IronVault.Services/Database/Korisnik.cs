@@ -31,6 +31,8 @@ public partial class Korisnik
 
     public int TeretanaId { get; set; }
 
+    public string Email { get; set; } = null!;
+
     public virtual Grad Grad { get; set; } = null!;
 
     public virtual ICollection<KorisnikClanarina> KorisnikClanarinas { get; set; } = new List<KorisnikClanarina>();

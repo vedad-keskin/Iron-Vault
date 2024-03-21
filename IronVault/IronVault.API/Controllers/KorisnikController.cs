@@ -1,5 +1,6 @@
 ﻿using IronVault.Model;
 using IronVault.Model.Requests;
+using IronVault.Model.SearchObjects;
 using IronVault.Services;
 using IronVault.Services.Database;
 using Microsoft.AspNetCore.Mvc;
@@ -19,9 +20,9 @@ namespace IronVault.API.Controllers
         }
 
         [HttpGet]
-        public List<Model.Korisnik> GetList()
+        public List<Model.Korisnik> GetList([FromQuery] KorisnikSearchObject searchObject)
         {
-            return _service.GetList();
+            return _service.GetList(searchObject);
         }
 
         [HttpPost]

@@ -15,6 +15,8 @@ public partial class Nutricionist
 
     public string? Slika { get; set; }
 
+    public string Email { get; set; } = null!;
+
     public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
 
     public virtual ICollection<Seminar> Seminars { get; set; } = new List<Seminar>();

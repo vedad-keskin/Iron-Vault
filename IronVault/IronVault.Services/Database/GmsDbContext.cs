@@ -110,6 +110,7 @@ public partial class GmsDbContext : DbContext
             entity.HasIndex(e => e.TeretanaId, "IX_Korisnik_TeretanaID");
 
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
             entity.Property(e => e.GradId).HasColumnName("GradID");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
             entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
@@ -212,6 +213,7 @@ public partial class GmsDbContext : DbContext
             entity.ToTable("Nutricionist");
 
             entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
+            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Nutricionists)
                 .UsingEntity<Dictionary<string, object>>(
@@ -293,6 +295,7 @@ public partial class GmsDbContext : DbContext
             entity.ToTable("Trener");
 
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
+            entity.Property(e => e.Email).HasDefaultValueSql("(N'')");
 
             entity.HasMany(d => d.Seminars).WithMany(p => p.Treners)
                 .UsingEntity<Dictionary<string, object>>(

@@ -1,5 +1,6 @@
 ﻿using IronVault.Model;
 using IronVault.Model.Requests;
+using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
 using System;
@@ -22,11 +23,35 @@ namespace IronVault.Services
             Mapper = mapper;
         }
 
-        public virtual List<Model.Korisnik> GetList()
+        public virtual List<Model.Korisnik> GetList(KorisnikSearchObject searchObject)
         {
             List<Model.Korisnik> result = new List<Model.Korisnik>();
 
-            var list = Context.Korisniks.ToList();
+            var query = Context.Korisniks.AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(searchObject?.ImeGTE))
+            {
+                query = query.Where(x => x.Ime.StartsWith(searchObject.ImeGTE));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchObject?.PrezimeGTE))
+            {
+                query = query.Where(x => x.Prezime.StartsWith(searchObject.PrezimeGTE));
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchObject?.Email))
+            {
+                query = query.Where(x => x.Email == searchObject.Email);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchObject?.KorisnickoIme))
+            {
+                query = query.Where(x => x.KorisnickoIme == searchObject.KorisnickoIme);
+            }
+
+
+
+            var list = query.ToList();
 
             result = Mapper.Map(list, result); 
 
