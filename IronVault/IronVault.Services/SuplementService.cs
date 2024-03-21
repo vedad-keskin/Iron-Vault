@@ -33,6 +33,11 @@ namespace IronVault.Services
                 query = query.Where(x => x.Naziv.Contains(searchObject.FTS) || x.Opis.Contains(searchObject.FTS));
             }
 
+            if (searchObject?.Page.HasValue == true && searchObject?.PageSize.HasValue == true)
+            {
+                query = query.Skip(searchObject.Page.Value * searchObject.PageSize.Value).Take(searchObject.PageSize.Value);
+            }
+
 
             var list = query.ToList();
 

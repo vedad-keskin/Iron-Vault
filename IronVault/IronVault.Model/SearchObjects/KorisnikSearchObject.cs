@@ -11,5 +11,7 @@ namespace IronVault.Model.SearchObjects
         public string? KorisnickoIme { get; set; }
         public string? Email { get; set; }
         public bool? IsKorisnikUlogaIncluded { get; set; }
+        public int? Page { get; set; }
+        public int? PageSize { get; set; }
     }
 }
