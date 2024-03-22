@@ -9,6 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddTransient<ISuplementService, SuplementService>();
 //builder.Services.AddTransient<ISuplementiService, DummySuplementiService>();
 builder.Services.AddTransient<IKorisnikService, KorisnikService>();
+builder.Services.AddTransient<IDobavljacService, DobavljacService>();
 
 
 builder.Services.AddControllers();

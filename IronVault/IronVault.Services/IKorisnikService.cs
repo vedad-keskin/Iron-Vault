@@ -12,7 +12,7 @@ namespace IronVault.Services
 {
     public interface IKorisnikService
     {
-        List<Korisnik> GetList(KorisnikSearchObject searchObject);
+        PagedResult<Model.Korisnik> GetList(KorisnikSearchObject searchObject);
         Korisnik Insert(KorisnikInsertRequest request);
         Korisnik Update(int id, KorisnikUpdateRequest request);
     }

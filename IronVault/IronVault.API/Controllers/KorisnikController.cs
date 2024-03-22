@@ -20,7 +20,7 @@ namespace IronVault.API.Controllers
         }
 
         [HttpGet]
-        public List<Model.Korisnik> GetList([FromQuery] KorisnikSearchObject searchObject)
+        public PagedResult<Model.Korisnik> GetList([FromQuery] KorisnikSearchObject searchObject)
         {
             return _service.GetList(searchObject);
         }

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Dynamic;
 
 namespace IronVault.Services
 {
@@ -24,7 +25,7 @@ namespace IronVault.Services
             Mapper = mapper;
         }
 
-        public virtual List<Model.Korisnik> GetList(KorisnikSearchObject searchObject)
+        public virtual PagedResult<Model.Korisnik> GetList(KorisnikSearchObject searchObject)
         {
             List<Model.Korisnik> result = new List<Model.Korisnik>();
 
@@ -55,6 +56,8 @@ namespace IronVault.Services
                 query = query.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
 
+            int count = query.Count();
+
             if (searchObject?.Page.HasValue == true && searchObject?.PageSize.HasValue == true)
             {
                 query = query.Skip(searchObject.Page.Value * searchObject.PageSize.Value).Take(searchObject.PageSize.Value);
@@ -63,9 +66,14 @@ namespace IronVault.Services
 
             var list = query.ToList();
 
-            result = Mapper.Map(list, result); 
+            var resultList = Mapper.Map(list, result);
 
-            return result;
+            PagedResult<Model.Korisnik> response = new PagedResult<Model.Korisnik>();
+
+            response.ResultList = resultList;
+            response.Count = count;
+
+            return response;
         }
 
         public Model.Korisnik Insert(KorisnikInsertRequest request)
