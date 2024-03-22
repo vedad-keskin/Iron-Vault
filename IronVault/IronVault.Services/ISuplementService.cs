@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public interface ISuplementService
+    public interface ISuplementService : IService<Suplement, SuplementSearchObject>
     {
-        List<Suplement> GetList(SuplementSearchObject searchObject);
+        
     }
 }

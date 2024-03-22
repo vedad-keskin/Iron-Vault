@@ -6,19 +6,15 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DobavljacController : ControllerBase
+    public class DobavljacController : BaseController<Model.Dobavljac,DobavljacSearchObject>
     {
-        protected IDobavljacService _service;
 
-        public DobavljacController(IDobavljacService service)
+
+        public DobavljacController(IDobavljacService service):base(service)
         {
-            _service = service;
+           
         }
 
-        [HttpGet]
-        public List<Model.Dobavljac> GetList([FromQuery] DobavljacSearchObject searchObject)
-        {
-            return _service.GetList(searchObject);
-        }
+
     }
 }

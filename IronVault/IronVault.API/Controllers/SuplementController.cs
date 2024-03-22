@@ -9,20 +9,15 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SuplementController : ControllerBase
+    public class SuplementController : BaseController<Model.Suplement,SuplementSearchObject>
     {
-        protected ISuplementService _service;
+    
 
-        public SuplementController(ISuplementService service)
+        public SuplementController(ISuplementService service):base(service)
         {
-            _service = service;
+            
         }
 
-        [HttpGet]
-        public List<Model.Suplement> GetList([FromQuery] SuplementSearchObject searchObject)
-        {
-            return _service.GetList(searchObject); 
-        }
 
     }
 }

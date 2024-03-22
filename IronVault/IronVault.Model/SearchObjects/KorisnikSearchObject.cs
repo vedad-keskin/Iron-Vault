@@ -4,14 +4,12 @@ using System.Text;
 
 namespace IronVault.Model.SearchObjects
 {
-    public class KorisnikSearchObject
+    public class KorisnikSearchObject : BaseSearchObject
     {
         public string? ImeGTE { get; set; }
         public string? PrezimeGTE { get; set; }
         public string? KorisnickoIme { get; set; }
         public string? Email { get; set; }
         public bool? IsKorisnikUlogaIncluded { get; set; }
-        public int? Page { get; set; }
-        public int? PageSize { get; set; }
     }
 }

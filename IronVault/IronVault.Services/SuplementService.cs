@@ -10,40 +10,28 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class SuplementService : ISuplementService
+    public class SuplementService : BaseService<Model.Suplement,SuplementSearchObject,Database.Suplement>, ISuplementService
     {
 
-        public GmsDbContext Context { get; set; }
-        public IMapper Mapper { get; set; }
-        public SuplementService(GmsDbContext context, IMapper mapper)
+
+        public SuplementService(GmsDbContext context, IMapper mapper):base(context,mapper)
         {
-            Context = context;
-            Mapper = mapper;
+           
         }
 
-        public virtual List<Model.Suplement> GetList(SuplementSearchObject searchObject)
+        public override IQueryable<Database.Suplement> AddFilter(SuplementSearchObject search, IQueryable<Database.Suplement> query)
         {
-            List<Model.Suplement> result = new List<Model.Suplement>();
+            var filteredQuery = base.AddFilter(search, query);
 
-
-            var query = Context.Suplements.AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(searchObject?.FTS))
+            if (!string.IsNullOrWhiteSpace(search?.FTS))
             {
-                query = query.Where(x => x.Naziv.Contains(searchObject.FTS) || x.Opis.Contains(searchObject.FTS));
+                filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));
             }
 
-            if (searchObject?.Page.HasValue == true && searchObject?.PageSize.HasValue == true)
-            {
-                query = query.Skip(searchObject.Page.Value * searchObject.PageSize.Value).Take(searchObject.PageSize.Value);
-            }
-
-
-            var list = query.ToList();
-
-            result = Mapper.Map(list, result); 
-
-            return result;
+            return filteredQuery;
         }
+
+
+
     }
 }
