@@ -15,6 +15,8 @@ public partial class GmsDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Aktivnost> Aktivnosts { get; set; }
+
     public virtual DbSet<Clanarina> Clanarinas { get; set; }
 
     public virtual DbSet<Dobavljac> Dobavljacs { get; set; }
@@ -59,6 +61,20 @@ public partial class GmsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Aktivnost>(entity =>
+        {
+            entity.ToTable("Aktivnost");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Aktivnost_KorisnikID");
+
+            entity.Property(e => e.AktivnostId).HasColumnName("AktivnostID");
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+
+            entity.HasOne(d => d.Korisnik).WithMany(p => p.Aktivnosts)
+                .HasForeignKey(d => d.KorisnikId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
         modelBuilder.Entity<Clanarina>(entity =>
         {
             entity.ToTable("Clanarina");
@@ -108,6 +124,7 @@ public partial class GmsDbContext : DbContext
             entity.Property(e => e.GradId).HasColumnName("GradID");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
             entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
+            entity.Property(e => e.VrijemeUteretani).HasColumnName("VrijemeUTeretani");
 
             entity.HasOne(d => d.Grad).WithMany(p => p.Korisniks)
                 .HasForeignKey(d => d.GradId)
@@ -250,9 +267,22 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<Recenzija>(entity =>
         {
+            entity.HasKey(e => new { e.KorisnikId, e.SuplementId });
+
             entity.ToTable("Recenzija");
 
-            entity.Property(e => e.RecenzijaId).HasColumnName("RecenzijaID");
+            entity.HasIndex(e => e.SuplementId, "IX_Recenzija_SuplementID");
+
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
+
+            entity.HasOne(d => d.Korisnik).WithMany(p => p.Recenzijas)
+                .HasForeignKey(d => d.KorisnikId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Suplement).WithMany(p => p.Recenzijas)
+                .HasForeignKey(d => d.SuplementId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Seminar>(entity =>

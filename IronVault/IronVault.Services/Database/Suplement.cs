@@ -26,4 +26,6 @@ public partial class Suplement
     public virtual Kategorija Kategorija { get; set; } = null!;
 
     public virtual ICollection<KorisnikSuplement> KorisnikSuplements { get; set; } = new List<KorisnikSuplement>();
+
+    public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 }

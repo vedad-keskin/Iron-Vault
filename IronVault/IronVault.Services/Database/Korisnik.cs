@@ -27,11 +27,17 @@ public partial class Korisnik
 
     public float Tezina { get; set; }
 
+    public int? Razina { get; set; }
+
+    public TimeSpan? VrijemeUteretani { get; set; }
+
     public int GradId { get; set; }
 
     public int SpolId { get; set; }
 
     public int TeretanaId { get; set; }
+
+    public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
 
     public virtual Grad Grad { get; set; } = null!;
 
@@ -44,6 +50,8 @@ public partial class Korisnik
     public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
 
     public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
+
+    public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 
     public virtual Spol Spol { get; set; } = null!;
 

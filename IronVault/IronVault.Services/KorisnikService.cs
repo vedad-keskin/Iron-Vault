@@ -84,6 +84,10 @@ namespace IronVault.Services
             }
 
             Database.Korisnik entity = new Database.Korisnik();
+
+            entity.Razina = 1;
+            entity.VrijemeUteretani = new TimeSpan(00, 00, 00);
+
             Mapper.Map(request, entity);
 
             entity.LozinkaSalt = GenerateSalt();

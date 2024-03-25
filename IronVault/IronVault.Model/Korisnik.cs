@@ -15,6 +15,8 @@ namespace IronVault.Model
         public string? BrojTelefona { get; set; }
         public float Visina { get; set; }
         public float Tezina { get; set; }
+        public int? Razina { get; set; }
+        public TimeSpan? VrijemeUteretani { get; set; }
         public int GradId { get; set; }
         public int SpolId { get; set; }
         public int TeretanaId { get; set; }

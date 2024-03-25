@@ -5,15 +5,15 @@ namespace IronVault.Services.Database;
 
 public partial class Recenzija
 {
-    public int RecenzijaId { get; set; }
+    public int KorisnikId { get; set; }
 
-    public string Ime { get; set; } = null!;
+    public int SuplementId { get; set; }
 
-    public string Prezime { get; set; } = null!;
+    public int Ocjena { get; set; }
 
-    public string Zanimanje { get; set; } = null!;
+    public string Opis { get; set; } = null!;
 
-    public string Tekst { get; set; } = null!;
+    public virtual Korisnik Korisnik { get; set; } = null!;
 
-    public string? Slika { get; set; }
+    public virtual Suplement Suplement { get; set; } = null!;
 }

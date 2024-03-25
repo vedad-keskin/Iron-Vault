@@ -28,6 +28,8 @@ namespace IronVault.API.Controllers
         [HttpPost]
         public Model.Korisnik Insert(KorisnikInsertRequest request)
         {
+
+
             return _service.Insert(request);
         }
 
