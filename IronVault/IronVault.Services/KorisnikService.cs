@@ -14,22 +14,16 @@ using System.Linq.Dynamic;
 
 namespace IronVault.Services
 {
-    public class KorisnikService : IKorisnikService
-    {
+    public class KorisnikService : BaseCRUDService<Model.Korisnik, KorisnikSearchObject, Database.Korisnik, KorisnikInsertRequest, KorisnikUpdateRequest>, IKorisnikService
 
-        public GmsDbContext Context { get; set; }
-        public IMapper Mapper { get; set; }
-        public KorisnikService(GmsDbContext context, IMapper mapper)
+    {
+        public KorisnikService(GmsDbContext context, IMapper mapper) : base(context, mapper)
         {
-            Context = context;
-            Mapper = mapper;
         }
 
-        public virtual PagedResult<Model.Korisnik> GetList(KorisnikSearchObject searchObject)
+        public override IQueryable<Database.Korisnik> AddFilter(KorisnikSearchObject searchObject, IQueryable<Database.Korisnik> query)
         {
-            List<Model.Korisnik> result = new List<Model.Korisnik>();
-
-            var query = Context.Korisniks.AsQueryable();
+            query = base.AddFilter(searchObject, query);
 
             if (!string.IsNullOrWhiteSpace(searchObject?.ImeGTE))
             {
@@ -56,50 +50,28 @@ namespace IronVault.Services
                 query = query.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
 
-            int count = query.Count();
 
-            if (searchObject?.Page.HasValue == true && searchObject?.PageSize.HasValue == true)
-            {
-                query = query.Skip(searchObject.Page.Value * searchObject.PageSize.Value).Take(searchObject.PageSize.Value);
-            }
-
-
-            var list = query.ToList();
-
-            var resultList = Mapper.Map(list, result);
-
-            PagedResult<Model.Korisnik> response = new PagedResult<Model.Korisnik>();
-
-            response.ResultList = resultList;
-            response.Count = count;
-
-            return response;
+            return query;
         }
 
-        public Model.Korisnik Insert(KorisnikInsertRequest request)
+
+        public override void BeforeInsert(KorisnikInsertRequest request, Database.Korisnik entity)
         {
             if (request.Lozinka != request.LozinkaPotvrda)
             {
                 throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
             }
 
-            Database.Korisnik entity = new Database.Korisnik();
+            entity.LozinkaSalt = GenerateSalt();
+            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
+
 
             entity.Razina = 1;
             entity.VrijemeUteretani = new TimeSpan(00, 00, 00);
 
-            Mapper.Map(request, entity);
-
-            entity.LozinkaSalt = GenerateSalt();
-            entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
-
-            Context.Add(entity);
-            Context.SaveChanges();
-
-
-            return Mapper.Map<Model.Korisnik>(entity);
-
+            base.BeforeInsert(request, entity);
         }
+
 
         public static string GenerateSalt()
         {
@@ -120,6 +92,22 @@ namespace IronVault.Services
             HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
             byte[] inArray = algorithm.ComputeHash(dst);
             return Convert.ToBase64String(inArray);
+        }
+
+        public override void BeforeUpdate(KorisnikUpdateRequest request, Database.Korisnik entity)
+        {
+            if (request.Lozinka != null)
+            {
+                if (request.Lozinka != request.LozinkaPotvrda)
+                {
+                    throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
+                }
+
+                entity.LozinkaSalt = GenerateSalt();
+                entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
+            }
+
+            base.BeforeUpdate(request, entity);
         }
 
         public Model.Korisnik Update(int id, KorisnikUpdateRequest request)
