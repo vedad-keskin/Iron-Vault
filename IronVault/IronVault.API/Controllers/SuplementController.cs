@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services;
 using IronVault.Services.Database;
@@ -9,7 +10,7 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class SuplementController : BaseController<Model.Suplement,SuplementSearchObject>
+    public class SuplementController : BaseCRUDController<Model.Suplement,SuplementSearchObject,SuplementInsertRequest,SuplementUpdateRequest>
     {
     
 

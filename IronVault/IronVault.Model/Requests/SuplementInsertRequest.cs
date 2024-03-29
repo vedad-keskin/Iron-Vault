@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IronVault.Model
+namespace IronVault.Model.Requests
 {
-    public class Suplement
+    public class SuplementInsertRequest
     {
-        public int SuplementId { get; set; }
         public string Naziv { get; set; }
         public float Cijena { get; set; }
         public float Gramaza { get; set; }
