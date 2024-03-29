@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class SuplementService : BaseService<Model.Suplement,SuplementSearchObject,Database.Suplement>, ISuplementService
+    public class SuplementService : BaseCRUDService<Model.Suplement,SuplementSearchObject,Database.Suplement,SuplementInsertRequest,SuplementUpdateRequest>, ISuplementService
     {
 
 
