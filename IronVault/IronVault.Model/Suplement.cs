@@ -12,6 +12,7 @@ namespace IronVault.Model
         public float Gramaza { get; set; }
         public string Opis { get; set; }
         public string? Slika { get; set; }
+        public string? StateMachine { get; set; }
         public int DobavljacId { get; set; }
         public int KategorijaId { get; set; }
     }
