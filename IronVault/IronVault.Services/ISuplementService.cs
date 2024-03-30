@@ -12,6 +12,6 @@ namespace IronVault.Services
 {
     public interface ISuplementService : ICRUDService<Suplement, SuplementSearchObject,SuplementInsertRequest,SuplementUpdateRequest>
     {
-        
+        public Suplement Activate(int id);
     }
 }

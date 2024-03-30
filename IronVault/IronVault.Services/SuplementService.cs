@@ -2,6 +2,7 @@
 using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
+using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,11 @@ namespace IronVault.Services
     public class SuplementService : BaseCRUDService<Model.Suplement,SuplementSearchObject,Database.Suplement,SuplementInsertRequest,SuplementUpdateRequest>, ISuplementService
     {
 
+        public BaseSuplementState BaseSuplementState { get; set; }
 
-        public SuplementService(GmsDbContext context, IMapper mapper):base(context,mapper)
+        public SuplementService(GmsDbContext context, IMapper mapper, BaseSuplementState baseSuplementState) : base(context, mapper)
         {
-           
+            BaseSuplementState = baseSuplementState;
         }
 
         public override IQueryable<Database.Suplement> AddFilter(SuplementSearchObject search, IQueryable<Database.Suplement> query)
@@ -32,6 +34,26 @@ namespace IronVault.Services
             return filteredQuery;
         }
 
+        public override Model.Suplement Insert(SuplementInsertRequest request)
+        {
+            var state = BaseSuplementState.CreateState("initial");
+            return state.Insert(request);
+        }
+
+        public override Model.Suplement Update(int id, SuplementUpdateRequest request)
+        {
+            var entity = GetById(id);
+            var state = BaseSuplementState.CreateState(entity.StateMachine);
+            return state.Update(id, request);
+
+        }
+
+        public Model.Suplement Activate(int id)
+        {
+            var entity = GetById(id);
+            var state = BaseSuplementState.CreateState(entity.StateMachine);
+            return state.Activate(id);
+        }
 
 
     }
