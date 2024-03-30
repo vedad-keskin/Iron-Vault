@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public interface IDobavljacService : IService<Dobavljac, DobavljacSearchObject>
+    public interface IDobavljacService : ICRUDService<Dobavljac, DobavljacSearchObject, DobavljacUpsertRequest, DobavljacUpsertRequest>
     {
        
     }

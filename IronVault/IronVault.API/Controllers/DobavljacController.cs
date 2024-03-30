@@ -1,4 +1,5 @@
-﻿using IronVault.Model.SearchObjects;
+﻿using IronVault.Model.Requests;
+using IronVault.Model.SearchObjects;
 using IronVault.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,7 +7,7 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DobavljacController : BaseController<Model.Dobavljac,DobavljacSearchObject>
+    public class DobavljacController : BaseCRUDController<Model.Dobavljac,DobavljacSearchObject,DobavljacUpsertRequest,DobavljacUpsertRequest>
     {
 
 

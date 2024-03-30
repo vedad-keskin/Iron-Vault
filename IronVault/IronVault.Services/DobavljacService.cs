@@ -1,4 +1,5 @@
 ﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services
 {
-    public class DobavljacService : BaseService<Model.Dobavljac,DobavljacSearchObject,Database.Dobavljac>, IDobavljacService
+    public class DobavljacService : BaseCRUDService<Model.Dobavljac,DobavljacSearchObject,Database.Dobavljac,DobavljacUpsertRequest,DobavljacUpsertRequest>, IDobavljacService
     {
 
 
