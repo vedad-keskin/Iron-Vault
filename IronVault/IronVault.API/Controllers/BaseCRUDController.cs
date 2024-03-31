@@ -1,5 +1,5 @@
 ﻿using IronVault.Model.SearchObjects;
-using IronVault.Services;
+using IronVault.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IronVault.API.Controllers

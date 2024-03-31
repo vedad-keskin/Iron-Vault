@@ -1,5 +1,6 @@
-using IronVault.Services;
 using IronVault.Services.Database;
+using IronVault.Services.Interfaces;
+using IronVault.Services.Methods;
 using IronVault.Services.SuplementStateMachine;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ builder.Services.AddTransient<ISuplementService, SuplementService>();
 builder.Services.AddTransient<IKorisnikService, KorisnikService>();
 builder.Services.AddTransient<IDobavljacService, DobavljacService>();
 builder.Services.AddTransient<IAktivnostService, AktivnostService>();
+builder.Services.AddTransient<IKategorijaService, KategorijaService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();

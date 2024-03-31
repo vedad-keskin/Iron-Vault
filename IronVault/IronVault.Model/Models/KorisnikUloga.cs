@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IronVault.Model
+namespace IronVault.Model.Models
 {
     public partial class KorisnikUloga
     {

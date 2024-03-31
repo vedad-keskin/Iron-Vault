@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronVault.Services
+namespace IronVault.Services.Methods
 {
     //public class DummySuplementService : ISuplementService
     //{

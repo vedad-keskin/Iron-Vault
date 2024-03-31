@@ -1,6 +1,6 @@
 ﻿using IronVault.Model;
 using IronVault.Model.SearchObjects;
-using IronVault.Services;
+using IronVault.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 

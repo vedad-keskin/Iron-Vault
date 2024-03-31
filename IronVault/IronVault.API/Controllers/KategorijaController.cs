@@ -8,15 +8,14 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class DobavljacController : BaseCRUDController<Dobavljac,DobavljacSearchObject,DobavljacUpsertRequest,DobavljacUpsertRequest>
+    public class KategorijaController : BaseCRUDController<Kategorija, KategorijaSearchObject, KategorijaUpsertRequest, KategorijaUpsertRequest>
     {
 
 
-        public DobavljacController(IDobavljacService service):base(service)
+        public KategorijaController(IKategorijaService service) : base(service)
         {
-           
-        }
 
+        }
 
     }
 }

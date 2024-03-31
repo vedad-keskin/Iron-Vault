@@ -1,6 +1,7 @@
 ﻿using IronVault.Model;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
+using IronVault.Services.Interfaces;
 using MapsterMapper;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronVault.Services
+namespace IronVault.Services.Methods
 {
     public class BaseService<TModel, TSearch, TDbEntity> : IService<TModel, TSearch> where TSearch : BaseSearchObject where TDbEntity : class where TModel : class
     {

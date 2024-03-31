@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronVault.Services
+namespace IronVault.Services.Interfaces
 {
     public interface IService<TModel, TSearch> where TSearch : BaseSearchObject
     {

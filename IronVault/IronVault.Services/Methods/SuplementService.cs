@@ -1,7 +1,7 @@
-﻿using IronVault.Model;
-using IronVault.Model.Requests;
+﻿using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
+using IronVault.Services.Interfaces;
 using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
 using System;
@@ -10,9 +10,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IronVault.Services
+namespace IronVault.Services.Methods
 {
-    public class SuplementService : BaseCRUDService<Model.Suplement,SuplementSearchObject,Database.Suplement,SuplementInsertRequest,SuplementUpdateRequest>, ISuplementService
+    public class SuplementService : BaseCRUDService<Model.Models.Suplement, SuplementSearchObject, Database.Suplement, SuplementInsertRequest, SuplementUpdateRequest>, ISuplementService
     {
 
         public BaseSuplementState BaseSuplementState { get; set; }
@@ -34,13 +34,13 @@ namespace IronVault.Services
             return filteredQuery;
         }
 
-        public override Model.Suplement Insert(SuplementInsertRequest request)
+        public override Model.Models.Suplement Insert(SuplementInsertRequest request)
         {
             var state = BaseSuplementState.CreateState("initial");
             return state.Insert(request);
         }
 
-        public override Model.Suplement Update(int id, SuplementUpdateRequest request)
+        public override Model.Models.Suplement Update(int id, SuplementUpdateRequest request)
         {
             var entity = GetById(id);
             var state = BaseSuplementState.CreateState(entity.StateMachine);
@@ -48,7 +48,7 @@ namespace IronVault.Services
 
         }
 
-        public Model.Suplement Activate(int id)
+        public Model.Models.Suplement Activate(int id)
         {
             var entity = GetById(id);
             var state = BaseSuplementState.CreateState(entity.StateMachine);

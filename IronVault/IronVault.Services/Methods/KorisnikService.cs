@@ -1,5 +1,4 @@
-﻿using IronVault.Model;
-using IronVault.Model.Requests;
+﻿using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using MapsterMapper;
@@ -11,10 +10,11 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic;
+using IronVault.Services.Interfaces;
 
-namespace IronVault.Services
+namespace IronVault.Services.Methods
 {
-    public class KorisnikService : BaseCRUDService<Model.Korisnik, KorisnikSearchObject, Database.Korisnik, KorisnikInsertRequest, KorisnikUpdateRequest>, IKorisnikService
+    public class KorisnikService : BaseCRUDService<Model.Models.Korisnik, KorisnikSearchObject, Database.Korisnik, KorisnikInsertRequest, KorisnikUpdateRequest>, IKorisnikService
 
     {
         public KorisnikService(GmsDbContext context, IMapper mapper) : base(context, mapper)
@@ -81,7 +81,7 @@ namespace IronVault.Services
 
         public static string GenerateSalt()
         {
-            var byteArray = RNGCryptoServiceProvider.GetBytes(16);
+            var byteArray = RandomNumberGenerator.GetBytes(16);
 
 
             return Convert.ToBase64String(byteArray);
@@ -92,8 +92,8 @@ namespace IronVault.Services
             byte[] bytes = Encoding.Unicode.GetBytes(password);
             byte[] dst = new byte[src.Length + bytes.Length];
 
-            System.Buffer.BlockCopy(src, 0, dst, 0, src.Length);
-            System.Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
+            Buffer.BlockCopy(src, 0, dst, 0, src.Length);
+            Buffer.BlockCopy(bytes, 0, dst, src.Length, bytes.Length);
 
             HashAlgorithm algorithm = HashAlgorithm.Create("SHA1");
             byte[] inArray = algorithm.ComputeHash(dst);
@@ -116,7 +116,7 @@ namespace IronVault.Services
             base.BeforeUpdate(request, entity);
         }
 
-      
+
     }
 }
 

@@ -22,22 +22,22 @@ namespace IronVault.Services.SuplementStateMachine
             Mapper = mapper;
             ServiceProvider = serviceProvider;
         }
-        public virtual Model.Suplement Insert(SuplementInsertRequest request)
+        public virtual Model.Models.Suplement Insert(SuplementInsertRequest request)
         {
             throw new Exception("Method not allowed");
         }
 
-        public virtual Model.Suplement Update(int id, SuplementUpdateRequest request)
+        public virtual Model.Models.Suplement Update(int id, SuplementUpdateRequest request)
         {
             throw new Exception("Method not allowed");
         }
 
-        public virtual Model.Suplement Activate(int id)
+        public virtual Model.Models.Suplement Activate(int id)
         {
             throw new Exception("Method not allowed");
         }
 
-        public virtual Model.Suplement Hide(int id)
+        public virtual Model.Models.Suplement Hide(int id)
         {
             throw new Exception("Method not allowed");
         }

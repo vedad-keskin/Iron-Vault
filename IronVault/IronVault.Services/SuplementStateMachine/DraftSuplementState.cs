@@ -15,7 +15,7 @@ namespace IronVault.Services.SuplementStateMachine
         {
         }
 
-        public override Model.Suplement Update(int id, SuplementUpdateRequest request)
+        public override Model.Models.Suplement Update(int id, SuplementUpdateRequest request)
         {
             var set = Context.Set<Database.Suplement>();
 
@@ -25,10 +25,10 @@ namespace IronVault.Services.SuplementStateMachine
 
             Context.SaveChanges();
 
-            return Mapper.Map<Model.Suplement>(entity);
+            return Mapper.Map<Model.Models.Suplement>(entity);
         }
 
-        public override Model.Suplement Activate(int id)
+        public override Model.Models.Suplement Activate(int id)
         {
             var set = Context.Set<Database.Suplement>();
 
@@ -38,7 +38,7 @@ namespace IronVault.Services.SuplementStateMachine
 
             Context.SaveChanges();
 
-            return Mapper.Map<Model.Suplement>(entity);
+            return Mapper.Map<Model.Models.Suplement>(entity);
         }
     }
 }

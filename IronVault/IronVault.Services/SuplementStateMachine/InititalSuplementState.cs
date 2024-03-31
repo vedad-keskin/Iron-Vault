@@ -1,4 +1,4 @@
-﻿using IronVault.Model;
+﻿using IronVault.Model.Models;
 using IronVault.Model.Requests;
 using MapsterMapper;
 using System;
