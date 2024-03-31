@@ -67,11 +67,18 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.KorisnikId, "IX_Aktivnost_KorisnikID");
 
+            entity.HasIndex(e => e.TeretanaId, "IX_Aktivnost_TeretanaID");
+
             entity.Property(e => e.AktivnostId).HasColumnName("AktivnostID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+            entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
 
             entity.HasOne(d => d.Korisnik).WithMany(p => p.Aktivnosts)
                 .HasForeignKey(d => d.KorisnikId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Teretana).WithMany(p => p.Aktivnosts)
+                .HasForeignKey(d => d.TeretanaId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 

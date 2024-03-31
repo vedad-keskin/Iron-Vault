@@ -23,5 +23,6 @@ namespace IronVault.Model
         public int TeretanaId { get; set; }
 
         public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
+        public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
     }
 }

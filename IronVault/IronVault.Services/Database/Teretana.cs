@@ -13,6 +13,8 @@ public partial class Teretana
 
     public string Adresa { get; set; } = null!;
 
+    public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
+
     public virtual Grad Grad { get; set; } = null!;
 
     public virtual ICollection<Korisnik> Korisniks { get; set; } = new List<Korisnik>();

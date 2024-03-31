@@ -16,6 +16,15 @@ namespace IronVault.Services
         {
         }
 
+        public override void BeforeInsert(AktivnostInsertRequest request, Aktivnost entity)
+        {
+            var korisnik = Context.Korisniks.Find(entity.KorisnikId);
+
+            entity.TeretanaId = korisnik.TeretanaId;
+
+            base.BeforeInsert(request, entity);
+        }
+
         public override void BeforeUpdate(AktivnostUpdateRequest request, Aktivnost entity)
         {
             // racunanje razine korisnika i provedenog vremena u teretani za svaku aktivnost
@@ -46,6 +55,11 @@ namespace IronVault.Services
             if (search?.KorisnikId != null)
             {
                 query = query.Where(x => x.KorisnikId == search.KorisnikId);
+            }
+
+            if (search?.TeretanaId != null)
+            {
+                query = query.Where(x => x.TeretanaId == search.TeretanaId);
             }
 
 
