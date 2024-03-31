@@ -4,6 +4,7 @@ using IronVault.Services.Database;
 using IronVault.Services.Interfaces;
 using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace IronVault.Services.Methods
             {
                 filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));
             }
+
+            filteredQuery = filteredQuery.Include(x => x.Dobavljac).Include(x => x.Kategorija);
 
             return filteredQuery;
         }

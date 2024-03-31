@@ -14,6 +14,7 @@ builder.Services.AddTransient<IKorisnikService, KorisnikService>();
 builder.Services.AddTransient<IDobavljacService, DobavljacService>();
 builder.Services.AddTransient<IAktivnostService, AktivnostService>();
 builder.Services.AddTransient<IKategorijaService, KategorijaService>();
+builder.Services.AddTransient<IGradService, GradService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
