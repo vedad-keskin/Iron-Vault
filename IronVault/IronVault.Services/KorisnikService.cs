@@ -50,6 +50,7 @@ namespace IronVault.Services
                 query = query.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
 
+            query.Include(x => x.Teretana).Include(x => x.Spol).Include(x => x.Grad);
 
             return query;
         }
@@ -110,27 +111,7 @@ namespace IronVault.Services
             base.BeforeUpdate(request, entity);
         }
 
-        public Model.Korisnik Update(int id, KorisnikUpdateRequest request)
-        {
-            var entity = Context.Korisniks.Find(id);
-
-            Mapper.Map(request, entity);
-
-            if (request.Lozinka != null)
-            {
-                if (request.Lozinka != request.LozinkaPotvrda)
-                {
-                    throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
-                }
-
-                entity.LozinkaSalt = GenerateSalt();
-                entity.LozinkaHash = GenerateHash(entity.LozinkaSalt, request.Lozinka);
-            }
-
-            Context.SaveChanges();
-
-            return Mapper.Map<Model.Korisnik>(entity);
-        }
+      
     }
 }
 

@@ -11,6 +11,7 @@ builder.Services.AddTransient<ISuplementService, SuplementService>();
 //builder.Services.AddTransient<ISuplementiService, DummySuplementiService>();
 builder.Services.AddTransient<IKorisnikService, KorisnikService>();
 builder.Services.AddTransient<IDobavljacService, DobavljacService>();
+builder.Services.AddTransient<IAktivnostService, AktivnostService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
