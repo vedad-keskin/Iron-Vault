@@ -21,6 +21,8 @@ public partial class Suplement
 
     public string? StateMachine { get; set; }
 
+    public double? ProsjecnaOcjena { get; set; }
+
     public int DobavljacId { get; set; }
 
     public int KategorijaId { get; set; }
