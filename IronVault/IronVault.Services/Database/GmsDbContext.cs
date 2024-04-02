@@ -228,15 +228,15 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<KorisnikUloga>(entity =>
         {
-            entity.HasKey(e => new { e.KorisnikId, e.UlogaId, e.KorisnikUlogaId });
-
             entity.ToTable("Korisnik_Uloga");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Uloga_KorisnikID");
 
             entity.HasIndex(e => e.UlogaId, "IX_Korisnik_Uloga_UlogaID");
 
+            entity.Property(e => e.KorisnikUlogaId).HasColumnName("Korisnik_UlogaID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.UlogaId).HasColumnName("UlogaID");
-            entity.Property(e => e.KorisnikUlogaId).HasColumnName("Korisnik_UlogaID");
 
             entity.HasOne(d => d.Korisnik).WithMany(p => p.KorisnikUlogas)
                 .HasForeignKey(d => d.KorisnikId)
@@ -274,12 +274,13 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<Recenzija>(entity =>
         {
-            entity.HasKey(e => new { e.KorisnikId, e.SuplementId });
-
             entity.ToTable("Recenzija");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Recenzija_KorisnikID");
 
             entity.HasIndex(e => e.SuplementId, "IX_Recenzija_SuplementID");
 
+            entity.Property(e => e.RecenzijaId).HasColumnName("RecenzijaID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
 
