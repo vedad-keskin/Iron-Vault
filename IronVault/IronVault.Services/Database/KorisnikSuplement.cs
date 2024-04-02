@@ -5,6 +5,8 @@ namespace IronVault.Services.Database;
 
 public partial class KorisnikSuplement
 {
+    public int KorisnikSuplementId { get; set; }
+
     public int KorisnikId { get; set; }
 
     public int SuplementId { get; set; }

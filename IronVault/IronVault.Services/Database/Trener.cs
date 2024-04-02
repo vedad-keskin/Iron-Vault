@@ -21,5 +21,5 @@ public partial class Trener
 
     public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
 
-    public virtual ICollection<Seminar> Seminars { get; set; } = new List<Seminar>();
+    public virtual ICollection<TrenerSeminar> TrenerSeminars { get; set; } = new List<TrenerSeminar>();
 }

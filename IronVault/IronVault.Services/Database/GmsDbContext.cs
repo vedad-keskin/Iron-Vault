@@ -41,6 +41,8 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<Nutricionist> Nutricionists { get; set; }
 
+    public virtual DbSet<NutricionistSeminar> NutricionistSeminars { get; set; }
+
     public virtual DbSet<Recenzija> Recenzijas { get; set; }
 
     public virtual DbSet<Seminar> Seminars { get; set; }
@@ -52,6 +54,8 @@ public partial class GmsDbContext : DbContext
     public virtual DbSet<Teretana> Teretanas { get; set; }
 
     public virtual DbSet<Trener> Treners { get; set; }
+
+    public virtual DbSet<TrenerSeminar> TrenerSeminars { get; set; }
 
     public virtual DbSet<Uloga> Ulogas { get; set; }
 
@@ -148,12 +152,13 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<KorisnikClanarina>(entity =>
         {
-            entity.HasKey(e => new { e.ClanarinaId, e.KorisnikId, e.DatumUplate });
-
             entity.ToTable("Korisnik_Clanarina");
+
+            entity.HasIndex(e => e.ClanarinaId, "IX_Korisnik_Clanarina_ClanarinaID");
 
             entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Clanarina_KorisnikID");
 
+            entity.Property(e => e.KorisnikClanarinaId).HasColumnName("Korisnik_ClanarinaID");
             entity.Property(e => e.ClanarinaId).HasColumnName("ClanarinaID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
 
@@ -168,12 +173,15 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<KorisnikNutricionst>(entity =>
         {
-            entity.HasKey(e => new { e.KorisnikId, e.NutricionistId, e.DatumTermina });
+            entity.HasKey(e => e.KorisnikNutricionistId);
 
             entity.ToTable("Korisnik_Nutricionst");
 
+            entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Nutricionst_KorisnikID");
+
             entity.HasIndex(e => e.NutricionistId, "IX_Korisnik_Nutricionst_NutricionistID");
 
+            entity.Property(e => e.KorisnikNutricionistId).HasColumnName("Korisnik_NutricionistID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
 
@@ -188,14 +196,15 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<KorisnikSuplement>(entity =>
         {
-            entity.HasKey(e => new { e.SuplementId, e.KorisnikId, e.DatumVrijemeNarudzbe });
-
             entity.ToTable("Korisnik_Suplement");
 
             entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Suplement_KorisnikID");
 
-            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
+            entity.HasIndex(e => e.SuplementId, "IX_Korisnik_Suplement_SuplementID");
+
+            entity.Property(e => e.KorisnikSuplementId).HasColumnName("Korisnik_SuplementID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
 
             entity.HasOne(d => d.Korisnik).WithMany(p => p.KorisnikSuplements)
                 .HasForeignKey(d => d.KorisnikId)
@@ -208,12 +217,13 @@ public partial class GmsDbContext : DbContext
 
         modelBuilder.Entity<KorisnikTrener>(entity =>
         {
-            entity.HasKey(e => new { e.KorisnikId, e.TrenerId, e.DatumTermina });
-
             entity.ToTable("Korisnik_Trener");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Trener_KorisnikID");
 
             entity.HasIndex(e => e.TrenerId, "IX_Korisnik_Trener_TrenerID");
 
+            entity.Property(e => e.KorisnikTrenerId).HasColumnName("Korisnik_TrenerID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
 
@@ -252,24 +262,27 @@ public partial class GmsDbContext : DbContext
             entity.ToTable("Nutricionist");
 
             entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
+        });
 
-            entity.HasMany(d => d.Seminars).WithMany(p => p.Nutricionists)
-                .UsingEntity<Dictionary<string, object>>(
-                    "NutricionistSeminar",
-                    r => r.HasOne<Seminar>().WithMany()
-                        .HasForeignKey("SeminarId")
-                        .OnDelete(DeleteBehavior.ClientSetNull),
-                    l => l.HasOne<Nutricionist>().WithMany()
-                        .HasForeignKey("NutricionistId")
-                        .OnDelete(DeleteBehavior.ClientSetNull),
-                    j =>
-                    {
-                        j.HasKey("NutricionistId", "SeminarId");
-                        j.ToTable("Nutricionist_Seminar");
-                        j.HasIndex(new[] { "SeminarId" }, "IX_Nutricionist_Seminar_SeminarID");
-                        j.IndexerProperty<int>("NutricionistId").HasColumnName("NutricionistID");
-                        j.IndexerProperty<int>("SeminarId").HasColumnName("SeminarID");
-                    });
+        modelBuilder.Entity<NutricionistSeminar>(entity =>
+        {
+            entity.ToTable("Nutricionist_Seminar");
+
+            entity.HasIndex(e => e.NutricionistId, "IX_Nutricionist_Seminar_NutricionistID");
+
+            entity.HasIndex(e => e.SeminarId, "IX_Nutricionist_Seminar_SeminarID");
+
+            entity.Property(e => e.NutricionistSeminarId).HasColumnName("Nutricionist_SeminarID");
+            entity.Property(e => e.NutricionistId).HasColumnName("NutricionistID");
+            entity.Property(e => e.SeminarId).HasColumnName("SeminarID");
+
+            entity.HasOne(d => d.Nutricionist).WithMany(p => p.NutricionistSeminars)
+                .HasForeignKey(d => d.NutricionistId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Seminar).WithMany(p => p.NutricionistSeminars)
+                .HasForeignKey(d => d.SeminarId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Recenzija>(entity =>
@@ -347,24 +360,27 @@ public partial class GmsDbContext : DbContext
             entity.ToTable("Trener");
 
             entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
+        });
 
-            entity.HasMany(d => d.Seminars).WithMany(p => p.Treners)
-                .UsingEntity<Dictionary<string, object>>(
-                    "TrenerSeminar",
-                    r => r.HasOne<Seminar>().WithMany()
-                        .HasForeignKey("SeminarId")
-                        .OnDelete(DeleteBehavior.ClientSetNull),
-                    l => l.HasOne<Trener>().WithMany()
-                        .HasForeignKey("TrenerId")
-                        .OnDelete(DeleteBehavior.ClientSetNull),
-                    j =>
-                    {
-                        j.HasKey("TrenerId", "SeminarId");
-                        j.ToTable("Trener_Seminar");
-                        j.HasIndex(new[] { "SeminarId" }, "IX_Trener_Seminar_SeminarID");
-                        j.IndexerProperty<int>("TrenerId").HasColumnName("TrenerID");
-                        j.IndexerProperty<int>("SeminarId").HasColumnName("SeminarID");
-                    });
+        modelBuilder.Entity<TrenerSeminar>(entity =>
+        {
+            entity.ToTable("Trener_Seminar");
+
+            entity.HasIndex(e => e.SeminarId, "IX_Trener_Seminar_SeminarID");
+
+            entity.HasIndex(e => e.TrenerId, "IX_Trener_Seminar_TrenerID");
+
+            entity.Property(e => e.TrenerSeminarId).HasColumnName("Trener_SeminarID");
+            entity.Property(e => e.SeminarId).HasColumnName("SeminarID");
+            entity.Property(e => e.TrenerId).HasColumnName("TrenerID");
+
+            entity.HasOne(d => d.Seminar).WithMany(p => p.TrenerSeminars)
+                .HasForeignKey(d => d.SeminarId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Trener).WithMany(p => p.TrenerSeminars)
+                .HasForeignKey(d => d.TrenerId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
         modelBuilder.Entity<Uloga>(entity =>

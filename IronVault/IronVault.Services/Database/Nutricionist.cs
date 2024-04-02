@@ -21,5 +21,5 @@ public partial class Nutricionist
 
     public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
 
-    public virtual ICollection<Seminar> Seminars { get; set; } = new List<Seminar>();
+    public virtual ICollection<NutricionistSeminar> NutricionistSeminars { get; set; } = new List<NutricionistSeminar>();
 }

@@ -13,7 +13,7 @@ public partial class Seminar
 
     public DateTime Datum { get; set; }
 
-    public virtual ICollection<Nutricionist> Nutricionists { get; set; } = new List<Nutricionist>();
+    public virtual ICollection<NutricionistSeminar> NutricionistSeminars { get; set; } = new List<NutricionistSeminar>();
 
-    public virtual ICollection<Trener> Treners { get; set; } = new List<Trener>();
+    public virtual ICollection<TrenerSeminar> TrenerSeminars { get; set; } = new List<TrenerSeminar>();
 }
