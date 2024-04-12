@@ -22,6 +22,7 @@ builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
 builder.Services.AddTransient<DraftSuplementState>();
 builder.Services.AddTransient<ActiveSuplementState>();
+builder.Services.AddTransient<HiddenSuplementState>();
 
 
 builder.Services.AddControllers();

@@ -22,5 +22,23 @@ namespace IronVault.API.Controllers
         {
             return (_service as ISuplementService).Activate(id);
         }
+
+        [HttpPut("{id}/edit")]
+        public Suplement Edit(int id)
+        {
+            return (_service as ISuplementService).Edit(id);
+        }
+
+        [HttpPut("{id}/hide")]
+        public Suplement Hide(int id)
+        {
+            return (_service as ISuplementService).Hide(id);
+        }
+
+        [HttpGet("{id}/hide")]
+        public List<string> AllowedActions(int id)
+        {
+            return (_service as ISuplementService).AllowedActions(id);
+        }
     }
 }

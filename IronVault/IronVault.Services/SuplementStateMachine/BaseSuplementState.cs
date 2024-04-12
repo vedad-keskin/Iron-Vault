@@ -42,6 +42,16 @@ namespace IronVault.Services.SuplementStateMachine
             throw new Exception("Method not allowed");
         }
 
+        public virtual Model.Models.Suplement Edit(int id)
+        {
+            throw new Exception("Method not allowed");
+        }
+
+        public virtual List<string> AllowedActions(Database.Suplement entity) 
+        {
+            throw new Exception("Method not allowed");
+        }
+
         public BaseSuplementState CreateState(string stateName)
         {
             switch (stateName)
@@ -52,6 +62,8 @@ namespace IronVault.Services.SuplementStateMachine
                     return ServiceProvider.GetService<DraftSuplementState>();
                 case "active":
                     return ServiceProvider.GetService<ActiveSuplementState>();
+                case "hidden":
+                    return ServiceProvider.GetService<HiddenSuplementState>();
                 default: throw new Exception("State not recognized");
             }
         }

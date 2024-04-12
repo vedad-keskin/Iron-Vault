@@ -58,6 +58,34 @@ namespace IronVault.Services.Methods
             return state.Activate(id);
         }
 
+        public Model.Models.Suplement Edit(int id)
+        {
+            var entity = GetById(id);
+            var state = BaseSuplementState.CreateState(entity.StateMachine);
+            return state.Edit(id);
+        }
 
+        public Model.Models.Suplement Hide(int id)
+        {
+            var entity = GetById(id);
+            var state = BaseSuplementState.CreateState(entity.StateMachine);
+            return state.Hide(id);
+        }
+
+        public List<string> AllowedActions(int id)
+        {
+            if(id <= 0)
+            {
+                var state = BaseSuplementState.CreateState("initial");
+                return state.AllowedActions(null);
+
+            }
+            else
+            {
+                var entity = Context.Suplements.Find(id);
+                var state = BaseSuplementState.CreateState(entity.StateMachine);
+                return state.AllowedActions(entity);
+            }
+        }
     }
 }

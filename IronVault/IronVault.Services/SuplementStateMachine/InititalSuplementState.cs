@@ -26,6 +26,9 @@ namespace IronVault.Services.SuplementStateMachine
             return Mapper.Map<Suplement>(entity);
         }
 
-
+        public override List<string> AllowedActions(Database.Suplement entity)
+        {
+            return new List<string> { nameof(Insert) };
+        }
     }
 }

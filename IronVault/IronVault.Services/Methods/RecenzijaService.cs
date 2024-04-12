@@ -31,6 +31,10 @@ namespace IronVault.Services.Methods
 
         public override void BeforeInsert(RecenzijaInsertRequest request, Recenzija entity)
         {
+            //TODO: Dodati zabranu kada se implementira kupovina suplemenata da ne moze
+            //dati recenziju korisnik kojem nije isporucen suplement
+
+
 
             // Zabrana da jedan korisnik dva puta ocjenjuje isti suplement
 

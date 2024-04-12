@@ -40,5 +40,24 @@ namespace IronVault.Services.SuplementStateMachine
 
             return Mapper.Map<Model.Models.Suplement>(entity);
         }
+
+        public override Model.Models.Suplement Hide(int id)
+        {
+            var set = Context.Set<Database.Suplement>();
+
+            var entity = set.Find(id);
+
+            entity.StateMachine = "hidden";
+
+            Context.SaveChanges();
+
+            return Mapper.Map<Model.Models.Suplement>(entity);
+        }
+
+
+        public override List<string> AllowedActions(Database.Suplement entity)
+        {
+            return new List<string> { nameof(Update), nameof(Activate), nameof(Hide) };
+        }
     }
 }

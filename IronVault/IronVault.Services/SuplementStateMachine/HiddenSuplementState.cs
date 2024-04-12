@@ -8,27 +8,28 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services.SuplementStateMachine
 {
-    public class ActiveSuplementState : BaseSuplementState
+    public class HiddenSuplementState : BaseSuplementState
     {
-        public ActiveSuplementState(GmsDbContext context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
+        public HiddenSuplementState(GmsDbContext context, IMapper mapper, IServiceProvider serviceProvider) : base(context, mapper, serviceProvider)
         {
         }
 
-        public override Model.Models.Suplement Hide(int id)
+        public override Model.Models.Suplement Edit(int id)
         {
             var set = Context.Set<Database.Suplement>();
 
             var entity = set.Find(id);
 
-            entity.StateMachine = "hidden";
+            entity.StateMachine = "draft";
 
             Context.SaveChanges();
 
             return Mapper.Map<Model.Models.Suplement>(entity);
         }
+
         public override List<string> AllowedActions(Database.Suplement entity)
         {
-            return new List<string> {  nameof(Hide) };
+            return new List<string> {  nameof(Edit) };
         }
     }
 }
