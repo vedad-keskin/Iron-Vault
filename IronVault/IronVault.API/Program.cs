@@ -1,3 +1,4 @@
+using IronVault.API.Filters;
 using IronVault.Services.Database;
 using IronVault.Services.Interfaces;
 using IronVault.Services.Methods;
@@ -25,7 +26,10 @@ builder.Services.AddTransient<ActiveSuplementState>();
 builder.Services.AddTransient<HiddenSuplementState>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(x=>
+{
+    x.Filters.Add<ExceptionFilter>();
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

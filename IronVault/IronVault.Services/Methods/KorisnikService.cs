@@ -11,14 +11,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Dynamic;
 using IronVault.Services.Interfaces;
+using Microsoft.Extensions.Logging;
+using IronVault.Model;
 
 namespace IronVault.Services.Methods
 {
     public class KorisnikService : BaseCRUDService<Model.Models.Korisnik, KorisnikSearchObject, Database.Korisnik, KorisnikInsertRequest, KorisnikUpdateRequest>, IKorisnikService
 
     {
-        public KorisnikService(GmsDbContext context, IMapper mapper) : base(context, mapper)
+        ILogger<KorisnikService> _logger;
+
+        public KorisnikService(GmsDbContext context, IMapper mapper, ILogger<KorisnikService> logger) : base(context, mapper)
         {
+            _logger = logger;
         }
 
         public override IQueryable<Database.Korisnik> AddFilter(KorisnikSearchObject searchObject, IQueryable<Database.Korisnik> query)
@@ -63,9 +68,11 @@ namespace IronVault.Services.Methods
 
         public override void BeforeInsert(KorisnikInsertRequest request, Database.Korisnik entity)
         {
+            _logger.LogInformation($"Adding user: {entity.KorisnickoIme}");
+
             if (request.Lozinka != request.LozinkaPotvrda)
             {
-                throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
+                throw new UserException("Lozinka i LozinkaPotvrda moraju biti iste");
             }
 
             entity.LozinkaSalt = GenerateSalt();

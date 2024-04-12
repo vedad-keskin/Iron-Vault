@@ -35,7 +35,7 @@ namespace IronVault.API.Controllers
             return (_service as ISuplementService).Hide(id);
         }
 
-        [HttpGet("{id}/hide")]
+        [HttpGet("{id}/allowedActions")]
         public List<string> AllowedActions(int id)
         {
             return (_service as ISuplementService).AllowedActions(id);

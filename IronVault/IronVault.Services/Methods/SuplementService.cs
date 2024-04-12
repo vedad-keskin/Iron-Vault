@@ -5,6 +5,7 @@ using IronVault.Services.Interfaces;
 using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,12 +16,13 @@ namespace IronVault.Services.Methods
 {
     public class SuplementService : BaseCRUDService<Model.Models.Suplement, SuplementSearchObject, Database.Suplement, SuplementInsertRequest, SuplementUpdateRequest>, ISuplementService
     {
-
+        ILogger<SuplementService> _logger;
         public BaseSuplementState BaseSuplementState { get; set; }
 
-        public SuplementService(GmsDbContext context, IMapper mapper, BaseSuplementState baseSuplementState) : base(context, mapper)
+        public SuplementService(GmsDbContext context, IMapper mapper, BaseSuplementState baseSuplementState, ILogger<SuplementService> logger) : base(context, mapper)
         {
             BaseSuplementState = baseSuplementState;
+            _logger = logger;
         }
 
         public override IQueryable<Database.Suplement> AddFilter(SuplementSearchObject search, IQueryable<Database.Suplement> query)
@@ -74,6 +76,8 @@ namespace IronVault.Services.Methods
 
         public List<string> AllowedActions(int id)
         {
+            _logger.LogInformation($"allowed actions for id: {id}");
+
             if(id <= 0)
             {
                 var state = BaseSuplementState.CreateState("initial");

@@ -1,4 +1,5 @@
-﻿using IronVault.Model.Requests;
+﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Services.Database;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,32 +25,32 @@ namespace IronVault.Services.SuplementStateMachine
         }
         public virtual Model.Models.Suplement Insert(SuplementInsertRequest request)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Models.Suplement Update(int id, SuplementUpdateRequest request)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Models.Suplement Activate(int id)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Models.Suplement Hide(int id)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual Model.Models.Suplement Edit(int id)
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public virtual List<string> AllowedActions(Database.Suplement entity) 
         {
-            throw new Exception("Method not allowed");
+            throw new UserException("Metoda nije dozvoljena");
         }
 
         public BaseSuplementState CreateState(string stateName)
