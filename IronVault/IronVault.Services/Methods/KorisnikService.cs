@@ -113,7 +113,7 @@ namespace IronVault.Services.Methods
             {
                 if (request.Lozinka != request.LozinkaPotvrda)
                 {
-                    throw new Exception("Lozinka i LozinkaPotvrda moraju biti iste");
+                    throw new UserException("Lozinka i LozinkaPotvrda moraju biti iste");
                 }
 
                 entity.LozinkaSalt = GenerateSalt();
@@ -123,7 +123,24 @@ namespace IronVault.Services.Methods
             base.BeforeUpdate(request, entity);
         }
 
+        public Model.Models.Korisnik Login(string username, string password)
+        {
+            var entity = Context.Korisniks.FirstOrDefault(x => x.KorisnickoIme == username);
 
+            if(entity == null)
+            {
+                return null;
+            }
+
+            var hash = GenerateHash(entity.LozinkaSalt, password);
+
+            if(hash != entity.LozinkaHash)
+            {
+                return null;
+            }
+
+            return this.Mapper.Map<Model.Models.Korisnik>(entity);
+        }
     }
 }
 
