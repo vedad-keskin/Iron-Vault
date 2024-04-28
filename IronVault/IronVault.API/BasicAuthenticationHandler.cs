@@ -33,7 +33,7 @@ namespace IronVault.API
 
             var user = _korisnikService.Login(username, password);
 
-            if(user == null)
+            if (user == null)
             {
                 return AuthenticateResult.Fail("Auth failed");
             }
@@ -41,9 +41,14 @@ namespace IronVault.API
             {
                 var claims = new List<Claim>()
                 {
-                    new Claim(ClaimTypes.Name,user.Ime),
-                    new Claim(ClaimTypes.NameIdentifier,user.KorisnickoIme)
+                    new Claim(ClaimTypes.Name, user.Ime),
+                    new Claim(ClaimTypes.NameIdentifier, user.KorisnickoIme)
                 };
+
+                foreach (var role in user.KorisnikUlogas)
+                {
+                    claims.Add(new Claim(ClaimTypes.Role, role.Uloga.Naziv));
+                }
 
                 var identity = new ClaimsIdentity(claims, Scheme.Name);
 

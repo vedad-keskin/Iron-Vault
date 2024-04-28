@@ -42,7 +42,6 @@ builder.Services.AddSwaggerGen(c =>
     {
         Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
         Scheme = "basic"
-
     });
 
     c.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement()
@@ -52,10 +51,8 @@ builder.Services.AddSwaggerGen(c =>
             {
                 Reference = new OpenApiReference{Type = ReferenceType.SecurityScheme, Id = "basicAuth"}
             },
-            new string []{}
-        }
-    });
-
+            new string[]{}
+    } });
 
 });
 
@@ -66,7 +63,7 @@ builder.Services.AddDbContext<GmsDbContext>(options =>
 builder.Services.AddMapster();
 
 builder.Services.AddAuthentication("BasicAuthentication")
-    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication",null);
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
 
 
 var app = builder.Build();
