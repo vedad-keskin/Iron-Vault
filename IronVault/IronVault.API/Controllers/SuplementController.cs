@@ -1,7 +1,9 @@
-﻿using IronVault.Model.Models;
+﻿using IronVault.Model;
+using IronVault.Model.Models;
 using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -15,6 +17,18 @@ namespace IronVault.API.Controllers
         public SuplementController(ISuplementService service):base(service)
         {
             
+        }
+
+        [AllowAnonymous]
+        public override PagedResult<Suplement> GetList([FromQuery] SuplementSearchObject searchObject)
+        {
+            return base.GetList(searchObject);
+        }
+
+        [AllowAnonymous]
+        public override Suplement GetById(int id)
+        {
+            return base.GetById(id);
         }
 
         [HttpPut("{id}/activate")]

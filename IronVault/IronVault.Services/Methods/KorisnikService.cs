@@ -125,9 +125,9 @@ namespace IronVault.Services.Methods
 
         public Model.Models.Korisnik Login(string username, string password)
         {
-            var entity = Context.Korisniks.FirstOrDefault(x => x.KorisnickoIme == username);
+            var entity = Context.Korisniks.Include(x => x.KorisnikUlogas).ThenInclude(y => y.Uloga).FirstOrDefault(x => x.KorisnickoIme == username);
 
-            if(entity == null)
+            if (entity == null)
             {
                 return null;
             }

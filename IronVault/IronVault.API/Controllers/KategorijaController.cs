@@ -19,6 +19,11 @@ namespace IronVault.API.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
+        public override Kategorija Insert(KategorijaUpsertRequest request)
+        {
+            return base.Insert(request);
+        }
 
         [AllowAnonymous]
         public override PagedResult<Kategorija> GetList([FromQuery] KategorijaSearchObject searchObject)
