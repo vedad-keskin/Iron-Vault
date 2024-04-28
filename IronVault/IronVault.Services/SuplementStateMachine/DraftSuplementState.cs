@@ -1,4 +1,6 @@
-﻿using IronVault.Model.Requests;
+﻿using EasyNetQ;
+using IronVault.Model.Messages;
+using IronVault.Model.Requests;
 using IronVault.Services.Database;
 using MapsterMapper;
 using System;
@@ -38,7 +40,13 @@ namespace IronVault.Services.SuplementStateMachine
 
             Context.SaveChanges();
 
-            return Mapper.Map<Model.Models.Suplement>(entity);
+            var bus = RabbitHutch.CreateBus("host=localhost:5673");
+
+            var mappedEntity = Mapper.Map<Model.Models.Suplement>(entity);
+            SuplementActivated message = new SuplementActivated { Suplement = mappedEntity };
+            bus.PubSub.Publish(message);
+
+            return mappedEntity;
         }
 
         public override Model.Models.Suplement Hide(int id)

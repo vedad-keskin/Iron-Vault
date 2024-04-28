@@ -5,12 +5,14 @@ VisualStudioVersion = 17.7.34221.43
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.API", "IronVault.API\IronVault.API.csproj", "{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronVault.Model", "IronVault.Model\IronVault.Model.csproj", "{44673936-DCD6-46D5-8ED4-735737423D20}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Model", "IronVault.Model\IronVault.Model.csproj", "{44673936-DCD6-46D5-8ED4-735737423D20}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronVault.Services", "IronVault.Services\IronVault.Services.csproj", "{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Services", "IronVault.Services\IronVault.Services.csproj", "{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{44673936-DCD6-46D5-8ED4-735737423D20} = {44673936-DCD6-46D5-8ED4-735737423D20}
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronVault.Subscriber", "IronVault.Subscriber\IronVault.Subscriber.csproj", "{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,6 +32,10 @@ Global
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
