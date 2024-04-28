@@ -18,6 +18,18 @@ namespace IronVault.API.Controllers
 
         }
 
+        [Authorize(Roles = "Administrator")]
+        public override Grad Insert(GradUpsertRequest request)
+        {
+            return base.Insert(request);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public override Grad Update(int id, GradUpsertRequest request)
+        {
+            return base.Update(id, request);
+        }
+
         [AllowAnonymous]
         public override PagedResult<Grad> GetList([FromQuery] GradSearchObject searchObject)
         {
