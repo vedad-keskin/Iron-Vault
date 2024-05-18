@@ -1,0 +1,36 @@
+version: '3'
+services:
+#mssql docker
+  ironvault-sql:
+    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+    restart: unless-stopped
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=QWElkj132!
+      - MSSQL_PID=Developer
+    ports:
+      - 1401:1433
+    expose:
+      - 1433
+    networks:
+      - ironvault2024
+
+  ironvault-api:
+    restart: unless-stopped
+    build:
+      context: .
+    environment:
+      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=IronVaultVjezbe2024;User=sa;Password=QWElkj132!;ConnectRetryCount=0; TrustServerCertificate=True
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - 44340:44340
+    networks:
+      - ironvault2024
+    links:
+      - ironvault-sql
+    depends_on:
+      - ironvault-sql
+      
+networks:
+  ironvault2024:
+    driver: bridge      

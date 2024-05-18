@@ -12,7 +12,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Services", "IronV
 		{44673936-DCD6-46D5-8ED4-735737423D20} = {44673936-DCD6-46D5-8ED4-735737423D20}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IronVault.Subscriber", "IronVault.Subscriber\IronVault.Subscriber.csproj", "{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Subscriber", "IronVault.Subscriber\IronVault.Subscriber.csproj", "{C4EC579B-05DF-4E9F-8EBC-95A4DB799B8D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F546F59F-F7A1-4011-AF5C-2C4D754AED00}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
