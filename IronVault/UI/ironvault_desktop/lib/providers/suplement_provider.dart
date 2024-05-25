@@ -13,7 +13,9 @@ class SuplementProvider {
   Future<dynamic> get() async {
     var url = "${_baseUrl}Suplement";
     var uri = Uri.parse(url);
-    print("url:::::: $url");
+
+
+
     var response = await http.get(uri, headers: createHeaders());
 
     if (isValidResponse(response)) {

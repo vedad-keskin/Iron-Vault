@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
+import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -72,23 +73,44 @@ class LoginPage extends StatelessWidget {
                       height: 150,
                       width: 150,
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     TextField(
                       controller: _usernameController,
                       decoration: InputDecoration(
-                        labelText: "Username",
+                        labelText: "Korisničko ime",
                         prefixIcon: Icon(Icons.account_circle_sharp),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     TextField(
                       controller: _passwordController,
+                      obscureText: true,
                       decoration: InputDecoration(
-                        labelText: "Password",
+                        labelText: "Lozinka",
                         prefixIcon: Icon(Icons.password),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: BorderSide(color: Colors.blue),
+                        ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
                         SuplementProvider provider = new SuplementProvider();
@@ -101,8 +123,9 @@ class LoginPage extends StatelessWidget {
 
                         try {
                           var data = await provider.get();
-                          //Navigator.of(context).push(MaterialPageRoute(builder:  (context) => ProductListScreen()));
-                          print("valja");
+
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SuplementListScreen()));
                         } on Exception catch (e) {
                           showDialog(
                               context: context,
@@ -118,7 +141,16 @@ class LoginPage extends StatelessWidget {
                                   ));
                         }
                       },
-                      child: Text("Login"),
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 15.0), // Button padding
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Rounded corners
+                        ),
+                        minimumSize: Size(double.infinity, 30),
+                      ),
+                      child: Text("Prijavi se"),
                     ),
                   ],
                 ),
