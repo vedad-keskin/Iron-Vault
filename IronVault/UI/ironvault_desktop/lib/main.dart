@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ironvault_desktop/providers/auth_provider.dart';
+import 'package:ironvault_desktop/providers/suplement_provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,8 +42,6 @@ class MyApp extends StatelessWidget {
   }
 }
 
-
-
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -51,9 +51,8 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("assets/images/loginbackground.png"),
             fit: BoxFit.cover,
@@ -63,7 +62,7 @@ class LoginPage extends StatelessWidget {
           child: Container(
             constraints: BoxConstraints(maxHeight: 400, maxWidth: 400),
             child: Card(
-              color: Color.fromARGB(255, 236, 236, 236), 
+              color: Color.fromARGB(255, 236, 236, 236),
               child: Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Column(
@@ -91,8 +90,33 @@ class LoginPage extends StatelessWidget {
                     ),
                     const SizedBox(height: 30),
                     ElevatedButton(
-                      onPressed: () {
-                        print("login attempt");
+                      onPressed: () async {
+                        SuplementProvider provider = new SuplementProvider();
+
+                        print(
+                            "credentials: ${_usernameController.text} : ${_passwordController.text}");
+
+                        AuthProvider.username = _usernameController.text;
+                        AuthProvider.password = _passwordController.text;
+
+                        try {
+                          var data = await provider.get();
+                          //Navigator.of(context).push(MaterialPageRoute(builder:  (context) => ProductListScreen()));
+                          print("valja");
+                        } on Exception catch (e) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                    title: Text("Error"),
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text("OK"))
+                                    ],
+                                    content: Text(e.toString()),
+                                  ));
+                        }
                       },
                       child: Text("Login"),
                     ),
