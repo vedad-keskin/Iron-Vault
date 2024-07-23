@@ -15,14 +15,13 @@ class SuplementProvider {
     var uri = Uri.parse(url);
 
 
-
     var response = await http.get(uri, headers: createHeaders());
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return data;
     } else {
-      throw new Exception("Unknown exception");
+      throw new Exception("Nepoznat problem");
     }
 
   }
@@ -31,16 +30,16 @@ class SuplementProvider {
     if(response.statusCode < 299) {
       return true;
     } else if (response.statusCode == 401) {
-      throw new Exception("Unauthorized");
+      throw new Exception("Korisničko ime ili lozinka nisu ispravni");
     } else {
-      throw new Exception("Something bad happened, please try again!");
+      throw new Exception("Dogodila se greška, pokušajte ponovo");
     }
 
   }
 
   Map<String, String> createHeaders() {
-    String username = AuthProvider.username ?? "";
-    String password = AuthProvider.password ?? "";
+    String username = AuthProvider.username!;
+    String password = AuthProvider.password!;
 
     String basicAuth = "Basic ${base64Encode(utf8.encode('$username:$password'))}";
 

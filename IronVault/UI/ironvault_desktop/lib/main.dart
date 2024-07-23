@@ -46,8 +46,8 @@ class MyApp extends StatelessWidget {
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
 
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  TextEditingController _usernameController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
         ),
         child: Center(
           child: Container(
-            constraints: BoxConstraints(maxHeight: 400, maxWidth: 400),
+            constraints: const BoxConstraints(maxHeight: 400, maxWidth: 400),
             child: Card(
               color: Color.fromARGB(255, 236, 236, 236),
               child: Padding(
@@ -117,28 +117,42 @@ class LoginPage extends StatelessWidget {
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
-
                         AuthProvider.username = _usernameController.text;
                         AuthProvider.password = _passwordController.text;
-
                         try {
                           var data = await provider.get();
-
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SuplementListScreen()));
                         } on Exception catch (e) {
                           showDialog(
-                              context: context,
-                              builder: (context) => AlertDialog(
-                                    title: Text("Error"),
-                                    actions: [
-                                      TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context),
-                                          child: Text("OK"))
-                                    ],
-                                    content: Text(e.toString()),
-                                  ));
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                "Greška",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              content: Text(
+                                e.toString().replaceFirst('Exception: ', ''),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: Text(
+                                    "OK",
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
                         }
                       },
                       style: ElevatedButton.styleFrom(

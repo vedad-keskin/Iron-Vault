@@ -21,7 +21,7 @@ class _MasterScreenState extends State<MasterScreen> {
         child: ListView(
           children: [
             ListTile(
-              title: Text("Back"),
+              title: Text("Nazad"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pop(context);
@@ -42,7 +42,7 @@ class _MasterScreenState extends State<MasterScreen> {
             ListTile(
               title: Text("Suplementi"),
               onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => SuplementListScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
               },
             )
           ],
