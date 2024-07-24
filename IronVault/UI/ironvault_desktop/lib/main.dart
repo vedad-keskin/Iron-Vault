@@ -2,11 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
+import 'package:ironvault_desktop/providers/logged_suplement_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<SuplementProvider>(create: (_) => LoggedSuplementProvider()),
+    ],
+    child: const MyApp(),));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Iron Vault',
       theme: ThemeData(
         // This is the theme of your application.
         //

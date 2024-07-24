@@ -29,12 +29,22 @@ namespace IronVault.Services.Methods
         {
             var filteredQuery = base.AddFilter(search, query);
 
+            filteredQuery = filteredQuery.Include(x => x.Dobavljac).Include(x => x.Kategorija);
+
+
             if (!string.IsNullOrWhiteSpace(search?.FTS))
             {
                 filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));
             }
+            if (!string.IsNullOrWhiteSpace(search?.Kategorija))
+            {
+                filteredQuery = filteredQuery.Where(x => x.Kategorija.Naziv.Contains(search.Kategorija));
+            }
+            if (!string.IsNullOrWhiteSpace(search?.Dobavljac))
+            {
+                filteredQuery = filteredQuery.Where(x => x.Dobavljac.Naziv.Contains(search.Dobavljac));
+            }
 
-            filteredQuery = filteredQuery.Include(x => x.Dobavljac).Include(x => x.Kategorija);
 
             return filteredQuery;
         }
