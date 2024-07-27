@@ -90,16 +90,20 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
           columnSpacing: 12,
           dataRowMaxHeight: 80, // Set the height of the rows
           columns: [
-            DataColumn(label: Text("ID"), numeric: true),
+            // DataColumn(label: Text("ID"), numeric: true),
             DataColumn(label: Text("Naziv")),
             DataColumn(label: Text("Cijena")),
+            DataColumn(label: Text("Gramaža")),
+            DataColumn(label: Text("Prosječna ocjena")),
             DataColumn(label: Text("Slika")),
           ],
           rows: result?.result
                   .map((e) => DataRow(cells: [
-                        DataCell(Text(e.suplementId.toString())),
+                        // DataCell(Text(e.suplementId.toString())),
                         DataCell(Text(e.naziv ?? "")),
                         DataCell(Text(formatNumber(e.cijena))),
+                        DataCell(Text(e.gramaza.toString())),
+                        DataCell(Text(e.prosjecnaOcjena == null ? "0" : e.prosjecnaOcjena.toString() )),
                         DataCell(
                           e.slika != null
                               ? Container(

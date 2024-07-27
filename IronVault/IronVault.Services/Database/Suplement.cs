@@ -17,7 +17,6 @@ public partial class Suplement
 
     public string? Slika { get; set; }
 
-    public byte[]? SlikaThumb { get; set; }
 
     public string? StateMachine { get; set; }
 
