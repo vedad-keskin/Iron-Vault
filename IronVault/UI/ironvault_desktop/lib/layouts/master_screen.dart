@@ -27,12 +27,6 @@ class _MasterScreenState extends State<MasterScreen> {
                 Navigator.pop(context);
               },
             ),
-             ListTile(
-              title: Text("Detalji"),
-              onTap: () {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementDetailsScreen()));
-              },
-            ),
             ListTile(
               title: Text("Korisnici"),
               onTap: () {
