@@ -1,3 +1,5 @@
+import 'package:ironvault_desktop/models/dobavljac.dart';
+import 'package:ironvault_desktop/models/kategorija.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'suplement.g.dart';
@@ -12,7 +14,9 @@ class Suplement {
   double? cijena;
   double? prosjecnaOcjena;
   int? dobavljacId;
+  Dobavljac? dobavljac;
   int? kategorijaId;
+  Kategorija? kategorija;
 
   Suplement({this.suplementId, this.naziv});
 
