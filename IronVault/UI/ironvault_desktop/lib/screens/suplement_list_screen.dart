@@ -3,7 +3,7 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
-import 'package:ironvault_desktop/providers/utils.dart';
+import 'package:ironvault_desktop/screens/suplement_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
@@ -40,104 +40,104 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
   TextEditingController _dobavljacController = TextEditingController();
   TextEditingController _kategorijaController = TextEditingController();
 
- Widget _buildSearch() {
-  return Padding(
-    padding: const EdgeInsets.all(9.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Expanded(
-              child: TextField(
-                controller: _ftsEditingController,
-                decoration: InputDecoration(
-                  labelText: "Naziv",
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(color: Colors.blue),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                controller: _kategorijaController,
-                decoration: InputDecoration(
-                  labelText: "Kategorija",
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(color: Colors.blue),
+  Widget _buildSearch() {
+    return Padding(
+      padding: const EdgeInsets.all(9.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: _ftsEditingController,
+                  decoration: InputDecoration(
+                    labelText: "Naziv",
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(width: 8),
-            Expanded(
-              child: TextField(
-                controller: _dobavljacController,
-                decoration: InputDecoration(
-                  labelText: "Dobavljač",
-                  filled: true,
-                  fillColor: Colors.grey[200],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(color: Colors.blue),
+              SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  controller: _kategorijaController,
+                  decoration: InputDecoration(
+                    labelText: "Kategorija",
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
-        ),
-        SizedBox(height: 8),
-        Row(
-          children: [
-            ElevatedButton(
-              onPressed: () async {
-                var filter = {
-                  'fts': _ftsEditingController.text,
-                  'dobavljac': _dobavljacController.text,
-                  'kategorija': _kategorijaController.text
-                };
-                result = await provider.get(filter: filter);
+              SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  controller: _dobavljacController,
+                  decoration: InputDecoration(
+                    labelText: "Dobavljač",
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(color: Colors.blue),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 8),
+          Row(
+            children: [
+              ElevatedButton(
+                onPressed: () async {
+                  var filter = {
+                    'fts': _ftsEditingController.text,
+                    'dobavljac': _dobavljacController.text,
+                    'kategorija': _kategorijaController.text
+                  };
+                  result = await provider.get(filter: filter);
 
-                setState(() {});
+                  setState(() {});
 
-                //TODO: add call to API
-              },
-              child: Text("Pretraga"),
-            ),
-            SizedBox(width: 8),
-            ElevatedButton(
-              onPressed: () async {
-                //TODO: add call to API
-              },
-              child: Text("Dodaj"),
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
-
+                  //TODO: add call to API
+                },
+                child: Text("Pretraga"),
+              ),
+              SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: () async {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SuplementDetailsScreen()));
+                },
+                child: Text("Dodaj"),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget _buildResultView() {
     return Expanded(
@@ -160,36 +160,52 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                 ],
                 rows: result?.result
                         .map((e) {
-                          return DataRow(cells: [
-                            DataCell(Container(
-                              width: constraints.maxWidth *
-                                  0.4, // 40% of the available width
-                              child: Text(e.naziv ?? ""),
-                            )),
-                            DataCell(Text(e.cijena != null ? '${e.cijena!.toInt()} KM' : '' )),
-                            DataCell(Text(e.gramaza != null ? '${e.gramaza!.toInt()} g' : '')),
-                            DataCell(Text(e.kategorija?.naziv ?? "")),
-                            DataCell(Text(e.dobavljac?.naziv ?? "")),
-                            DataCell(Text(e.prosjecnaOcjena == null
-                                ? "0"
-                                : e.prosjecnaOcjena.toString())),
-                            DataCell(
-                              e.slika != null
-                                  ? Container(
-                                      width:
-                                          100, // Set the width of the image container
-                                      height:
-                                          300, // Set the height of the image container
-                                      child: Image.memory(
-                                        base64Decode(
-                                            e.slika!), // Decode base64 string
-                                        fit: BoxFit
-                                            .fitHeight, // Ensures the image scales properly
-                                      ),
-                                    )
-                                  : Text(""),
-                            ),
-                          ]);
+                          return DataRow(
+                              onSelectChanged: (selected) => {
+                                    if (selected == true)
+                                      {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    SuplementDetailsScreen(
+                                                      suplement: e,
+                                                    )))
+                                      }
+                                  },
+                              cells: [
+                                DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.4, // 40% of the available width
+                                  child: Text(e.naziv ?? ""),
+                                )),
+                                DataCell(Text(e.cijena != null
+                                    ? '${e.cijena!.toInt()} KM'
+                                    : '')),
+                                DataCell(Text(e.gramaza != null
+                                    ? '${e.gramaza!.toInt()} g'
+                                    : '')),
+                                DataCell(Text(e.kategorija?.naziv ?? "")),
+                                DataCell(Text(e.dobavljac?.naziv ?? "")),
+                                DataCell(Text(e.prosjecnaOcjena == null
+                                    ? "0"
+                                    : e.prosjecnaOcjena.toString())),
+                                DataCell(
+                                  e.slika != null
+                                      ? Container(
+                                          width:
+                                              100, // Set the width of the image container
+                                          height:
+                                              300, // Set the height of the image container
+                                          child: Image.memory(
+                                            base64Decode(e
+                                                .slika!), // Decode base64 string
+                                            fit: BoxFit
+                                                .fitHeight, // Ensures the image scales properly
+                                          ),
+                                        )
+                                      : Text(""),
+                                ),
+                              ]);
                         })
                         .toList()
                         .cast<DataRow>() ??
