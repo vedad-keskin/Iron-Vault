@@ -24,6 +24,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
     provider = context.read<SuplementProvider>();
   }
 
+
   SearchResult<Suplement>? result = null;
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
 
   Widget _buildSearch() {
     return Padding(
-      padding: const EdgeInsets.all(9.0),
+      padding: const EdgeInsets.fromLTRB(150, 15, 150, 30),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -50,6 +51,16 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
             children: [
               Expanded(
                 child: TextField(
+                  onChanged: (value) async {
+                    var filter = {
+                      'fts': _ftsEditingController.text,
+                      'dobavljac': _dobavljacController.text,
+                      'kategorija': _kategorijaController.text
+                    };
+                    result = await provider.get(filter: filter);
+
+                    setState(() {});
+                  },
                   controller: _ftsEditingController,
                   decoration: InputDecoration(
                     labelText: "Naziv",
@@ -69,6 +80,16 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               SizedBox(width: 8),
               Expanded(
                 child: TextField(
+                  onChanged: (value) async {
+                    var filter = {
+                      'fts': _ftsEditingController.text,
+                      'dobavljac': _dobavljacController.text,
+                      'kategorija': _kategorijaController.text
+                    };
+                    result = await provider.get(filter: filter);
+
+                    setState(() {});
+                  },
                   controller: _kategorijaController,
                   decoration: InputDecoration(
                     labelText: "Kategorija",
@@ -88,6 +109,16 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               SizedBox(width: 8),
               Expanded(
                 child: TextField(
+                  onChanged: (value) async {
+                    var filter = {
+                      'fts': _ftsEditingController.text,
+                      'dobavljac': _dobavljacController.text,
+                      'kategorija': _kategorijaController.text
+                    };
+                    result = await provider.get(filter: filter);
+
+                    setState(() {});
+                  },
                   controller: _dobavljacController,
                   decoration: InputDecoration(
                     labelText: "Dobavljač",
@@ -108,6 +139,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
           ),
           SizedBox(height: 8),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
                 onPressed: () async {

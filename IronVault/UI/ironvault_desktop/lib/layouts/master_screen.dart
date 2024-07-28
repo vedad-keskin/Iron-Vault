@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
-import 'package:ironvault_desktop/screens/suplement_details_screen.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 
 class MasterScreen extends StatefulWidget {

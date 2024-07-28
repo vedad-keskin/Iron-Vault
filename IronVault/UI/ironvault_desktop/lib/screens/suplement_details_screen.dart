@@ -24,6 +24,7 @@ class SuplementDetailsScreen extends StatefulWidget {
 }
 
 class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
+  
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
   late SuplementProvider suplementProvider;
