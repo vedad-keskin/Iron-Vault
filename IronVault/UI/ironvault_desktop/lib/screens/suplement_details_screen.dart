@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/dobavljac.dart';
@@ -35,6 +36,14 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   SearchResult<Dobavljac>? dobavljaciResult;
   bool isLoading = true;
 
+
+File? _image;
+String? _base64Image;
+final _base64Placeholder =
+    "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
+
+
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -55,7 +64,8 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       'gramaza': widget.suplement?.gramaza.toString(),
       'opis': widget.suplement?.opis,
       'dobavljacId': widget.suplement?.dobavljacId.toString(),
-      'kategorijaId': widget.suplement?.kategorijaId.toString()
+      'kategorijaId': widget.suplement?.kategorijaId.toString(),
+      'slika': widget.suplement?.slika.toString()
     };
 
     initForm();
@@ -75,10 +85,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     return MasterScreen(
         "Podaci o suplementu",
         Column(
-          children: [
-            isLoading ? Container() : _buildForm(),
-            _saveRow()
-          ],
+          children: [isLoading ? Container() : _buildForm(), _saveRow()],
         ));
   }
 
@@ -103,7 +110,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
         padding: const EdgeInsets.fromLTRB(150, 15, 150, 15),
         child: Column(
           children: [
-            SizedBox(height: 80),
+            SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -164,18 +171,6 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
             Row(
               children: [
                 Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Opis"),
-                    name: 'opis',
-                    maxLines: 6,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
                   child: FormBuilderField(
                     name: "imageId",
                     builder: (field) {
@@ -194,6 +189,41 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                 ),
               ],
             ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 200,
+                    child: FormBuilderTextField(
+                      decoration: commonDecoration.copyWith(labelText: "Opis"),
+                      name: 'opis',
+                      maxLines: 7,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10),
+                Container(
+                  height: 200,
+                  width: 200,
+                  decoration: BoxDecoration(
+                    color: commonDecoration.fillColor,
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: Colors.transparent),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.memory(
+                      _initialValue['slika'] == null
+                          ? base64Decode(_base64Placeholder)
+                          : base64Decode( _initialValue['slika']),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
@@ -207,7 +237,17 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
+            padding: const EdgeInsets.fromLTRB(150, 0, 10, 0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
+                onPressed: () {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SuplementListScreen()));
+                },
+                child: Text("Odustani")),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
             child: ElevatedButton(
                 onPressed: () async {
                   _formKey.currentState?.saveAndValidate();
@@ -215,7 +255,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
 
                   var request = Map.from(_formKey.currentState!.value);
 
-                  request['slika'] = _base64Image;
+                  request['slika'] = _initialValue['slika'];
 
                   if (widget.suplement == null) {
                     await suplementProvider.insert(request);
@@ -224,10 +264,8 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                         widget.suplement!.suplementId!, request);
                   }
 
-
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => SuplementListScreen()));
-                      
                 },
                 child: Text("Sačuvaj")),
           )
@@ -235,16 +273,25 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       ),
     );
   }
-}
 
-File? _image;
-String? _base64Image;
+
 
 void getImage() async {
   var result = await FilePicker.platform.pickFiles(type: FileType.image);
 
   if (result != null && result.files.single.path != null) {
     _image = File(result.files.single.path!);
-    _base64Image = base64Encode(_image!.readAsBytesSync());
+    // _base64Image = base64Encode(_image!.readAsBytesSync());
+   _initialValue['slika'] = base64Encode(_image!.readAsBytesSync());
   }
+
+
+setState(() {
+
+});
+
 }
+
+}
+
+
