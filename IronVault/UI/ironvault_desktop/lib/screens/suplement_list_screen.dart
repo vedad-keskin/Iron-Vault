@@ -165,6 +165,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
           child: LayoutBuilder(
             builder: (context, constraints) {
               return DataTable(
+                showCheckboxColumn: false,
                 columnSpacing: 12,
                 dataRowMaxHeight: 80, // Set the height of the rows
                 columns: [
