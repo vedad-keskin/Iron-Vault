@@ -16,15 +16,11 @@ class SuplementListScreen extends StatefulWidget {
 
 class _SuplementListScreenState extends State<SuplementListScreen> {
   late SuplementProvider provider;
-  bool isLoading = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    provider = context.read<SuplementProvider>();
-    setState(() {
-});
   }
 
   @override
@@ -38,7 +34,6 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
   }
 
   Future initForm() async {
-
     var filter = {
       'fts': _ftsEditingController.text,
       'dobavljac': _dobavljacController.text,
@@ -47,7 +42,6 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
     result = await provider.get(filter: filter);
 
     setState(() {
-      isLoading = false;
     });
   }
 
@@ -59,7 +53,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
         Container(
           child: Column(
             children: [
-              isLoading ? Container() : _buildSearch(),
+              _buildSearch(),
               _buildResultView()
             ],
           ),
@@ -81,14 +75,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               Expanded(
                 child: TextField(
                   onChanged: (value) async {
-                    var filter = {
-                      'fts': _ftsEditingController.text,
-                      'dobavljac': _dobavljacController.text,
-                      'kategorija': _kategorijaController.text
-                    };
-                    result = await provider.get(filter: filter);
-
-                    setState(() {});
+                    initForm();
                   },
                   controller: _ftsEditingController,
                   decoration: InputDecoration(
@@ -110,14 +97,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               Expanded(
                 child: TextField(
                   onChanged: (value) async {
-                    var filter = {
-                      'fts': _ftsEditingController.text,
-                      'dobavljac': _dobavljacController.text,
-                      'kategorija': _kategorijaController.text
-                    };
-                    result = await provider.get(filter: filter);
-
-                    setState(() {});
+                    initForm();
                   },
                   controller: _kategorijaController,
                   decoration: InputDecoration(
@@ -139,14 +119,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               Expanded(
                 child: TextField(
                   onChanged: (value) async {
-                    var filter = {
-                      'fts': _ftsEditingController.text,
-                      'dobavljac': _dobavljacController.text,
-                      'kategorija': _kategorijaController.text
-                    };
-                    result = await provider.get(filter: filter);
-
-                    setState(() {});
+                   initForm();
                   },
                   controller: _dobavljacController,
                   decoration: InputDecoration(

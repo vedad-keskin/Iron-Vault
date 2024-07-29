@@ -75,7 +75,10 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     return MasterScreen(
         "Podaci o suplementu",
         Column(
-          children: [isLoading ? Container() : _buildForm(), _saveRow()],
+          children: [
+            isLoading ? Container() : _buildForm(),
+            _saveRow()
+          ],
         ));
   }
 
@@ -206,7 +209,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
           Padding(
             padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
             child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   _formKey.currentState?.saveAndValidate();
                   debugPrint(_formKey.currentState?.value.toString());
 
@@ -215,14 +218,16 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                   request['slika'] = _base64Image;
 
                   if (widget.suplement == null) {
-                    suplementProvider.insert(request);
+                    await suplementProvider.insert(request);
                   } else {
-                    suplementProvider.update(
+                    await suplementProvider.update(
                         widget.suplement!.suplementId!, request);
                   }
 
 
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => SuplementListScreen()));
+                      
                 },
                 child: Text("Sačuvaj")),
           )
