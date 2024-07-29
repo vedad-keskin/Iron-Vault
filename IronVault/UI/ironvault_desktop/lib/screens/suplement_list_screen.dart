@@ -16,14 +16,40 @@ class SuplementListScreen extends StatefulWidget {
 
 class _SuplementListScreenState extends State<SuplementListScreen> {
   late SuplementProvider provider;
+  bool isLoading = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
     provider = context.read<SuplementProvider>();
+    setState(() {
+});
   }
 
+  @override
+  void initState() {
+    provider = context.read<SuplementProvider>();
+
+    // TODO: implement initState
+    super.initState();
+
+    initForm();
+  }
+
+  Future initForm() async {
+
+    var filter = {
+      'fts': _ftsEditingController.text,
+      'dobavljac': _dobavljacController.text,
+      'kategorija': _kategorijaController.text
+    };
+    result = await provider.get(filter: filter);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
 
   SearchResult<Suplement>? result = null;
   @override
@@ -32,7 +58,10 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
         "Lista suplemenata",
         Container(
           child: Column(
-            children: [_buildSearch(), _buildResultView()],
+            children: [
+              isLoading ? Container() : _buildSearch(),
+              _buildResultView()
+            ],
           ),
         ));
   }
@@ -143,26 +172,10 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  var filter = {
-                    'fts': _ftsEditingController.text,
-                    'dobavljac': _dobavljacController.text,
-                    'kategorija': _kategorijaController.text
-                  };
-                  result = await provider.get(filter: filter);
-
-                  setState(() {});
-
-                  //TODO: add call to API
-                },
-                child: Text("Pretraga"),
-              ),
-              SizedBox(width: 8),
-              ElevatedButton(
-                onPressed: () async {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => SuplementDetailsScreen()));
                 },
-                child: Text("Dodaj"),
+                child: Text("Dodaj novi suplement"),
               ),
             ],
           ),

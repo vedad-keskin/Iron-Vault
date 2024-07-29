@@ -12,6 +12,7 @@ import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
+import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class SuplementDetailsScreen extends StatefulWidget {
@@ -24,7 +25,6 @@ class SuplementDetailsScreen extends StatefulWidget {
 }
 
 class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
-  
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
   late SuplementProvider suplementProvider;
@@ -64,7 +64,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   Future initForm() async {
     kategorijeResult = await kategorijaProvider.get();
     dobavljaciResult = await dobavljacProvider.get();
-    print("retreived dobavljaci: ${dobavljaciResult?.result.length}");
+
     setState(() {
       isLoading = false;
     });
@@ -73,125 +73,129 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Detalji",
+        "Podaci o suplementu",
         Column(
           children: [isLoading ? Container() : _buildForm(), _saveRow()],
         ));
   }
 
- Widget _buildForm() {
-  final commonDecoration = InputDecoration(
-    filled: true,
-    fillColor: Colors.grey[200],
-    border: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-      borderSide: BorderSide.none,
-    ),
-    focusedBorder: OutlineInputBorder(
-      borderRadius: BorderRadius.circular(10.0),
-      borderSide: BorderSide(color: Colors.blue),
-    ),
-  );
-
-  return FormBuilder(
-    key: _formKey,
-    initialValue: _initialValue,
-    child: Padding(
-      padding: const EdgeInsets.all(18.0),
-      child: Column(
-        children: [
-          Row(
-            children: [
-              Expanded(
-                child: FormBuilderTextField(
-                  decoration: commonDecoration.copyWith(labelText: "Naziv"),
-                  name: 'naziv',
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: FormBuilderTextField(
-                  decoration: commonDecoration.copyWith(labelText: "Cijena"),
-                  name: 'cijena',
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: FormBuilderTextField(
-                  decoration: commonDecoration.copyWith(labelText: "Gramaža"),
-                  name: 'gramaza',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: FormBuilderDropdown(
-                  name: 'kategorijaId',
-                  decoration: commonDecoration.copyWith(labelText: "Kategorija"),
-                  items: kategorijeResult?.result
-                          .map((item) => DropdownMenuItem(
-                              value: item.kategorijaId.toString(),
-                              child: Text(item.naziv ?? "")))
-                          .toList() ??
-                      [],
-                ),
-              ),
-              SizedBox(width: 10),
-              Expanded(
-                child: FormBuilderDropdown(
-                  name: 'dobavljacId',
-                  decoration: commonDecoration.copyWith(labelText: "Dobavljač"),
-                  items: dobavljaciResult?.result
-                          .map((item) => DropdownMenuItem(
-                              value: item.dobavljacId.toString(),
-                              child: Text(item.naziv ?? "")))
-                          .toList() ??
-                      [],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: FormBuilderTextField(
-                  decoration: commonDecoration.copyWith(labelText: "Opis"),
-                  name: 'opis',
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: FormBuilderField(
-                  name: "imageId",
-                  builder: (field) {
-                    return InputDecorator(
-                      decoration: commonDecoration.copyWith(labelText: "Slika"),
-                      child: ListTile(
-                        leading: Icon(Icons.image),
-                        title: Text("Odaberite sliku"),
-                        trailing: Icon(Icons.file_upload),
-                        onTap: getImage,
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ),
-        ],
+  Widget _buildForm() {
+    final commonDecoration = InputDecoration(
+      filled: true,
+      fillColor: Colors.grey[200],
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide.none,
       ),
-    ),
-  );
-}
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(10.0),
+        borderSide: BorderSide(color: Colors.blue),
+      ),
+    );
 
+    return FormBuilder(
+      key: _formKey,
+      initialValue: _initialValue,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(150, 15, 150, 15),
+        child: Column(
+          children: [
+            SizedBox(height: 80),
+            Row(
+              children: [
+                Expanded(
+                  child: FormBuilderTextField(
+                    decoration: commonDecoration.copyWith(labelText: "Naziv"),
+                    name: 'naziv',
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: FormBuilderTextField(
+                    decoration: commonDecoration.copyWith(labelText: "Cijena"),
+                    name: 'cijena',
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: FormBuilderTextField(
+                    decoration: commonDecoration.copyWith(labelText: "Gramaža"),
+                    name: 'gramaza',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: FormBuilderDropdown(
+                    name: 'kategorijaId',
+                    decoration:
+                        commonDecoration.copyWith(labelText: "Kategorija"),
+                    items: kategorijeResult?.result
+                            .map((item) => DropdownMenuItem(
+                                value: item.kategorijaId.toString(),
+                                child: Text(item.naziv ?? "")))
+                            .toList() ??
+                        [],
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: FormBuilderDropdown(
+                    name: 'dobavljacId',
+                    decoration:
+                        commonDecoration.copyWith(labelText: "Dobavljač"),
+                    items: dobavljaciResult?.result
+                            .map((item) => DropdownMenuItem(
+                                value: item.dobavljacId.toString(),
+                                child: Text(item.naziv ?? "")))
+                            .toList() ??
+                        [],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: FormBuilderTextField(
+                    decoration: commonDecoration.copyWith(labelText: "Opis"),
+                    name: 'opis',
+                    maxLines: 6,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: FormBuilderField(
+                    name: "imageId",
+                    builder: (field) {
+                      return InputDecorator(
+                        decoration:
+                            commonDecoration.copyWith(labelText: "Slika"),
+                        child: ListTile(
+                          leading: Icon(Icons.image),
+                          title: Text("Odaberite sliku"),
+                          trailing: Icon(Icons.file_upload),
+                          onTap: getImage,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
   Widget _saveRow() {
     return Padding(
@@ -199,23 +203,29 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          ElevatedButton(
-              onPressed: () {
-                _formKey.currentState?.saveAndValidate();
-                debugPrint(_formKey.currentState?.value.toString());
+          Padding(
+            padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
+            child: ElevatedButton(
+                onPressed: () {
+                  _formKey.currentState?.saveAndValidate();
+                  debugPrint(_formKey.currentState?.value.toString());
 
-                var request = Map.from(_formKey.currentState!.value);
+                  var request = Map.from(_formKey.currentState!.value);
 
-                request['slika'] = _base64Image;
+                  request['slika'] = _base64Image;
 
-                if (widget.suplement == null) {
-                  suplementProvider.insert(request);
-                } else {
-                  suplementProvider.update(
-                      widget.suplement!.suplementId!, request);
-                }
-              },
-              child: Text("Sačuvaj"))
+                  if (widget.suplement == null) {
+                    suplementProvider.insert(request);
+                  } else {
+                    suplementProvider.update(
+                        widget.suplement!.suplementId!, request);
+                  }
+
+
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
+                },
+                child: Text("Sačuvaj")),
+          )
         ],
       ),
     );
