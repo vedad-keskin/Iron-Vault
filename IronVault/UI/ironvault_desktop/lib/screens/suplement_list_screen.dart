@@ -41,11 +41,12 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
     };
     result = await provider.get(filter: filter);
 
+
     setState(() {
     });
   }
 
-  SearchResult<Suplement>? result = null;
+  SearchResult<Suplement>? result;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
@@ -60,9 +61,9 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
         ));
   }
 
-  TextEditingController _ftsEditingController = TextEditingController();
-  TextEditingController _dobavljacController = TextEditingController();
-  TextEditingController _kategorijaController = TextEditingController();
+  final TextEditingController _ftsEditingController = TextEditingController();
+  final TextEditingController _dobavljacController = TextEditingController();
+  final TextEditingController _kategorijaController = TextEditingController();
 
   Widget _buildSearch() {
     return Padding(
@@ -88,12 +89,12 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: TextField(
                   onChanged: (value) async {
@@ -110,12 +111,12 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                     ),
                   ),
                 ),
               ),
-              SizedBox(width: 8),
+              const SizedBox(width: 8),
               Expanded(
                 child: TextField(
                   onChanged: (value) async {
@@ -132,14 +133,14 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                     ),
                   ),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 8),
+          const SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -148,7 +149,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => SuplementDetailsScreen()));
                 },
-                child: Text("Dodaj novi suplement"),
+                child: const Text("Dodaj novi suplement"),
               ),
             ],
           ),
@@ -168,7 +169,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                 showCheckboxColumn: false,
                 columnSpacing: 12,
                 dataRowMaxHeight: 80, // Set the height of the rows
-                columns: [
+                columns: const [
                   DataColumn(label: Text("Naziv")),
                   DataColumn(label: Text("Cijena")),
                   DataColumn(label: Text("Gramaža")),
@@ -210,7 +211,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                                     : e.prosjecnaOcjena.toString())),
                                 DataCell(
                                   e.slika != null
-                                      ? Container(
+                                      ? SizedBox(
                                           width:
                                               100, // Set the width of the image container
                                           height:
@@ -222,7 +223,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                                                 .fitHeight, // Ensures the image scales properly
                                           ),
                                         )
-                                      : Text(""),
+                                      : const Text(""),
                                 ),
                               ]);
                         })

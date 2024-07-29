@@ -38,7 +38,6 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   bool isLoading = true;
 
   File? _image;
-  String? _base64Image;
   final _base64Placeholder =
       "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
 
@@ -97,7 +96,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(10.0),
-        borderSide: BorderSide(color: Colors.blue),
+        borderSide: const BorderSide(color: Colors.blue),
       ),
     );
 
@@ -108,7 +107,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
         padding: const EdgeInsets.fromLTRB(150, 50, 150, 15),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               children: [
                 Expanded(
@@ -120,7 +119,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Cijena"),
@@ -131,7 +130,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     ]),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Gramaža"),
@@ -158,12 +157,12 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],
-                        validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                  ]),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Expanded(
                   child: FormBuilderDropdown(
                     name: 'dobavljacId',
@@ -175,9 +174,9 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],
-                        validator: FormBuilderValidators.compose([
-                    FormBuilderValidators.required(),
-                  ]),
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
                   ),
                 ),
               ],
@@ -193,9 +192,9 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                         decoration:
                             commonDecoration.copyWith(labelText: "Slika"),
                         child: ListTile(
-                          leading: Icon(Icons.image),
-                          title: Text("Odaberite sliku"),
-                          trailing: Icon(Icons.file_upload),
+                          leading: const Icon(Icons.image),
+                          title: const Text("Odaberite sliku"),
+                          trailing: const Icon(Icons.file_upload),
                           onTap: getImage,
                         ),
                       );
@@ -213,14 +212,14 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     child: FormBuilderTextField(
                       decoration: commonDecoration.copyWith(labelText: "Opis"),
                       name: 'opis',
-                      validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required()
-                    ]),
                       maxLines: 7,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(),
+                      ]),
                     ),
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Container(
                   height: 200,
                   width: 200,
@@ -260,33 +259,22 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                 style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SuplementListScreen()));
+                      builder: (context) => const SuplementListScreen()));
                 },
-                child: Text("Odustani")),
+                child: const Text("Odustani")),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
-            child: ElevatedButton(
-                onPressed: () async {
-                  _formKey.currentState?.saveAndValidate();
-                  debugPrint(_formKey.currentState?.value.toString());
+              padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
+              child: ElevatedButton(
 
-                  var request = Map.from(_formKey.currentState!.value);
 
-                  request['slika'] = _initialValue['slika'];
-
-                  if (widget.suplement == null) {
-                    await suplementProvider.insert(request);
-                  } else {
-                    await suplementProvider.update(
-                        widget.suplement!.suplementId!, request);
-                  }
-
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => SuplementListScreen()));
+                // Ako su polja validirana idi na dialog 
+                onPressed: () => {
+                  if (_formKey.currentState!.saveAndValidate())
+                    {_showConfirmationDialog(context)}
                 },
-                child: Text("Sačuvaj")),
-          )
+                child: const Text('Sačuvaj'),
+              ))
         ],
       ),
     );
@@ -302,5 +290,46 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     }
 
     setState(() {});
+  }
+
+  void _showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Potvrda'),
+          content: const Text('Da li želite spasiti izmjene'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Otkaži'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Potvrdi'),
+              onPressed: () async {
+
+                debugPrint(_formKey.currentState?.value.toString());
+
+                var request = Map.from(_formKey.currentState!.value);
+
+                request['slika'] = _initialValue['slika'];
+
+                if (widget.suplement == null) {
+                  await suplementProvider.insert(request);
+                } else {
+                  await suplementProvider.update(
+                      widget.suplement!.suplementId!, request);
+                }
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const SuplementListScreen()));
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
