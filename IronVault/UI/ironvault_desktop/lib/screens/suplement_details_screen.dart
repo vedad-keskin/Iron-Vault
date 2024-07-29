@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/dobavljac.dart';
 import 'package:ironvault_desktop/models/kategorija.dart';
@@ -36,13 +37,10 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   SearchResult<Dobavljac>? dobavljaciResult;
   bool isLoading = true;
 
-
-File? _image;
-String? _base64Image;
-final _base64Placeholder =
-    "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
-
-
+  File? _image;
+  String? _base64Image;
+  final _base64Placeholder =
+      "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
 
   @override
   void didChangeDependencies() {
@@ -107,7 +105,7 @@ final _base64Placeholder =
       key: _formKey,
       initialValue: _initialValue,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 15, 150, 15),
+        padding: const EdgeInsets.fromLTRB(150, 50, 150, 15),
         child: Column(
           children: [
             SizedBox(height: 20),
@@ -117,6 +115,9 @@ final _base64Placeholder =
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Naziv"),
                     name: 'naziv',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                    ]),
                   ),
                 ),
                 SizedBox(width: 10),
@@ -124,6 +125,10 @@ final _base64Placeholder =
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Cijena"),
                     name: 'cijena',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                      FormBuilderValidators.numeric()
+                    ]),
                   ),
                 ),
                 SizedBox(width: 10),
@@ -131,6 +136,10 @@ final _base64Placeholder =
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Gramaža"),
                     name: 'gramaza',
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(),
+                      FormBuilderValidators.numeric()
+                    ]),
                   ),
                 ),
               ],
@@ -149,6 +158,9 @@ final _base64Placeholder =
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],
+                        validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
                   ),
                 ),
                 SizedBox(width: 10),
@@ -163,6 +175,9 @@ final _base64Placeholder =
                                 child: Text(item.naziv ?? "")))
                             .toList() ??
                         [],
+                        validator: FormBuilderValidators.compose([
+                    FormBuilderValidators.required(),
+                  ]),
                   ),
                 ),
               ],
@@ -198,6 +213,9 @@ final _base64Placeholder =
                     child: FormBuilderTextField(
                       decoration: commonDecoration.copyWith(labelText: "Opis"),
                       name: 'opis',
+                      validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required()
+                    ]),
                       maxLines: 7,
                     ),
                   ),
@@ -216,7 +234,7 @@ final _base64Placeholder =
                     child: Image.memory(
                       _initialValue['slika'] == null
                           ? base64Decode(_base64Placeholder)
-                          : base64Decode( _initialValue['slika']),
+                          : base64Decode(_initialValue['slika']),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -274,24 +292,15 @@ final _base64Placeholder =
     );
   }
 
+  void getImage() async {
+    var result = await FilePicker.platform.pickFiles(type: FileType.image);
 
+    if (result != null && result.files.single.path != null) {
+      _image = File(result.files.single.path!);
+      // _base64Image = base64Encode(_image!.readAsBytesSync());
+      _initialValue['slika'] = base64Encode(_image!.readAsBytesSync());
+    }
 
-void getImage() async {
-  var result = await FilePicker.platform.pickFiles(type: FileType.image);
-
-  if (result != null && result.files.single.path != null) {
-    _image = File(result.files.single.path!);
-    // _base64Image = base64Encode(_image!.readAsBytesSync());
-   _initialValue['slika'] = base64Encode(_image!.readAsBytesSync());
+    setState(() {});
   }
-
-
-setState(() {
-
-});
-
 }
-
-}
-
-
