@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ironvault_desktop/main.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 
@@ -37,6 +38,13 @@ class _MasterScreenState extends State<MasterScreen> {
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
               },
+            ),
+              ListTile(
+              title: Text("Odjavi se"),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+              
             )
           ],
         ),
