@@ -10,16 +10,14 @@ import 'package:ironvault_mobile/providers/auth_provider.dart';
 abstract class BaseProvider<T> with ChangeNotifier {
   static String? _baseUrl;
   String _endpoint = "";
-  HttpClient _httpClient = HttpClient();
-  late IOClient _ioClient;
+
 
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "http://10.0.2.2:44340/");
+        defaultValue: "http://10.0.2.2:5039/");
 
-    _httpClient.badCertificateCallback = ( cert,  host,  port) => true;
-    _ioClient = IOClient(_httpClient); // Create an IOClient with the custom HttpClient
+
   }
 
   Future<SearchResult<T>> get({dynamic filter}) async {
@@ -33,7 +31,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    var response = await _ioClient.get(uri, headers: headers); // Use _ioClient for requests
+    var response = await http.get(uri, headers: headers); // Use _ioClient for requests
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
@@ -58,7 +56,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var headers = createHeaders();
 
     var jsonRequest = jsonEncode(request);
-    var response = await _ioClient.post(uri, headers: headers, body: jsonRequest);
+    var response = await http.post(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
@@ -74,7 +72,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var headers = createHeaders();
 
     var jsonRequest = jsonEncode(request);
-    var response = await _ioClient.put(uri, headers: headers, body: jsonRequest);
+    var response = await http.put(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);

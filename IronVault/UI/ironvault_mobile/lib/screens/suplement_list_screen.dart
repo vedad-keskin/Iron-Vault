@@ -80,9 +80,9 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               icon: Icon(Icons.arrow_forward_ios_outlined),
               onPressed: () async {
                 print('called product');
-                 // var tmpData = await _suplementProvider?.get(filter: {'fts': _searchController.text});
+                 var tmpData = await _suplementProvider?.get(filter: {'fts': _searchController.text});
                 setState(() {
-                  // data = tmpData!;
+                  data = tmpData!;
                 });
               },
             ),

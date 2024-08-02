@@ -6,17 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
-import 'package:ironvault_mobile/providers/logged_suplement_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-   HttpOverrides.global = MyHttpOverrides();
+  HttpOverrides.global = MyHttpOverrides();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<SuplementProvider>(
-          create: (_) => LoggedSuplementProvider()),
+          create: (_) => SuplementProvider()),
       ChangeNotifierProvider<KategorijaProvider>(
           create: (_) => KategorijaProvider()),
       ChangeNotifierProvider<DobavljacProvider>(
@@ -60,14 +59,14 @@ class MyApp extends StatelessWidget {
   }
 }
 
- class MyHttpOverrides extends HttpOverrides{
-  @override
-  HttpClient createHttpClient(SecurityContext? context){
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
-  }
-}
-
+ class MyHttpOverrides extends HttpOverrides {
+   @override
+   HttpClient createHttpClient(SecurityContext? context) {
+     return super.createHttpClient(context)
+       ..badCertificateCallback =
+           (X509Certificate cert, String host, int port) => true;
+   }
+ }
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);
@@ -133,7 +132,7 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 40),
                     ElevatedButton(
                       onPressed: () async {
-                        SuplementProvider provider = new SuplementProvider();
+                         SuplementProvider provider = new SuplementProvider();
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
@@ -143,7 +142,7 @@ class LoginPage extends StatelessWidget {
                           var data = await provider.get();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SuplementListScreen()));
-                          print("pokusano");
+                          
                         } on Exception catch (e) {
                           showDialog(
                             context: context,
