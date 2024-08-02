@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
@@ -10,6 +12,7 @@ import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+   HttpOverrides.global = MyHttpOverrides();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<SuplementProvider>(
@@ -51,11 +54,20 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Colors.blue, primary: Colors.blue),
         useMaterial3: true,
       ),
-      home: SuplementListScreen(),
+      home: LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
+
+ class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
+  }
+}
+
 
 class LoginPage extends StatelessWidget {
   LoginPage({Key? key}) : super(key: key);

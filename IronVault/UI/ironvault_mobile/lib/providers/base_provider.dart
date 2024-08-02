@@ -1,19 +1,25 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
+import 'package:http/io_client.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 
 abstract class BaseProvider<T> with ChangeNotifier {
   static String? _baseUrl;
   String _endpoint = "";
+  HttpClient _httpClient = HttpClient();
+  late IOClient _ioClient;
 
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "https://10.0.2.2:44340/");
+        defaultValue: "http://10.0.2.2:44340/");
+
+    _httpClient.badCertificateCallback = ( cert,  host,  port) => true;
+    _ioClient = IOClient(_httpClient); // Create an IOClient with the custom HttpClient
   }
 
   Future<SearchResult<T>> get({dynamic filter}) async {
@@ -27,7 +33,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var uri = Uri.parse(url);
     var headers = createHeaders();
 
-    var response = await http.get(uri, headers: headers);
+    var response = await _ioClient.get(uri, headers: headers); // Use _ioClient for requests
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
@@ -42,9 +48,8 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
       return result;
     } else {
-      throw new Exception("Nepoznat problem");
+      throw Exception("Nepoznat problem");
     }
-    // print("response: ${response.request} ${response.statusCode}, ${response.body}");
   }
 
   Future<T> insert(dynamic request) async {
@@ -53,13 +58,13 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var headers = createHeaders();
 
     var jsonRequest = jsonEncode(request);
-    var response = await http.post(uri, headers: headers, body: jsonRequest);
+    var response = await _ioClient.post(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
-      throw new Exception("Nepoznat problem");
+      throw Exception("Nepoznat problem");
     }
   }
 
@@ -69,13 +74,13 @@ abstract class BaseProvider<T> with ChangeNotifier {
     var headers = createHeaders();
 
     var jsonRequest = jsonEncode(request);
-    var response = await http.put(uri, headers: headers, body: jsonRequest);
+    var response = await _ioClient.put(uri, headers: headers, body: jsonRequest);
 
     if (isValidResponse(response)) {
       var data = jsonDecode(response.body);
       return fromJson(data);
     } else {
-      throw new Exception("Nepoznat problem");
+      throw Exception("Nepoznat problem");
     }
   }
 
@@ -83,14 +88,14 @@ abstract class BaseProvider<T> with ChangeNotifier {
     throw Exception("Metoda nije implementirana");
   }
 
-  bool isValidResponse(Response response) {
+  bool isValidResponse(http.Response response) {
     if (response.statusCode < 299) {
       return true;
     } else if (response.statusCode == 401) {
-      throw new Exception("Korisničko ime ili lozinka nisu ispravni");
+      throw Exception("Korisničko ime ili lozinka nisu ispravni");
     } else {
       print(response.body);
-      throw new Exception("Dogodila se greška, pokušajte ponovo");
+      throw Exception("Dogodila se greška, pokušajte ponovo");
     }
   }
 
@@ -100,8 +105,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
 
     print("passed creds: $username, $password");
 
-    String basicAuth =
-        "Basic ${base64Encode(utf8.encode('$username:$password'))}";
+    String basicAuth = "Basic ${base64Encode(utf8.encode('$username:$password'))}";
 
     var headers = {
       "Content-Type": "application/json",
@@ -135,8 +139,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
       } else if (value is List || value is Map) {
         if (value is List) value = value.asMap();
         value.forEach((k, v) {
-          query +=
-              getQueryString({k: v}, prefix: '$prefix$key', inRecursion: true);
+          query += getQueryString({k: v}, prefix: '$prefix$key', inRecursion: true);
         });
       }
     });
