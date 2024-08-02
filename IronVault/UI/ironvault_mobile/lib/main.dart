@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
             ColorScheme.fromSeed(seedColor: Colors.blue, primary: Colors.blue),
         useMaterial3: true,
       ),
-      home: LoginPage(),
+      home: SuplementListScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -78,7 +78,7 @@ class LoginPage extends StatelessWidget {
             ),
             Container(
               child: Padding(
-                padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                padding: EdgeInsets.fromLTRB(30, 50, 30, 50),
                 child: Column(
                   children: [
                     const SizedBox(height: 50),
