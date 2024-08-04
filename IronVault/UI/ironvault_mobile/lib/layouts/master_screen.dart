@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/main.dart';
+import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/screens/cart_screen.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
+import 'package:provider/provider.dart';
 
 class MasterScreen extends StatefulWidget {
   MasterScreen(this.title, this.child, {super.key});
@@ -13,8 +16,12 @@ class MasterScreen extends StatefulWidget {
 }
 
 class _MasterScreenState extends State<MasterScreen> {
+   CartProvider? _cartProvider;
+
   @override
   Widget build(BuildContext context) {
+   _cartProvider = context.watch<CartProvider>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -30,10 +37,10 @@ class _MasterScreenState extends State<MasterScreen> {
               },
             ),
             ListTile(
-              title: Text("Korisnici"),
+              title: Text("U korpi ${_cartProvider?.cart.items.length}"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => KorisnikListScreen()));
+                    builder: (context) => CartScreen()));
               },
             ),
             ListTile(

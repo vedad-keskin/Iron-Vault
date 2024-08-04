@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/models/cart.dart';
 import 'package:ironvault_mobile/models/suplement.dart';
 import 'package:flutter/widgets.dart';
+import 'package:collection/collection.dart';
 
 class CartProvider with ChangeNotifier {
   Cart cart = Cart();
@@ -21,7 +22,7 @@ class CartProvider with ChangeNotifier {
   }
 
   CartItem? findInCart(Suplement suplement) {
-    CartItem? item = cart.items.firstWhere((item) => item.suplement.suplementId == suplement.suplementId);
+    CartItem? item = cart.items.firstWhereOrNull((item) => item.suplement.suplementId == suplement.suplementId);
     return item;
   }
 }
