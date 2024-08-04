@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
+import 'package:ironvault_desktop/utils/app_constants.dart';
 
 abstract class BaseProvider<T> with ChangeNotifier {
   static String? _baseUrl;
@@ -14,7 +15,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "https://localhost:44340/");
+        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
   }
 
   Future<SearchResult<T>> get({dynamic filter}) async {

@@ -3,7 +3,7 @@ import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/cart.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
-import 'package:ironvault_mobile/providers/utils.dart';
+import 'package:ironvault_mobile/utils/utils.dart';
 import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
@@ -76,7 +76,6 @@ return ListTile(
           items.add({
             "suplementId": item.suplement.suplementId,
 
-            // treba srediti narudzbu da ima kolicinu
             "kolicina": item.count
           });
         });

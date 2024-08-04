@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:http/io_client.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
+import 'package:ironvault_mobile/utils/app_constants.dart';
 
 abstract class BaseProvider<T> with ChangeNotifier {
   static String? _baseUrl;
@@ -15,7 +16,7 @@ abstract class BaseProvider<T> with ChangeNotifier {
   BaseProvider(String endpoint) {
     _endpoint = endpoint;
     _baseUrl = const String.fromEnvironment("baseUrl",
-        defaultValue: "http://10.0.2.2:5039/");
+          defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
 
 
   }

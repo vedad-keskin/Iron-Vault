@@ -67,12 +67,14 @@ namespace IronVault.API.Controllers
         }
 
         [HttpGet("{id}/allowedActions")]
+        [AllowAnonymous]
         public List<string> AllowedActions(int id)
         {
             return (_service as ISuplementService).AllowedActions(id);
         }
 
         [HttpGet("{id}/recommend")]
+        [AllowAnonymous]
         public List<Suplement> Recommend(int id)
         {
             return (_service as ISuplementService).Recommend(id);
