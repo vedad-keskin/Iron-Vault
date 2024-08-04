@@ -266,9 +266,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
           Padding(
               padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
               child: ElevatedButton(
-
-
-                // Ako su polja validirana idi na dialog 
+                // Ako su polja validirana idi na dialog
                 onPressed: () => {
                   if (_formKey.currentState!.saveAndValidate())
                     {_showConfirmationDialog(context)}
@@ -293,43 +291,77 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   }
 
   void _showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Potvrda'),
-          content: const Text('Da li želite spasiti izmjene'),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Otkaži'),
-              onPressed: () {
-                Navigator.of(context).pop(); // Dismiss the dialog
-              },
-            ),
-            TextButton(
-              child: const Text('Potvrdi'),
-              onPressed: () async {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Potvrda'),
+        content: const Text('Da li želite spasiti izmjene'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Otkaži'),
+            onPressed: () {
+              Navigator.of(context).pop(); // Dismiss the dialog
+            },
+          ),
+          TextButton(
+            child: const Text('Potvrdi'),
+            onPressed: () async {
+              
+              debugPrint(_formKey.currentState?.value.toString());
 
-                debugPrint(_formKey.currentState?.value.toString());
+              var request = Map.from(_formKey.currentState!.value);
 
-                var request = Map.from(_formKey.currentState!.value);
+              request['slika'] = _initialValue['slika'];
 
-                request['slika'] = _initialValue['slika'];
-
+              try {
                 if (widget.suplement == null) {
                   await suplementProvider.insert(request);
                 } else {
                   await suplementProvider.update(
                       widget.suplement!.suplementId!, request);
                 }
-
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
                     builder: (context) => const SuplementListScreen()));
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+              } on Exception catch (e) {
+                
+
+                showDialog(
+                  
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text(
+                      "Greška",
+                      style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    content: Text(
+                      e.toString().replaceFirst('Exception: ', ''),
+                      style: const TextStyle(
+                        fontSize: 16,
+                      ),
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text(
+                          "OK",
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 }

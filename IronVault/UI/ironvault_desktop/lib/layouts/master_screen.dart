@@ -21,26 +21,26 @@ class _MasterScreenState extends State<MasterScreen> {
         child: ListView(
           children: [
             ListTile(
-              title: Text("Nazad"),
+              title: const Text("Nazad"),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pop(context);
               },
             ),
             ListTile(
-              title: Text("Korisnici"),
+              title: const Text("Korisnici"),
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => KorisnikListScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const KorisnikListScreen()));
               },
             ),
             ListTile(
-              title: Text("Suplementi"),
+              title: const Text("Suplementi"),
               onTap: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SuplementListScreen()));
               },
             ),
               ListTile(
-              title: Text("Odjavi se"),
+              title: const Text("Odjavi se"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
               },

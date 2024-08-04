@@ -31,6 +31,7 @@ namespace IronVault.Services.SuplementStateMachine
         public virtual Model.Models.Suplement Update(int id, SuplementUpdateRequest request)
         {
             throw new UserException("Metoda nije dozvoljena");
+            
         }
 
         public virtual Model.Models.Suplement Activate(int id)

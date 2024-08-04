@@ -140,7 +140,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          const SizedBox(height: 18),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -175,7 +175,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                   DataColumn(label: Text("Gramaža")),
                   DataColumn(label: Text("Kategorija")),
                   DataColumn(label: Text("Dobavljač")),
-                  DataColumn(label: Text("Prosjek")),
+                  DataColumn(label: Text("Ocjena")),
                   DataColumn(label: Text("Slika")),
                 ],
                 rows: result?.result
