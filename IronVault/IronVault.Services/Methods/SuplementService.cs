@@ -6,6 +6,9 @@ using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Microsoft.ML.Data;
+using Microsoft.ML.Trainers;
+using Microsoft.ML;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -101,5 +104,103 @@ namespace IronVault.Services.Methods
                 return state.AllowedActions(entity);
             }
         }
+        static MLContext mlContext = null;
+        static object isLocked = new object();
+        static ITransformer model = null;
+        public List<Model.Models.Suplement> Recommend(int id)
+        {
+            if (mlContext == null)
+            {
+
+                //train
+                lock (isLocked)
+                {
+                    mlContext = new MLContext();
+
+                    var tmpData = Context.Narudzbas.Include("NarudzbaStavkas").ToList();
+
+                    var data = new List<ProductEntry>();
+
+                    foreach (var item in tmpData)
+                    {
+                        if (item.NarudzbaStavkas.Count > 1)
+                        {
+                            var distinctItemId = item.NarudzbaStavkas.Select(y => y.SuplementId).Distinct().ToList();
+
+                            distinctItemId.ForEach(y =>
+                            {
+                                var relatedItems = item.NarudzbaStavkas.Where(z => z.SuplementId != y);
+
+                                foreach (var z in relatedItems)
+                                {
+                                    data.Add(new ProductEntry()
+                                    {
+                                        ProductID = (uint)y,
+                                        CoPurchaseProductID = (uint)z.SuplementId
+                                    });
+                                }
+                            });
+                        }
+                    }
+
+                    var traindata = mlContext.Data.LoadFromEnumerable(data);
+
+                    MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
+                    options.MatrixColumnIndexColumnName = nameof(ProductEntry.ProductID);
+                    options.MatrixRowIndexColumnName = nameof(ProductEntry.CoPurchaseProductID);
+                    options.LabelColumnName = "Label";
+                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
+                    options.Alpha = 0.01;
+                    options.Lambda = 0.025;
+                    // For better results use the following parameters
+                    options.NumberOfIterations = 100;
+                    options.C = 0.00001;
+
+                    var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
+
+                    model = est.Fit(traindata);
+                }
+            }
+
+            var suplements = Context.Suplements.Where(x => x.SuplementId != id);
+
+            var predictionResult = new List<(Database.Suplement, float)>();
+
+            foreach (var suplement in suplements)
+            {
+                var predictionengine = mlContext.Model.CreatePredictionEngine<ProductEntry, Copurchase_prediction>(model);
+                var prediction = predictionengine.Predict(
+                                         new ProductEntry()
+                                         {
+                                             ProductID = (uint)id,
+                                             CoPurchaseProductID = (uint)suplement.SuplementId
+                                         });
+
+                predictionResult.Add(new(suplement, prediction.Score));
+            }
+
+            var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(4).ToList();
+
+            return Mapper.Map<List<Model.Models.Suplement>>(finalResult);
+        }
     }
+
+    public class Copurchase_prediction
+    {
+        public float Score { get; set; }
+    }
+
+    public class ProductEntry
+    {
+        [KeyType(count: 10000)]
+        public uint ProductID { get; set; }
+
+        [KeyType(count: 10000)]
+        public uint CoPurchaseProductID { get; set; }
+
+        public float Label { get; set; }
+    }
+
+
+
 }

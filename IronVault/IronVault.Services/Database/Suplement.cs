@@ -17,7 +17,6 @@ public partial class Suplement
 
     public string? Slika { get; set; }
 
-
     public string? StateMachine { get; set; }
 
     public double? ProsjecnaOcjena { get; set; }
@@ -30,7 +29,7 @@ public partial class Suplement
 
     public virtual Kategorija Kategorija { get; set; } = null!;
 
-    public virtual ICollection<KorisnikSuplement> KorisnikSuplements { get; set; } = new List<KorisnikSuplement>();
+    public virtual ICollection<NarudzbaStavka> NarudzbaStavkas { get; set; } = new List<NarudzbaStavka>();
 
     public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 }

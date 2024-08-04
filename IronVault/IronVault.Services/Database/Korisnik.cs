@@ -47,11 +47,11 @@ public partial class Korisnik
 
     public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
 
-    public virtual ICollection<KorisnikSuplement> KorisnikSuplements { get; set; } = new List<KorisnikSuplement>();
-
     public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
 
     public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
+
+    public virtual ICollection<Narudzba> Narudzbas { get; set; } = new List<Narudzba>();
 
     public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 

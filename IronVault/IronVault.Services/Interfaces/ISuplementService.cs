@@ -15,6 +15,7 @@ namespace IronVault.Services.Interfaces
         public Suplement Edit(int id);
         public Suplement Hide(int id);
         public List<string> AllowedActions(int id);
+        List<Model.Models.Suplement> Recommend(int id);
 
     }
 }

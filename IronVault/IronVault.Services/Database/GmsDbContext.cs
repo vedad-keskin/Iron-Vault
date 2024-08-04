@@ -33,11 +33,13 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<KorisnikNutricionst> KorisnikNutricionsts { get; set; }
 
-    public virtual DbSet<KorisnikSuplement> KorisnikSuplements { get; set; }
-
     public virtual DbSet<KorisnikTrener> KorisnikTreners { get; set; }
 
     public virtual DbSet<KorisnikUloga> KorisnikUlogas { get; set; }
+
+    public virtual DbSet<Narudzba> Narudzbas { get; set; }
+
+    public virtual DbSet<NarudzbaStavka> NarudzbaStavkas { get; set; }
 
     public virtual DbSet<Nutricionist> Nutricionists { get; set; }
 
@@ -194,27 +196,6 @@ public partial class GmsDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
-        modelBuilder.Entity<KorisnikSuplement>(entity =>
-        {
-            entity.ToTable("Korisnik_Suplement");
-
-            entity.HasIndex(e => e.KorisnikId, "IX_Korisnik_Suplement_KorisnikID");
-
-            entity.HasIndex(e => e.SuplementId, "IX_Korisnik_Suplement_SuplementID");
-
-            entity.Property(e => e.KorisnikSuplementId).HasColumnName("Korisnik_SuplementID");
-            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
-            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
-
-            entity.HasOne(d => d.Korisnik).WithMany(p => p.KorisnikSuplements)
-                .HasForeignKey(d => d.KorisnikId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Suplement).WithMany(p => p.KorisnikSuplements)
-                .HasForeignKey(d => d.SuplementId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
         modelBuilder.Entity<KorisnikTrener>(entity =>
         {
             entity.ToTable("Korisnik_Trener");
@@ -254,6 +235,41 @@ public partial class GmsDbContext : DbContext
 
             entity.HasOne(d => d.Uloga).WithMany(p => p.KorisnikUlogas)
                 .HasForeignKey(d => d.UlogaId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<Narudzba>(entity =>
+        {
+            entity.ToTable("Narudzba");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Narudzba_KorisnikID");
+
+            entity.Property(e => e.NarudzbaId).HasColumnName("NarudzbaID");
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+
+            entity.HasOne(d => d.Korisnik).WithMany(p => p.Narudzbas)
+                .HasForeignKey(d => d.KorisnikId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<NarudzbaStavka>(entity =>
+        {
+            entity.ToTable("Narudzba_Stavka");
+
+            entity.HasIndex(e => e.NarudzbaId, "IX_Narudzba_Stavka_NarudzbaID");
+
+            entity.HasIndex(e => e.SuplementId, "IX_Narudzba_Stavka_SuplementID");
+
+            entity.Property(e => e.NarudzbaStavkaId).HasColumnName("Narudzba_StavkaID");
+            entity.Property(e => e.NarudzbaId).HasColumnName("NarudzbaID");
+            entity.Property(e => e.SuplementId).HasColumnName("SuplementID");
+
+            entity.HasOne(d => d.Narudzba).WithMany(p => p.NarudzbaStavkas)
+                .HasForeignKey(d => d.NarudzbaId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+
+            entity.HasOne(d => d.Suplement).WithMany(p => p.NarudzbaStavkas)
+                .HasForeignKey(d => d.SuplementId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
