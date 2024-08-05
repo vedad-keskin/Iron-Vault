@@ -20,5 +20,21 @@ namespace IronVault.Services.Methods
 
         }
 
+        public override IQueryable<Dobavljac> AddFilter(DobavljacSearchObject search, IQueryable<Dobavljac> query)
+        {
+            var filteredQuery = base.AddFilter(search, query);
+
+
+
+            if (!string.IsNullOrWhiteSpace(search?.FTS))
+            {
+                filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));
+            }
+
+
+
+            return filteredQuery;
+        }
+
     }
 }
