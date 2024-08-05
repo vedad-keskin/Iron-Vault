@@ -19,9 +19,7 @@ public partial class Korisnik
 
     public string LozinkaSalt { get; set; } = null!;
 
-    public byte[]? Slika { get; set; }
-
-    public byte[]? SlikaThumb { get; set; }
+    public string? Slika { get; set; }
 
     public string BrojTelefona { get; set; } = null!;
 
@@ -36,8 +34,6 @@ public partial class Korisnik
     public int GradId { get; set; }
 
     public int SpolId { get; set; }
-
-    public int TeretanaId { get; set; }
 
     public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
 
@@ -56,6 +52,4 @@ public partial class Korisnik
     public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 
     public virtual Spol Spol { get; set; } = null!;
-
-    public virtual Teretana Teretana { get; set; } = null!;
 }

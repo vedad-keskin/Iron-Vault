@@ -9,13 +9,9 @@ public partial class Aktivnost
 
     public int KorisnikId { get; set; }
 
-    public int TeretanaId { get; set; }
-
     public DateTime DatumVrijemeUlaska { get; set; }
 
     public DateTime? DatumVrijemeIzlaska { get; set; }
 
     public virtual Korisnik Korisnik { get; set; } = null!;
-
-    public virtual Teretana Teretana { get; set; } = null!;
 }

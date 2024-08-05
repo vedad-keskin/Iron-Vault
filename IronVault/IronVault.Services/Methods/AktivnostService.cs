@@ -18,14 +18,7 @@ namespace IronVault.Services.Methods
         {
         }
 
-        public override void BeforeInsert(AktivnostInsertRequest request, Database.Aktivnost entity)
-        {
-            var korisnik = Context.Korisniks.Find(entity.KorisnikId);
-
-            entity.TeretanaId = korisnik.TeretanaId;
-
-            base.BeforeInsert(request, entity);
-        }
+     
 
         public override void BeforeUpdate(AktivnostUpdateRequest request, Database.Aktivnost entity)
         {
@@ -59,10 +52,7 @@ namespace IronVault.Services.Methods
                 query = query.Where(x => x.KorisnikId == search.KorisnikId);
             }
 
-            if (search?.TeretanaId != null)
-            {
-                query = query.Where(x => x.TeretanaId == search.TeretanaId);
-            }
+          
 
 
             return query;

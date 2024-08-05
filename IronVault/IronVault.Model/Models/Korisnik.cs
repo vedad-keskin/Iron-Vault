@@ -11,8 +11,7 @@ namespace IronVault.Model.Models
         public string Prezime { get; set; } = null!;
         public string KorisnickoIme { get; set; } = null!;
         public string? Email { get; set; }
-        //public byte[]? Slika { get; set; }
-        //public byte[]? SlikaThumb { get; set; }
+        public string? Slika { get; set; }
         public string? BrojTelefona { get; set; }
         public float Visina { get; set; }
         public float Tezina { get; set; }

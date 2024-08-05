@@ -60,7 +60,7 @@ namespace IronVault.Services.Methods
                 query = query.Include(x => x.Aktivnosts);
             }
 
-            query.Include(x => x.Teretana).Include(x => x.Spol).Include(x => x.Grad);
+            query.Include(x => x.Spol).Include(x => x.Grad);
 
             return query;
         }

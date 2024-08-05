@@ -10,8 +10,8 @@ namespace IronVault.Model.Requests
         public string Prezime { get; set; } = null!;
         public string? Lozinka { get; set; }
         public string? LozinkaPotvrda { get; set; }
-        public byte[]? Slika { get; set; }
-        public byte[]? SlikaThumb { get; set; }
+        public string? Slika { get; set; }
+
         public string? BrojTelefona { get; set; }
         public float? Visina { get; set; }
         public float? Tezina { get; set; }

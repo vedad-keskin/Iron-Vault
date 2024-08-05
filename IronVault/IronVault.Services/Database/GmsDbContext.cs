@@ -53,8 +53,6 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<Suplement> Suplements { get; set; }
 
-    public virtual DbSet<Teretana> Teretanas { get; set; }
-
     public virtual DbSet<Trener> Treners { get; set; }
 
     public virtual DbSet<TrenerSeminar> TrenerSeminars { get; set; }
@@ -73,18 +71,11 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.KorisnikId, "IX_Aktivnost_KorisnikID");
 
-            entity.HasIndex(e => e.TeretanaId, "IX_Aktivnost_TeretanaID");
-
             entity.Property(e => e.AktivnostId).HasColumnName("AktivnostID");
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
-            entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
 
             entity.HasOne(d => d.Korisnik).WithMany(p => p.Aktivnosts)
                 .HasForeignKey(d => d.KorisnikId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Teretana).WithMany(p => p.Aktivnosts)
-                .HasForeignKey(d => d.TeretanaId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -131,12 +122,9 @@ public partial class GmsDbContext : DbContext
 
             entity.HasIndex(e => e.SpolId, "IX_Korisnik_SpolID");
 
-            entity.HasIndex(e => e.TeretanaId, "IX_Korisnik_TeretanaID");
-
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.GradId).HasColumnName("GradID");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
-            entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
             entity.Property(e => e.VrijemeUteretani).HasColumnName("VrijemeUTeretani");
 
             entity.HasOne(d => d.Grad).WithMany(p => p.Korisniks)
@@ -145,10 +133,6 @@ public partial class GmsDbContext : DbContext
 
             entity.HasOne(d => d.Spol).WithMany(p => p.Korisniks)
                 .HasForeignKey(d => d.SpolId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-
-            entity.HasOne(d => d.Teretana).WithMany(p => p.Korisniks)
-                .HasForeignKey(d => d.TeretanaId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
@@ -354,20 +338,6 @@ public partial class GmsDbContext : DbContext
 
             entity.HasOne(d => d.Kategorija).WithMany(p => p.Suplements)
                 .HasForeignKey(d => d.KategorijaId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
-        modelBuilder.Entity<Teretana>(entity =>
-        {
-            entity.ToTable("Teretana");
-
-            entity.HasIndex(e => e.GradId, "IX_Teretana_GradID");
-
-            entity.Property(e => e.TeretanaId).HasColumnName("TeretanaID");
-            entity.Property(e => e.GradId).HasColumnName("GradID");
-
-            entity.HasOne(d => d.Grad).WithMany(p => p.Teretanas)
-                .HasForeignKey(d => d.GradId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 
