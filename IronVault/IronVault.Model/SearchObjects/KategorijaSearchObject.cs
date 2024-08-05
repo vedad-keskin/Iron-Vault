@@ -6,5 +6,6 @@ namespace IronVault.Model.SearchObjects
 {
     public class KategorijaSearchObject : BaseSearchObject
     {
+        public string? FTS { get; set; }
     }
 }
