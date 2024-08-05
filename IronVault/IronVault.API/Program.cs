@@ -23,6 +23,7 @@ builder.Services.AddTransient<IGradService, GradService>();
 builder.Services.AddTransient<IRecenzijaService, RecenzijaService>();
 builder.Services.AddTransient<IFaqService, FaqService>();
 builder.Services.AddTransient<IClanarinaService, ClanarinaService>();
+builder.Services.AddTransient<ISeminarService, SeminarService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
