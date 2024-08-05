@@ -82,9 +82,18 @@ class _GradDetailsScreenState extends State<GradDetailsScreen> {
       key: _formKey,
       initialValue: _initialValue,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 150, 150, 15),
+        padding: const EdgeInsets.fromLTRB(150, 180, 150, 15),
         child: Column(
-          children: [
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            tooltip: "Nazad",
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const GradListScreen()));
+            },
+          ),
             const SizedBox(height: 20),
             Row(
               children: [

@@ -13,7 +13,7 @@ Faq _$FaqFromJson(Map<String, dynamic> json) => Faq(
       ..odgovor = json['odgovor'] as String?;
 
 Map<String, dynamic> _$FaqToJson(Faq instance) => <String, dynamic>{
-      'faqId': instance.faqid,
+      'faqid': instance.faqid,
       'pitanje': instance.pitanje,
       'odgovor': instance.odgovor,
     };

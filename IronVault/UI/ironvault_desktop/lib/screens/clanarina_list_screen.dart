@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/dobavljac.dart';
+import 'package:ironvault_desktop/models/clanarina.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
-import 'package:ironvault_desktop/screens/dobavljac_details_screen.dart';
+import 'package:ironvault_desktop/providers/clanarina_provider.dart';
+import 'package:ironvault_desktop/screens/clanarina_details_screen.dart';
 import 'package:provider/provider.dart';
 
-class DobavljacListScreen extends StatefulWidget {
-  const DobavljacListScreen({super.key});
+class ClanarinaListScreen extends StatefulWidget {
+  const ClanarinaListScreen({super.key});
 
   @override
-  State<DobavljacListScreen> createState() => _DobavljacListScreenState();
+  State<ClanarinaListScreen> createState() => _ClanarinaListScreenState();
 }
 
-class _DobavljacListScreenState extends State<DobavljacListScreen> {
-  late DobavljacProvider provider;
+class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
+  late ClanarinaProvider provider;
 
   @override
   void didChangeDependencies() {
@@ -24,7 +24,7 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
 
   @override
   void initState() {
-    provider = context.read<DobavljacProvider>();
+    provider = context.read<ClanarinaProvider>();
 
     // TODO: implement initState
     super.initState();
@@ -43,11 +43,11 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
     });
   }
 
-  SearchResult<Dobavljac>? result;
+  SearchResult<Clanarina>? result;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Lista proizvođača",
+        "Lista mjesečnih paketa",
         Container(
           child: Column(
             children: [
@@ -99,9 +99,9 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
               ElevatedButton(
                 onPressed: () async {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => DobavljacDetailsScreen()));
+                      builder: (context) => ClanarinaDetailsScreen()));
                 },
-                child: const Text("Dodaj novog proizvođača"),
+                child: const Text("Dodaj novi paket"),
               ),
             ],
           ),
@@ -123,6 +123,8 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
                 dataRowMaxHeight: 80, // Set the height of the rows
                 columns: const [
                   DataColumn(label: Text("Naziv")),
+                  DataColumn(label: Text("Cijena")),
+                  DataColumn(label: Text("Opis")),
                 ],
                 rows: result?.result
                         .map((e) {
@@ -130,22 +132,32 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
                               onSelectChanged: (selected) => {
                                     if (selected == true)
                                       {
-                                          Navigator.of(context).pushReplacement(
+                                            Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    DobavljacDetailsScreen(
-                                                      dobavljac: e,
+                                                    ClanarinaDetailsScreen(
+                                                      clanarina: e,
                                                     )))
                                       }
                                   },
                               cells: [
                                 DataCell(Container(
                                   width: constraints.maxWidth *
-                                      0.4, // 40% of the available width
+                                      0.2, // 40% of the available width
                                   child: Text(e.naziv ?? ""),
                                 )),
-                                
-                               
+                                DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.1, // 40% of the available width
+                                  child: Text(e.cijena == null
+                                    ? "0 KM "
+                                    : "${e.cijena} KM")),
+                                ),
+                               DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.6, // 40% of the available width
+                                  child: Text(e.opis ?? ""),
+                                )),
                               ]);
                         })
                         .toList()

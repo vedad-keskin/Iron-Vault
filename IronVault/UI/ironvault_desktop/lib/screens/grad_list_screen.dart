@@ -47,7 +47,7 @@ class _GradListScreenState extends State<GradListScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Gradovi",
+        "Lista gradova",
         Container(
           child: Column(
             children: [

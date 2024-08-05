@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/main.dart';
+import 'package:ironvault_desktop/screens/clanarina_list_screen.dart';
 import 'package:ironvault_desktop/screens/dobavljac_list_screen.dart';
 import 'package:ironvault_desktop/screens/faq_list_screen.dart';
 import 'package:ironvault_desktop/screens/grad_list_screen.dart';
@@ -54,6 +55,12 @@ class _MasterScreenState extends State<MasterScreen> {
               title: const Text("Korisnici"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const KorisnikListScreen()));
+              },
+            ),
+            ListTile(
+              title: const Text("Mjesečni paketi"),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ClanarinaListScreen()));
               },
             ),
             ListTile(

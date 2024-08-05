@@ -47,7 +47,7 @@ class _KategorijaListScreenState extends State<KategorijaListScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Kategorije",
+        "Lista kategorija",
         Container(
           child: Column(
             children: [

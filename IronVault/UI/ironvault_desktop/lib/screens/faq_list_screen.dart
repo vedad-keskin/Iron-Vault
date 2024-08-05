@@ -48,7 +48,7 @@ class _FaqListScreenState extends State<FaqListScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "FAQs",
+        "Lista FAQs",
         Container(
           child: Column(
             children: [

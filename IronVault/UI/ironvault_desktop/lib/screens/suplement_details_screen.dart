@@ -103,9 +103,18 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       key: _formKey,
       initialValue: _initialValue,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 50, 150, 15),
+        padding: const EdgeInsets.fromLTRB(150, 30, 150, 15),
         child: Column(
-          children: [
+          crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            tooltip: "Nazad",
+            onPressed: () {
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const SuplementListScreen()));
+            },
+          ),
             const SizedBox(height: 20),
             Row(
               children: [
