@@ -6,5 +6,6 @@ namespace IronVault.Model.SearchObjects
 {
     public class GradSearchObject : BaseSearchObject
     {
+        public string? Naziv { get; set; }
     }
 }

@@ -124,7 +124,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                   },
                   controller: _dobavljacController,
                   decoration: InputDecoration(
-                    labelText: "Dobavljač",
+                    labelText: "Proizvođač",
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(
@@ -174,7 +174,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                   DataColumn(label: Text("Cijena")),
                   DataColumn(label: Text("Gramaža")),
                   DataColumn(label: Text("Kategorija")),
-                  DataColumn(label: Text("Dobavljač")),
+                  DataColumn(label: Text("Proizvođač")),
                   DataColumn(label: Text("Ocjena")),
                   DataColumn(label: Text("Slika")),
                 ],

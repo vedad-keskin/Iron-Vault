@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/dobavljac.dart';
-import 'package:ironvault_desktop/models/kategorija.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
-import 'package:ironvault_desktop/providers/kategorija_provider.dart';
 import 'package:ironvault_desktop/screens/dobavljac_details_screen.dart';
-import 'package:ironvault_desktop/screens/kategorija_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class DobavljacListScreen extends StatefulWidget {
@@ -37,7 +34,7 @@ class _DobavljacListScreenState extends State<DobavljacListScreen> {
 
   Future initForm() async {
     var filter = {
-      'fts': _ftsEditingController.text,
+      'naziv': _ftsEditingController.text,
     };
     result = await provider.get(filter: filter);
 

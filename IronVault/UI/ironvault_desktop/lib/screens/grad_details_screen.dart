@@ -1,31 +1,30 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/dobavljac.dart';
+import 'package:ironvault_desktop/models/grad.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
-import 'package:ironvault_desktop/screens/dobavljac_list_screen.dart';
+import 'package:ironvault_desktop/providers/grad_provider.dart';
+import 'package:ironvault_desktop/screens/grad_list_screen.dart';
 import 'package:provider/provider.dart';
 
-class DobavljacDetailsScreen extends StatefulWidget {
-  Dobavljac? dobavljac;
+class GradDetailsScreen extends StatefulWidget {
+  Grad? grad;
 
-  DobavljacDetailsScreen({super.key, this.dobavljac});
+  GradDetailsScreen({super.key, this.grad});
 
   @override
-  State<DobavljacDetailsScreen> createState() => _DobavljacDetailsScreenState();
+  State<GradDetailsScreen> createState() => _GradDetailsScreenState();
 }
 
-class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
+class _GradDetailsScreenState extends State<GradDetailsScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
-  late DobavljacProvider dobavljacProvider;
+  late GradProvider gradProvider;
 
 
-  SearchResult<Dobavljac>? dobavljacResult;
+  SearchResult<Grad>? gradResult;
 
   bool isLoading = true;
 
@@ -36,20 +35,20 @@ class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
 
   @override
   void initState() {
-    dobavljacProvider = context.read<DobavljacProvider>();
+    gradProvider = context.read<GradProvider>();
 
     // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'naziv': widget.dobavljac?.naziv,
+      'naziv': widget.grad?.naziv,
     };
 
     initForm();
   }
 
   Future initForm() async {
-    dobavljacResult = await dobavljacProvider.get();
+    gradResult = await gradProvider.get();
 
     setState(() {
       isLoading = false;
@@ -59,7 +58,7 @@ class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Podaci o proizvođaču",
+        "Podaci o gradu",
         Column(
           children: [isLoading ? Container() : _buildForm(), _saveRow()],
         ));
@@ -119,7 +118,7 @@ class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
                 style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const DobavljacListScreen()));
+                      builder: (context) => const GradListScreen()));
                 },
                 child: const Text("Odustani")),
           ),
@@ -163,14 +162,14 @@ class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
 
 
               try {
-                if (widget.dobavljac == null) {
-                  await dobavljacProvider.insert(request);
+                if (widget.grad == null) {
+                  await gradProvider.insert(request);
                 } else {
-                  await dobavljacProvider.update(
-                      widget.dobavljac!.dobavljacId!, request);
+                  await gradProvider.update(
+                      widget.grad!.gradId!, request);
                 }
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const DobavljacListScreen()));
+                    builder: (context) => const GradListScreen()));
               } on Exception catch (e) {
                 
 

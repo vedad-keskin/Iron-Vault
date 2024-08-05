@@ -6,7 +6,7 @@ namespace IronVault.Model.SearchObjects
 {
     public class DobavljacSearchObject : BaseSearchObject
     {
-        public string? FTS { get; set; }
+        public string? Naziv { get; set; }
 
     }
 }

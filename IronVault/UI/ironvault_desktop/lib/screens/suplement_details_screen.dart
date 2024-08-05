@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
@@ -167,7 +166,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                   child: FormBuilderDropdown(
                     name: 'dobavljacId',
                     decoration:
-                        commonDecoration.copyWith(labelText: "Dobavljač"),
+                        commonDecoration.copyWith(labelText: "Proizvođač"),
                     items: dobavljaciResult?.result
                             .map((item) => DropdownMenuItem(
                                 value: item.dobavljacId.toString(),

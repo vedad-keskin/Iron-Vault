@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
 import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
+import 'package:ironvault_desktop/providers/grad_provider.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
@@ -14,6 +15,7 @@ void main() {
       ChangeNotifierProvider<SuplementProvider>(create: (_) => SuplementProvider()),
       ChangeNotifierProvider<KategorijaProvider>(create: (_) => KategorijaProvider()),
       ChangeNotifierProvider<DobavljacProvider>(create: (_) => DobavljacProvider()),
+      ChangeNotifierProvider<GradProvider>(create: (_) => GradProvider()),
     ],
     child: const MyApp(),));
 }

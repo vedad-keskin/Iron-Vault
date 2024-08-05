@@ -26,9 +26,9 @@ namespace IronVault.Services.Methods
 
 
 
-            if (!string.IsNullOrWhiteSpace(search?.FTS))
+            if (!string.IsNullOrWhiteSpace(search?.Naziv))
             {
-                filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));
+                filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.Naziv));
             }
 
 

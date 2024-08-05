@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/kategorija.dart';
+import 'package:ironvault_desktop/models/grad.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/providers/kategorija_provider.dart';
-import 'package:ironvault_desktop/screens/kategorija_details_screen.dart';
+import 'package:ironvault_desktop/providers/grad_provider.dart';
+import 'package:ironvault_desktop/screens/grad_details_screen.dart';
 import 'package:provider/provider.dart';
 
-class KategorijaListScreen extends StatefulWidget {
-  const KategorijaListScreen({super.key});
+class GradListScreen extends StatefulWidget {
+  const GradListScreen({super.key});
 
   @override
-  State<KategorijaListScreen> createState() => _KategorijaListScreenState();
+  State<GradListScreen> createState() => _GradListScreenState();
 }
 
-class _KategorijaListScreenState extends State<KategorijaListScreen> {
-  late KategorijaProvider provider;
+class _GradListScreenState extends State<GradListScreen> {
+  late GradProvider provider;
 
   @override
   void didChangeDependencies() {
@@ -24,7 +24,7 @@ class _KategorijaListScreenState extends State<KategorijaListScreen> {
 
   @override
   void initState() {
-    provider = context.read<KategorijaProvider>();
+    provider = context.read<GradProvider>();
 
     // TODO: implement initState
     super.initState();
@@ -43,11 +43,11 @@ class _KategorijaListScreenState extends State<KategorijaListScreen> {
     });
   }
 
-  SearchResult<Kategorija>? result;
+  SearchResult<Grad>? result;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Kategorije",
+        "Gradovi",
         Container(
           child: Column(
             children: [
@@ -99,9 +99,9 @@ class _KategorijaListScreenState extends State<KategorijaListScreen> {
               ElevatedButton(
                 onPressed: () async {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => KategorijaDetailsScreen()));
+                      builder: (context) => GradDetailsScreen()));
                 },
-                child: const Text("Dodaj novu kategoriju"),
+                child: const Text("Dodaj novi grad"),
               ),
             ],
           ),
@@ -130,11 +130,11 @@ class _KategorijaListScreenState extends State<KategorijaListScreen> {
                               onSelectChanged: (selected) => {
                                     if (selected == true)
                                       {
-                                         Navigator.of(context).pushReplacement(
+                                            Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    KategorijaDetailsScreen(
-                                                      kategorija: e,
+                                                    GradDetailsScreen(
+                                                      grad: e,
                                                     )))
                                       }
                                   },

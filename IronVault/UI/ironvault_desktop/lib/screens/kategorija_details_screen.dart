@@ -1,21 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/dobavljac.dart';
 import 'package:ironvault_desktop/models/kategorija.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/models/suplement.dart';
-import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
-import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/screens/kategorija_list_screen.dart';
-import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class KategorijaDetailsScreen extends StatefulWidget {
