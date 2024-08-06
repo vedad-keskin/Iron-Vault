@@ -24,6 +24,8 @@ builder.Services.AddTransient<IRecenzijaService, RecenzijaService>();
 builder.Services.AddTransient<IFaqService, FaqService>();
 builder.Services.AddTransient<IClanarinaService, ClanarinaService>();
 builder.Services.AddTransient<ISeminarService, SeminarService>();
+builder.Services.AddTransient<ITrenerService, TrenerService>();
+builder.Services.AddTransient<INutricionistService, NutricionistService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
