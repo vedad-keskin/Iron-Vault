@@ -6,6 +6,7 @@ import 'package:ironvault_desktop/screens/faq_list_screen.dart';
 import 'package:ironvault_desktop/screens/grad_list_screen.dart';
 import 'package:ironvault_desktop/screens/kategorija_list_screen.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
+import 'package:ironvault_desktop/screens/seminar_list_screen.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -79,6 +80,12 @@ class _MasterScreenState extends State<MasterScreen> {
               title: const Text("Kategorije"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const KategorijaListScreen()));
+              },
+            ),
+              ListTile(
+              title: const Text("Seminari"),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SeminarListScreen()));
               },
             ),
             ListTile(
