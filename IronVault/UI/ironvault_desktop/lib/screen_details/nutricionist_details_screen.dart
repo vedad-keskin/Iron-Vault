@@ -54,7 +54,9 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
       'prezime': widget.nutricionist?.prezime,
       'email': widget.nutricionist?.email,
       'brojTelefona': widget.nutricionist?.brojTelefona,
-      'slika': widget.nutricionist?.slika.toString()
+      'slika': widget.nutricionist?.slika != null
+          ? widget.nutricionist!.slika.toString()
+          : null
     };
 
     initForm();

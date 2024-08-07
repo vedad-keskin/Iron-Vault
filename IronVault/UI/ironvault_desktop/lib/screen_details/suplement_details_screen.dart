@@ -61,7 +61,9 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       'opis': widget.suplement?.opis,
       'dobavljacId': widget.suplement?.dobavljacId.toString(),
       'kategorijaId': widget.suplement?.kategorijaId.toString(),
-      'slika': widget.suplement?.slika.toString()
+      'slika': widget.suplement?.slika != null
+          ? widget.suplement!.slika.toString()
+          : null
     };
 
     initForm();
@@ -106,15 +108,15 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
         padding: const EdgeInsets.fromLTRB(150, 30, 150, 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            tooltip: "Nazad",
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const SuplementListScreen()));
-            },
-          ),
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              tooltip: "Nazad",
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const SuplementListScreen()));
+              },
+            ),
             const SizedBox(height: 20),
             Row(
               children: [
@@ -299,77 +301,73 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
   }
 
   void _showConfirmationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Potvrda'),
-        content: const Text('Da li želite spasiti izmjene'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Otkaži'),
-            onPressed: () {
-              Navigator.of(context).pop(); // Dismiss the dialog
-            },
-          ),
-          TextButton(
-            child: const Text('Potvrdi'),
-            onPressed: () async {
-              
-              debugPrint(_formKey.currentState?.value.toString());
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Potvrda'),
+          content: const Text('Da li želite spasiti izmjene'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Otkaži'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Potvrdi'),
+              onPressed: () async {
+                debugPrint(_formKey.currentState?.value.toString());
 
-              var request = Map.from(_formKey.currentState!.value);
+                var request = Map.from(_formKey.currentState!.value);
 
-              request['slika'] = _initialValue['slika'];
+                request['slika'] = _initialValue['slika'];
 
-              try {
-                if (widget.suplement == null) {
-                  await suplementProvider.insert(request);
-                } else {
-                  await suplementProvider.update(
-                      widget.suplement!.suplementId!, request);
-                }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SuplementListScreen()));
-              } on Exception catch (e) {
-                
-
-                showDialog(
-                  
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text(
-                      "Greška",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    content: Text(
-                      e.toString().replaceFirst('Exception: ', ''),
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text(
-                          "OK",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
+                try {
+                  if (widget.suplement == null) {
+                    await suplementProvider.insert(request);
+                  } else {
+                    await suplementProvider.update(
+                        widget.suplement!.suplementId!, request);
+                  }
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const SuplementListScreen()));
+                } on Exception catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text(
+                        "Greška",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+                      content: Text(
+                        e.toString().replaceFirst('Exception: ', ''),
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

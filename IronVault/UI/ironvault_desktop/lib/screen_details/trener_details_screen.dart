@@ -51,7 +51,8 @@ class _TrenerDetailsScreenState extends State<TrenerDetailsScreen> {
       'prezime': widget.trener?.prezime,
       'email': widget.trener?.email,
       'brojTelefona': widget.trener?.brojTelefona,
-      'slika': widget.trener?.slika.toString()
+      'slika':
+          widget.trener?.slika != null ? widget.trener!.slika.toString() : null
     };
 
     initForm();
