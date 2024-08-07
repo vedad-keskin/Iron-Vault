@@ -3,7 +3,7 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
-import 'package:ironvault_desktop/screens/suplement_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/suplement_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 

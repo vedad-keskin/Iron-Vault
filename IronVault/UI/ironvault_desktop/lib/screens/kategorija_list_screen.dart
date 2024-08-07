@@ -3,7 +3,7 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/kategorija.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
-import 'package:ironvault_desktop/screens/kategorija_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/kategorija_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class KategorijaListScreen extends StatefulWidget {

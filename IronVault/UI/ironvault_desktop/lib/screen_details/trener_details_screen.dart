@@ -9,7 +9,6 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/providers/trener_provider.dart';
-import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:ironvault_desktop/screens/trener_list_screen.dart';
 import 'package:provider/provider.dart';
 

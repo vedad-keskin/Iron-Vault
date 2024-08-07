@@ -4,7 +4,7 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/seminar.dart';
 import 'package:ironvault_desktop/providers/seminar_provider.dart';
-import 'package:ironvault_desktop/screens/seminar_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/seminar_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class SeminarListScreen extends StatefulWidget {

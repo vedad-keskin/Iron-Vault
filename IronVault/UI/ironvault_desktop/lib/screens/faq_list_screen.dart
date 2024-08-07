@@ -3,8 +3,8 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/faq.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/providers/faq_provider.dart';
-import 'package:ironvault_desktop/screens/faq_details_screen.dart';
-import 'package:ironvault_desktop/screens/kategorija_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/faq_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/kategorija_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class FaqListScreen extends StatefulWidget {

@@ -3,7 +3,7 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/dobavljac.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
-import 'package:ironvault_desktop/screens/dobavljac_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/dobavljac_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class DobavljacListScreen extends StatefulWidget {

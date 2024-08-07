@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
+import 'package:ironvault_desktop/models/nutricionist.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/trener.dart';
+import 'package:ironvault_desktop/providers/nutricionist_provider.dart';
 import 'package:ironvault_desktop/providers/trener_provider.dart';
+import 'package:ironvault_desktop/screen_details/nutricionist_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
-class TrenerListScreen extends StatefulWidget {
-  const TrenerListScreen({super.key});
+class NutricionistListScreen extends StatefulWidget {
+  const NutricionistListScreen({super.key});
 
   @override
-  State<TrenerListScreen> createState() => _TrenerListScreenState();
+  State<NutricionistListScreen> createState() => _NutricionistListScreenState();
 }
 
-class _TrenerListScreenState extends State<TrenerListScreen> {
-  late TrenerProvider provider;
+class _NutricionistListScreenState extends State<NutricionistListScreen> {
+  late NutricionistProvider provider;
 
   @override
   void didChangeDependencies() {
@@ -25,7 +28,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
 
   @override
   void initState() {
-    provider = context.read<TrenerProvider>();
+    provider = context.read<NutricionistProvider>();
 
     // TODO: implement initState
     super.initState();
@@ -44,11 +47,11 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
     });
   }
 
-  SearchResult<Trener>? result;
+  SearchResult<Nutricionist>? result;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Lista trenera",
+        "Lista nutricionista",
         Container(
           child: Column(
             children: [
@@ -100,9 +103,9 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
               ElevatedButton(
                 onPressed: () async {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => TrenerDetailsScreen()));
+                      builder: (context) => NutricionistDetailsScreen()));
                 },
-                child: const Text("Dodaj novog trenera"),
+                child: const Text("Dodaj novog nutricionistu"),
               ),
             ],
           ),
@@ -138,8 +141,8 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    TrenerDetailsScreen(
-                                                      trener: e,
+                                                    NutricionistDetailsScreen(
+                                                      nutricionist: e,
                                                     )))
                                       }
                                   },
