@@ -121,7 +121,7 @@ class _FaqListScreenState extends State<FaqListScreen> {
               return DataTable(
                 showCheckboxColumn: false,
                 columnSpacing: 12,
-                dataRowMaxHeight: 80, // Set the height of the rows
+                dataRowMaxHeight: 70, // Set the height of the rows
                 columns: const [
                   DataColumn(label: Text("Pitanje")),
                   DataColumn(label: Text("Odgovor")),

@@ -145,7 +145,7 @@ class _SeminarListScreenState extends State<SeminarListScreen> {
               return DataTable(
                 showCheckboxColumn: false,
                 columnSpacing: 12,
-                dataRowMaxHeight: 80, // Set the height of the rows
+                dataRowMaxHeight: 70, // Set the height of the rows
                 columns: const [
                   DataColumn(label: Text("Tema")),
                   DataColumn(label: Text("Predavač")),

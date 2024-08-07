@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/clanarina.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/providers/clanarina_provider.dart';
-import 'package:ironvault_desktop/screens/clanarina_details_screen.dart';
+import 'package:ironvault_desktop/models/trener.dart';
+import 'package:ironvault_desktop/providers/trener_provider.dart';
+import 'package:ironvault_desktop/screens/trener_details_screen.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
-class ClanarinaListScreen extends StatefulWidget {
-  const ClanarinaListScreen({super.key});
+class TrenerListScreen extends StatefulWidget {
+  const TrenerListScreen({super.key});
 
   @override
-  State<ClanarinaListScreen> createState() => _ClanarinaListScreenState();
+  State<TrenerListScreen> createState() => _TrenerListScreenState();
 }
 
-class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
-  late ClanarinaProvider provider;
+class _TrenerListScreenState extends State<TrenerListScreen> {
+  late TrenerProvider provider;
 
   @override
   void didChangeDependencies() {
@@ -24,7 +25,7 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
 
   @override
   void initState() {
-    provider = context.read<ClanarinaProvider>();
+    provider = context.read<TrenerProvider>();
 
     // TODO: implement initState
     super.initState();
@@ -34,7 +35,7 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
 
   Future initForm() async {
     var filter = {
-      'naziv': _ftsEditingController.text,
+      'imePrezime': _imePrezimeEditingController.text,
     };
     result = await provider.get(filter: filter);
 
@@ -43,11 +44,11 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
     });
   }
 
-  SearchResult<Clanarina>? result;
+  SearchResult<Trener>? result;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Lista mjesečnih paketa",
+        "Lista trenera",
         Container(
           child: Column(
             children: [
@@ -58,7 +59,7 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
         ));
   }
 
-  final TextEditingController _ftsEditingController = TextEditingController();
+  final TextEditingController _imePrezimeEditingController = TextEditingController();
 
   Widget _buildSearch() {
     return Padding(
@@ -73,9 +74,9 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
                   onChanged: (value) async {
                     initForm();
                   },
-                  controller: _ftsEditingController,
+                  controller: _imePrezimeEditingController,
                   decoration: InputDecoration(
-                    labelText: "Naziv",
+                    labelText: "Ime ili prezime",
                     filled: true,
                     fillColor: Colors.grey[200],
                     border: OutlineInputBorder(
@@ -99,9 +100,9 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
               ElevatedButton(
                 onPressed: () async {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => ClanarinaDetailsScreen()));
+                      builder: (context) => TrenerDetailsScreen()));
                 },
-                child: const Text("Dodaj novi paket"),
+                child: const Text("Dodaj novog trenera"),
               ),
             ],
           ),
@@ -122,9 +123,11 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
                 columnSpacing: 12,
                 dataRowMaxHeight: 70, // Set the height of the rows
                 columns: const [
-                  DataColumn(label: Text("Naziv")),
-                  DataColumn(label: Text("Cijena")),
-                  DataColumn(label: Text("Opis")),
+                  DataColumn(label: Text("Ime")),
+                  DataColumn(label: Text("Prezime")),
+                  DataColumn(label: Text("Email")),
+                  DataColumn(label: Text("Broj telefona")),
+                  DataColumn(label: Text("Slika")),
                 ],
                 rows: result?.result
                         .map((e) {
@@ -132,32 +135,53 @@ class _ClanarinaListScreenState extends State<ClanarinaListScreen> {
                               onSelectChanged: (selected) => {
                                     if (selected == true)
                                       {
-                                            Navigator.of(context).pushReplacement(
+                                        Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    ClanarinaDetailsScreen(
-                                                      clanarina: e,
+                                                    TrenerDetailsScreen(
+                                                      trener: e,
                                                     )))
                                       }
                                   },
                               cells: [
                                 DataCell(Container(
                                   width: constraints.maxWidth *
-                                      0.2, // 40% of the available width
-                                  child: Text(e.naziv ?? ""),
+                                      0.1, // 40% of the available width
+                                  child: Text(e.ime ?? ""),
                                 )),
                                 DataCell(Container(
                                   width: constraints.maxWidth *
                                       0.1, // 40% of the available width
-                                  child: Text(e.cijena == null
-                                    ? "0 KM "
-                                    : "${e.cijena} KM")),
-                                ),
-                               DataCell(Container(
-                                  width: constraints.maxWidth *
-                                      0.6, // 40% of the available width
-                                  child: Text(e.opis ?? ""),
+                                  child: Text(e.prezime ?? ""),
                                 )),
+                                DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.2, // 40% of the available width
+                                  child: Text(e.email ?? ""),
+                                )),
+                                DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.1, // 40% of the available width
+                                  child: Text(e.brojTelefona ?? ""),
+                                )),
+                                DataCell(
+                                  e.slika != null
+                                      ? SizedBox(
+                                          width:
+                                              100, // Set the width of the image container
+                                          height:
+                                              300, // Set the height of the image container
+                                          child: Image.memory(
+                                            base64Decode(e
+                                                .slika!), // Decode base64 string
+                                               
+                                            fit: BoxFit
+                                                .fitHeight, // Ensures the image scales properly
+                                                
+                                          ),
+                                        )
+                                      : const Text(""),
+                                ),
                               ]);
                         })
                         .toList()
