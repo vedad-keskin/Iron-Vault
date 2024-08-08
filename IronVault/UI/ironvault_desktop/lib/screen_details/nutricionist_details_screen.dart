@@ -225,7 +225,7 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
                 style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const TrenerListScreen()));
+                      builder: (context) => const NutricionistListScreen()));
                 },
                 child: const Text("Odustani")),
           ),
