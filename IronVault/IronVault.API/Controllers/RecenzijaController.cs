@@ -37,11 +37,19 @@ namespace IronVault.API.Controllers
             return base.GetList(searchObject);
         }
 
+
         [AllowAnonymous]
         public override Recenzija GetById(int id)
         {
             return base.GetById(id);
         }
 
+
+        [HttpGet("{id}/ListById")]
+        [Authorize(Roles = "Administrator")]
+        public List<Recenzija> GetListById(int id)
+        {
+            return (_service as IRecenzijaService).GetListById(id);
+        }
     }
 }

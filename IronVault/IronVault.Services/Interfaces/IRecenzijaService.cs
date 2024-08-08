@@ -11,6 +11,6 @@ namespace IronVault.Services.Interfaces
 {
     public interface IRecenzijaService : ICRUDService<Recenzija, RecenzijaSerachObject, RecenzijaInsertRequest, RecenzijaUpdateRequest>
     {
-
+        List<Model.Models.Recenzija> GetListById(int id);
     }
 }

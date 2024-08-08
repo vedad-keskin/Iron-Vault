@@ -17,5 +17,7 @@ namespace IronVault.Services.Interfaces
         public List<string> AllowedActions(int id);
         List<Model.Models.Suplement> Recommend(int id);
 
+        
+
     }
 }
