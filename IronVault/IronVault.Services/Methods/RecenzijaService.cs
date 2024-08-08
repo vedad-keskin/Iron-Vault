@@ -20,12 +20,17 @@ namespace IronVault.Services.Methods
 
         public override IQueryable<Recenzija> AddFilter(RecenzijaSerachObject search, IQueryable<Recenzija> query)
         {
-            query = base.AddFilter(search, query);
+            var filteredQuery = base.AddFilter(search, query);
 
-            query = query.Include(x => x.Korisnik).Include(x => x.Suplement);
+            filteredQuery = filteredQuery.Include(x => x.Korisnik).Include(x => x.Suplement);
+
+            if (!string.IsNullOrWhiteSpace(search?.SuplementId))
+            {
+                filteredQuery = filteredQuery.Where(x => x.SuplementId.ToString() == search.SuplementId );
+            }
 
 
-            return base.AddFilter(search, query);
+            return filteredQuery;
         }
 
 
@@ -38,6 +43,7 @@ namespace IronVault.Services.Methods
 
         }
 
+       
 
 
         public override void BeforeInsert(RecenzijaInsertRequest request, Recenzija entity)

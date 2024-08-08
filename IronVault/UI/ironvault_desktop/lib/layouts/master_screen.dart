@@ -7,6 +7,7 @@ import 'package:ironvault_desktop/screens/grad_list_screen.dart';
 import 'package:ironvault_desktop/screens/kategorija_list_screen.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
 import 'package:ironvault_desktop/screens/nutricionist_list_screen.dart';
+import 'package:ironvault_desktop/screens/recenzija_list_screen.dart';
 import 'package:ironvault_desktop/screens/seminar_list_screen.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:ironvault_desktop/screens/trener_list_screen.dart';
@@ -63,6 +64,12 @@ class _MasterScreenState extends State<MasterScreen> {
               title: const Text("Suplementi"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const SuplementListScreen()));
+              },
+            ),
+            ListTile(
+              title: const Text("Recenzije"),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const RecenzijaListScreen()));
               },
             ),
             ListTile(

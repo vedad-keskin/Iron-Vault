@@ -6,5 +6,6 @@ namespace IronVault.Model.SearchObjects
 {
     public class RecenzijaSerachObject : BaseSearchObject
     {
+        public string? SuplementId { get; set; }
     }
 }

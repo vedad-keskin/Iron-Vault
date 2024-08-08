@@ -45,7 +45,7 @@ namespace IronVault.API.Controllers
         }
 
 
-        [HttpGet("{id}/ListById")]
+        [HttpGet("{id}/GetListById")]
         [Authorize(Roles = "Administrator")]
         public List<Recenzija> GetListById(int id)
         {
