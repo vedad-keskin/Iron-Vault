@@ -106,7 +106,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       key: _formKey,
       initialValue: _initialValue,
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 30, 150, 15),
+        padding: const EdgeInsets.fromLTRB(150, 0, 150, 15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -254,22 +254,46 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
             const SizedBox(height: 10),
             Row(
               children: [
-                Expanded(
-                  child: Container(
-                    height: 60,
-                    decoration: BoxDecoration(
-                      color: _getColorForState(_initialValue[
-                          'stateMachine']), // Method to determine color
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: FormBuilderTextField(
-                      decoration:
-                          commonDecoration.copyWith(labelText: "Stanje"),
-                      name: 'stateMachine',
-                      enabled: false,
-                    ),
+                Container(
+                  height: 60,
+                  width: 250,
+                  decoration: BoxDecoration(
+                    color: _getColorForState(_initialValue[
+                        'stateMachine']), // Method to determine color
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: FormBuilderTextField(
+                    decoration: commonDecoration.copyWith(labelText: "Stanje"),
+                    name: 'stateMachine',
+                    enabled: false,
                   ),
                 ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: widget.suplement != null
+                        ? Colors.grey[200]
+                        : Colors.grey, // Change color based on enabled state
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 8.0),
+                    side: BorderSide.none, // No border
+                    elevation: 2, // Shadow
+                  ),
+                  onPressed: widget.suplement != null
+                      ? () {
+                          _showChoiceDialog(context);
+                        }
+                      : null, // Disable button if widget.suplement is null
+                  child: const Text(
+                    'Promijeni stanje',
+                    style: TextStyle(
+                      color: Colors.black, // Adjust text color as needed
+                    ),
+                  ),
+                )
               ],
             ),
           ],
@@ -311,10 +335,12 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
               padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
               child: ElevatedButton(
                 // Ako su polja validirana idi na dialog
+
                 onPressed: () => {
                   if (_formKey.currentState!.saveAndValidate())
                     {
-                      if (_initialValue['stateMachine'] == 'active' || _initialValue['stateMachine'] == 'hidden')
+                      if (_initialValue['stateMachine'] == 'active' ||
+                          _initialValue['stateMachine'] == 'hidden')
                         {_showErrorDialog(context)}
                       else
                         {_showConfirmationDialog(context)}
@@ -409,35 +435,154 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       },
     );
   }
-}
 
-void _showErrorDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text(
-          'Greška',
-          style: TextStyle(
-            color: Colors.red,
-            fontWeight: FontWeight.bold,
+  void _showErrorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Greška',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ),
-        content: const Text(
-          'Stanje suplementa mora biti u stanju draft da bi ga mogli uređivati',
-          style: TextStyle(
-            fontSize: 16,
+          content: const Text(
+            'Ako želite urediti suplement on mora biti u draft stanju',
+            style: TextStyle(
+              fontSize: 16,
+            ),
           ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: const Text('OK'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+    void _showErrorDialog2(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text(
+            'Greška',
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-        ],
-      );
-    },
-  );
+          content: const Text(
+            'Promjena u odabrano stanje nije dozvoljena',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop(); // Close the dialog
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showChoiceDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Odaberite stanje'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.yellow, // Text color
+                        foregroundColor: Colors.black),
+                     onPressed: () async {
+                      // Activate
+
+                      if (widget.suplement != null && _initialValue['stateMachine'] != "draft") {
+                        await suplementProvider.Edit(
+                            widget.suplement!.suplementId!);
+
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const SuplementListScreen()));
+                      } else {
+                        _showErrorDialog2(context);
+                      }
+
+
+                    },
+                    child: const Text('Draft'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.green, // Text color
+                        foregroundColor: Colors.black),
+                    onPressed: () async {
+                      // Activate
+
+                      if (widget.suplement != null && _initialValue['stateMachine'] != "active" && _initialValue['stateMachine'] != "hidden") {
+                        await suplementProvider.Activate(
+                            widget.suplement!.suplementId!);
+
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const SuplementListScreen()));
+                      } else {
+                        _showErrorDialog2(context);
+                      }
+                          
+                    },
+                    child: const Text('Active'),
+                  ),
+                  const SizedBox(
+                    width: 10,
+                  ),
+                  TextButton(
+                    style: TextButton.styleFrom(
+                        backgroundColor: Colors.orange, // Text color
+                        foregroundColor: Colors.black),
+                           onPressed: () async {
+                      // Activate
+
+                      if (widget.suplement != null && _initialValue['stateMachine'] != "activate" && _initialValue['stateMachine'] != "hidden") {
+                        await suplementProvider.Hide(
+                            widget.suplement!.suplementId!);
+
+                            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const SuplementListScreen()));
+                      } else {
+                        _showErrorDialog2(context);
+                      }
+
+
+                    },
+                    child: const Text('Hidden'),
+                  ),
+                ],
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 }

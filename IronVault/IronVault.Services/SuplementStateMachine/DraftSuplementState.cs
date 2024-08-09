@@ -40,11 +40,11 @@ namespace IronVault.Services.SuplementStateMachine
 
             Context.SaveChanges();
 
-            var bus = RabbitHutch.CreateBus("host=localhost:5673");
+            // var bus = RabbitHutch.CreateBus("host=localhost:5673");
 
             var mappedEntity = Mapper.Map<Model.Models.Suplement>(entity);
             SuplementActivated message = new SuplementActivated { Suplement = mappedEntity };
-            bus.PubSub.Publish(message);
+            // bus.PubSub.Publish(message);
 
             return mappedEntity;
         }
