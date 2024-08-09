@@ -14,6 +14,7 @@ import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
+import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class SuplementDetailsScreen extends StatefulWidget {
@@ -341,7 +342,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     {
                       if (_initialValue['stateMachine'] == 'active' ||
                           _initialValue['stateMachine'] == 'hidden')
-                        {_showErrorDialog(context)}
+                        {ErrorDialog(context,"Ako želite urediti suplement on mora biti u draft stanju")}
                       else
                         {_showConfirmationDialog(context)}
                     }
@@ -436,67 +437,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     );
   }
 
-  void _showErrorDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Greška',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: const Text(
-            'Ako želite urediti suplement on mora biti u draft stanju',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
-    void _showErrorDialog2(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text(
-            'Greška',
-            style: TextStyle(
-              color: Colors.red,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          content: const Text(
-            'Promjena u odabrano stanje nije dozvoljena',
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-              child: const Text('OK'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   void _showChoiceDialog(BuildContext context) {
     showDialog(
@@ -523,7 +464,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const SuplementListScreen()));
                       } else {
-                        _showErrorDialog2(context);
+                         ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
                       }
 
 
@@ -547,7 +488,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const SuplementListScreen()));
                       } else {
-                        _showErrorDialog2(context);
+                        ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
                       }
                           
                     },
@@ -569,8 +510,11 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
 
                             Navigator.of(context).pushReplacement(MaterialPageRoute(
                           builder: (context) => const SuplementListScreen()));
+
+
+
                       } else {
-                        _showErrorDialog2(context);
+                        ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
                       }
 
 
