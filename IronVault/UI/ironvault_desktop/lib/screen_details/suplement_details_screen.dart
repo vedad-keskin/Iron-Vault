@@ -59,6 +59,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       'cijena': widget.suplement?.cijena.toString(),
       'gramaza': widget.suplement?.gramaza.toString(),
       'opis': widget.suplement?.opis,
+      'stateMachine': widget.suplement?.stateMachine,
       'dobavljacId': widget.suplement?.dobavljacId.toString(),
       'kategorijaId': widget.suplement?.kategorijaId.toString(),
       'slika': widget.suplement?.slika != null
@@ -251,10 +252,43 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
               ],
             ),
             const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 60,
+                    decoration: BoxDecoration(
+                      color: _getColorForState(_initialValue[
+                          'stateMachine']), // Method to determine color
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: FormBuilderTextField(
+                      decoration:
+                          commonDecoration.copyWith(labelText: "Stanje"),
+                      name: 'stateMachine',
+                      enabled: false,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
+  }
+
+  Color _getColorForState(String? state) {
+    switch (state) {
+      case 'draft':
+        return Colors.yellow;
+      case 'active':
+        return Colors.green;
+      case 'hidden':
+        return Colors.orange;
+      default:
+        return Colors.grey;
+    }
   }
 
   Widget _saveRow() {
@@ -279,7 +313,12 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                 // Ako su polja validirana idi na dialog
                 onPressed: () => {
                   if (_formKey.currentState!.saveAndValidate())
-                    {_showConfirmationDialog(context)}
+                    {
+                      if (_initialValue['stateMachine'] == 'active' || _initialValue['stateMachine'] == 'hidden')
+                        {_showErrorDialog(context)}
+                      else
+                        {_showConfirmationDialog(context)}
+                    }
                 },
                 child: const Text('Sačuvaj'),
               ))
@@ -370,4 +409,35 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       },
     );
   }
+}
+
+void _showErrorDialog(BuildContext context) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text(
+          'Greška',
+          style: TextStyle(
+            color: Colors.red,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        content: const Text(
+          'Stanje suplementa mora biti u stanju draft da bi ga mogli uređivati',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the dialog
+            },
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -15,6 +15,7 @@ Suplement _$SuplementFromJson(Map<String, dynamic> json) => Suplement(
       ..slika = json['slika'] as String?
       ..cijena = (json['cijena'] as num?)?.toDouble()
       ..prosjecnaOcjena = (json['prosjecnaOcjena'] as num?)?.toDouble()
+      ..stateMachine = json['stateMachine'] as String?
       ..dobavljacId = (json['dobavljacId'] as num?)?.toInt()
       ..dobavljac = json['dobavljac'] == null
           ? null
@@ -32,6 +33,7 @@ Map<String, dynamic> _$SuplementToJson(Suplement instance) => <String, dynamic>{
       'slika': instance.slika,
       'cijena': instance.cijena,
       'prosjecnaOcjena': instance.prosjecnaOcjena,
+      'stateMachine': instance.stateMachine,
       'dobavljacId': instance.dobavljacId,
       'dobavljac': instance.dobavljac,
       'kategorijaId': instance.kategorijaId,

@@ -13,6 +13,7 @@ class Suplement {
   String? slika;
   double? cijena;
   double? prosjecnaOcjena;
+  String? stateMachine;
   int? dobavljacId;
   Dobavljac? dobavljac;
   int? kategorijaId;
