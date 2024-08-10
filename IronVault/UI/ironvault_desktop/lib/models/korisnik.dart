@@ -18,7 +18,7 @@ class Korisnik {
   double? visina;
   double? tezina;
   int? razina;
-  Duration? vrijemeUteretani;
+  // Duration? vrijemeUteretani;
   int? gradId;
   int? spolId;
   int? teretanaId;

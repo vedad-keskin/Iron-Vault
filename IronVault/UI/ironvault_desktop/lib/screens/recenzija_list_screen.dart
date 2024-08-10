@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
-import 'package:ironvault_desktop/models/clanarina.dart';
 import 'package:ironvault_desktop/models/recenzija.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/suplement.dart';
-import 'package:ironvault_desktop/providers/clanarina_provider.dart';
 import 'package:ironvault_desktop/providers/recenzija_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
-import 'package:ironvault_desktop/screen_details/clanarina_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class RecenzijaListScreen extends StatefulWidget {

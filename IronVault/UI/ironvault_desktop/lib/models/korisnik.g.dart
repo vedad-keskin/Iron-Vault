@@ -18,9 +18,9 @@ Korisnik _$KorisnikFromJson(Map<String, dynamic> json) => Korisnik(
       ..visina = (json['visina'] as num?)?.toDouble()
       ..tezina = (json['tezina'] as num?)?.toDouble()
       ..razina = (json['razina'] as num?)?.toInt()
-      ..vrijemeUteretani = json['vrijemeUteretani'] == null
-          ? null
-          : Duration(microseconds: (json['vrijemeUteretani'] as num).toInt())
+      //..vrijemeUteretani = json['vrijemeUteretani'] == null
+      //    ? null
+      //    : Duration(microseconds: (json['vrijemeUteretani'] as num).toInt())
       ..gradId = (json['gradId'] as num?)?.toInt()
       ..spolId = (json['spolId'] as num?)?.toInt()
       ..teretanaId = (json['teretanaId'] as num?)?.toInt();
@@ -36,7 +36,7 @@ Map<String, dynamic> _$KorisnikToJson(Korisnik instance) => <String, dynamic>{
       'visina': instance.visina,
       'tezina': instance.tezina,
       'razina': instance.razina,
-      'vrijemeUteretani': instance.vrijemeUteretani?.inMicroseconds,
+      // 'vrijemeUteretani': instance.vrijemeUteretani?.inMicroseconds,
       'gradId': instance.gradId,
       'spolId': instance.spolId,
       'teretanaId': instance.teretanaId,

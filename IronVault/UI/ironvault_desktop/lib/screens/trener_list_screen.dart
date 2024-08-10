@@ -4,6 +4,7 @@ import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/providers/trener_provider.dart';
 import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/trener_seminar_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
@@ -20,7 +21,6 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
   }
 
   @override
@@ -39,9 +39,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
     };
     result = await provider.get(filter: filter);
 
-
-    setState(() {
-    });
+    setState(() {});
   }
 
   SearchResult<Trener>? result;
@@ -51,15 +49,13 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
         "Lista trenera",
         Container(
           child: Column(
-            children: [
-              _buildSearch(),
-              _buildResultView()
-            ],
+            children: [_buildSearch(), _buildResultView()],
           ),
         ));
   }
 
-  final TextEditingController _imePrezimeEditingController = TextEditingController();
+  final TextEditingController _imePrezimeEditingController =
+      TextEditingController();
 
   Widget _buildSearch() {
     return Padding(
@@ -90,7 +86,6 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                   ),
                 ),
               ),
-              
             ],
           ),
           const SizedBox(height: 18),
@@ -123,11 +118,11 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                 columnSpacing: 12,
                 dataRowMaxHeight: 70, // Set the height of the rows
                 columns: const [
-                  DataColumn(label: Text("Ime")),
-                  DataColumn(label: Text("Prezime")),
+                  DataColumn(label: Text("Ime i prezime")),
                   DataColumn(label: Text("Email")),
                   DataColumn(label: Text("Broj telefona")),
                   DataColumn(label: Text("Slika")),
+                  DataColumn(label: Text("")),
                 ],
                 rows: result?.result
                         .map((e) {
@@ -146,13 +141,8 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                               cells: [
                                 DataCell(Container(
                                   width: constraints.maxWidth *
-                                      0.1, // 40% of the available width
-                                  child: Text(e.ime ?? ""),
-                                )),
-                                DataCell(Container(
-                                  width: constraints.maxWidth *
-                                      0.1, // 40% of the available width
-                                  child: Text(e.prezime ?? ""),
+                                      0.3, // 40% of the available width
+                                  child: Text("${e.ime} ${e.prezime}"),
                                 )),
                                 DataCell(Container(
                                   width: constraints.maxWidth *
@@ -174,13 +164,31 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                                           child: Image.memory(
                                             base64Decode(e
                                                 .slika!), // Decode base64 string
-                                               
+
                                             fit: BoxFit
                                                 .fitHeight, // Ensures the image scales properly
-                                                
                                           ),
                                         )
                                       : const Text(""),
+                                ),
+                                DataCell(
+                                  Container(
+                                    width: constraints.maxWidth *
+                                        0.1, // 10% of the available width
+                                    child: ElevatedButton(
+                                      onPressed: () {
+
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    TrenerSeminarDetailsScreen(
+                                                      trener: e,
+                                                    )));
+                                                    
+                                      },
+                                      child: Text('Seminari'),
+                                    ),
+                                  ),
                                 ),
                               ]);
                         })
