@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -43,6 +42,26 @@ abstract class BaseProvider<T> with ChangeNotifier {
       }
 
       return result;
+    } else {
+      throw new Exception("Nepoznat problem");
+    }
+    // print("response: ${response.request} ${response.statusCode}, ${response.body}");
+  }
+
+  Future<T> getbyid(int id) async {
+    var url = "$_baseUrl$_endpoint/$id";
+
+    var uri = Uri.parse(url);
+    var headers = createHeaders();
+
+    var response = await http.get(uri, headers: headers);
+
+    if (isValidResponse(response)) {
+      var data = jsonDecode(response.body);
+
+ 
+
+      return fromJson(data);
     } else {
       throw new Exception("Nepoznat problem");
     }
