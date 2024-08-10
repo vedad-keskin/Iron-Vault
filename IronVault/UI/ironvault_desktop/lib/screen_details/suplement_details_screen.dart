@@ -267,6 +267,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     decoration: commonDecoration.copyWith(labelText: "Stanje"),
                     name: 'stateMachine',
                     enabled: false,
+                    
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -342,7 +343,10 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     {
                       if (_initialValue['stateMachine'] == 'active' ||
                           _initialValue['stateMachine'] == 'hidden')
-                        {ErrorDialog(context,"Ako želite urediti suplement on mora biti u draft stanju")}
+                        {
+                          ErrorDialog(context,
+                              "Ako želite urediti suplement on mora biti u draft stanju")
+                        }
                       else
                         {_showConfirmationDialog(context)}
                     }
@@ -437,8 +441,6 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     );
   }
 
-
-
   void _showChoiceDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -454,20 +456,28 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     style: TextButton.styleFrom(
                         backgroundColor: Colors.yellow, // Text color
                         foregroundColor: Colors.black),
-                     onPressed: () async {
+                    onPressed: () async {
                       // Activate
 
-                      if (widget.suplement != null && _initialValue['stateMachine'] != "draft") {
+                      if (widget.suplement != null &&
+                          _initialValue['stateMachine'] != "draft" && _initialValue['stateMachine'] != "active") {
                         await suplementProvider.Edit(
                             widget.suplement!.suplementId!);
 
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const SuplementListScreen()));
+                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
+
+                        // Navigate to the SuplementDetailsScreen with the retrieved Suplement
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => SuplementDetailsScreen(
+                              suplement: suplement,
+                            ),
+                          ),
+                        );
                       } else {
-                         ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
+                        ErrorDialog(context,
+                            "Promjena u odabrano stanje nije dozvoljena");
                       }
-
-
                     },
                     child: const Text('Draft'),
                   ),
@@ -481,16 +491,26 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     onPressed: () async {
                       // Activate
 
-                      if (widget.suplement != null && _initialValue['stateMachine'] != "active" && _initialValue['stateMachine'] != "hidden") {
+                      if (widget.suplement != null &&
+                          _initialValue['stateMachine'] != "active" &&
+                          _initialValue['stateMachine'] != "hidden") {
                         await suplementProvider.Activate(
                             widget.suplement!.suplementId!);
 
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const SuplementListScreen()));
+                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
+
+                        // Navigate to the SuplementDetailsScreen with the retrieved Suplement
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => SuplementDetailsScreen(
+                              suplement: suplement,
+                            ),
+                          ),
+                        );
                       } else {
-                        ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
+                        ErrorDialog(context,
+                            "Promjena u odabrano stanje nije dozvoljena");
                       }
-                          
                     },
                     child: const Text('Active'),
                   ),
@@ -501,23 +521,31 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     style: TextButton.styleFrom(
                         backgroundColor: Colors.orange, // Text color
                         foregroundColor: Colors.black),
-                           onPressed: () async {
+                    onPressed: () async {
                       // Activate
 
-                      if (widget.suplement != null && _initialValue['stateMachine'] != "activate" && _initialValue['stateMachine'] != "hidden") {
+                      if (widget.suplement != null &&
+                          _initialValue['stateMachine'] != "activate" &&
+                          _initialValue['stateMachine'] != "hidden") {
                         await suplementProvider.Hide(
                             widget.suplement!.suplementId!);
 
-                            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                          builder: (context) => const SuplementListScreen()));
+                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
 
+                        // Navigate to the SuplementDetailsScreen with the retrieved Suplement
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(
+                            builder: (context) => SuplementDetailsScreen(
+                              suplement: suplement,
+                            ),
+                          ),
+                        );
 
 
                       } else {
-                        ErrorDialog(context,"Promjena u odabrano stanje nije dozvoljena");
+                        ErrorDialog(context,
+                            "Promjena u odabrano stanje nije dozvoljena");
                       }
-
-
                     },
                     child: const Text('Hidden'),
                   ),
