@@ -1,18 +1,20 @@
 import 'dart:convert';
-import 'dart:io';
 
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
+import 'package:ironvault_desktop/models/seminar.dart';
 import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/models/trener_seminar.dart';
-import 'package:ironvault_desktop/providers/trener_provider.dart';
+import 'package:ironvault_desktop/providers/seminar_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
+import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
 import 'package:ironvault_desktop/screens/trener_list_screen.dart';
+import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class TrenerSeminarDetailsScreen extends StatefulWidget {
@@ -30,7 +32,8 @@ class _TrenerSeminarDetailsScreenState
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
   late TrenerSeminarProvider provider;
-
+  late SeminarProvider seminarProvider;
+  late TrenerSeminarProvider trenerSeminarProvider;
   bool isLoading = true;
 
   final _base64Placeholder =
@@ -43,13 +46,14 @@ class _TrenerSeminarDetailsScreenState
 
   @override
   void initState() {
-      provider = context.read<TrenerSeminarProvider>();
-
+    provider = context.read<TrenerSeminarProvider>();
+    seminarProvider = context.read<SeminarProvider>();
+    trenerSeminarProvider = context.read<TrenerSeminarProvider>();
     // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'trenerId' : widget.trener?.trenerId,
+      'trenerId': widget.trener?.trenerId,
       'ime': widget.trener?.ime,
       'prezime': widget.trener?.prezime,
       'email': widget.trener?.email,
@@ -62,11 +66,11 @@ class _TrenerSeminarDetailsScreenState
   }
 
   Future initForm() async {
-
-  var filter = {
+    var filter = {
       'trenerId': _initialValue['trenerId'],
     };
     result = await provider.get(filter: filter);
+    searchResult = await seminarProvider.get();
 
     setState(() {
       isLoading = false;
@@ -86,19 +90,16 @@ class _TrenerSeminarDetailsScreenState
     ),
   );
 
-
   SearchResult<TrenerSeminar>? result;
+  SearchResult<Seminar>? searchResult;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
         "Odslušani seminari trenera",
         Column(
           children: [
-            _buildHeader(),
+            isLoading ? Container() : _buildHeader(),
             _buildResultView(),
-
-            // isLoading ? Container() : _buildForm(),
-            // _saveRow()
           ],
         ));
   }
@@ -169,8 +170,8 @@ class _TrenerSeminarDetailsScreenState
                   child: Column(
                     mainAxisSize: MainAxisSize
                         .min, // Ensures column size is based on content
-                    crossAxisAlignment: CrossAxisAlignment
-                        .start, // Center content horizontally
+                    crossAxisAlignment:
+                        CrossAxisAlignment.start, // Center content horizontally
                     children: [
                       Text(
                         "${_initialValue['ime']} ${_initialValue['prezime']}",
@@ -187,16 +188,27 @@ class _TrenerSeminarDetailsScreenState
               ),
             ],
           ),
+          const SizedBox(
+            height: 30,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              ElevatedButton(
+                onPressed: () => {_showChoiceDialog(context)},
+                child: const Text('Dodaj novi seminar'),
+              )
+            ],
+          ),
         ],
       ),
     );
   }
 
-
- Widget _buildResultView() {
+  Widget _buildResultView() {
     return Expanded(
       child: Padding(
-              padding: const EdgeInsets.fromLTRB(150, 15, 150, 15),
+        padding: const EdgeInsets.fromLTRB(150, 0, 150, 0),
         child: Container(
           width: double.infinity,
           child: SingleChildScrollView(
@@ -213,29 +225,23 @@ class _TrenerSeminarDetailsScreenState
                   ],
                   rows: result?.result
                           .map((e) {
-                            return DataRow(
-        
-                                cells: [
-                                  DataCell(Container(
-                                    width: constraints.maxWidth *
-                                        0.6, // 40% of the available width
-                                    child: Text(e.seminar?.tema ?? ""),
-                                   
-                                  )),
-                                  DataCell(Container(
-                                    width: constraints.maxWidth *
-                                        0.2, // 40% of the available width
-                                    child: Text(e.seminar?.predavac ?? ""),
-                                   
-                                  )),
-                                  DataCell(Container(
-                                    width: constraints.maxWidth *
-                                        0.2, // 40% of the available width
-                                    child: Text(DateFormat('dd MMM yyyy').format(e.seminar!.datum!))
-                                   
-                                  )),
-                                 
-                                ]);
+                            return DataRow(cells: [
+                              DataCell(Container(
+                                width: constraints.maxWidth *
+                                    0.6, // 40% of the available width
+                                child: Text(e.seminar?.tema ?? ""),
+                              )),
+                              DataCell(Container(
+                                width: constraints.maxWidth *
+                                    0.2, // 40% of the available width
+                                child: Text(e.seminar?.predavac ?? ""),
+                              )),
+                              DataCell(Container(
+                                  width: constraints.maxWidth *
+                                      0.2, // 40% of the available width
+                                  child: Text(DateFormat('dd MMM yyyy')
+                                      .format(e.seminar!.datum!)))),
+                            ]);
                           })
                           .toList()
                           .cast<DataRow>() ??
@@ -249,14 +255,85 @@ class _TrenerSeminarDetailsScreenState
     );
   }
 
+  void _showChoiceDialog(BuildContext context) {
+    final _formKey = GlobalKey<FormBuilderState>();
 
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Odaberite seminar'),
+          content: FormBuilder(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderDropdown(
+                        name: 'seminarId',
+                        decoration:
+                            commonDecoration.copyWith(labelText: "Seminar"),
+                        items: searchResult?.result
+                                .map((item) => DropdownMenuItem(
+                                    value: item.seminarId.toString(),
+                                    child: Text(item.tema ?? "")))
+                                .toList() ??
+                            [],
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                    height: 20), // Adds space between dropdown and button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState?.saveAndValidate() ?? false) {
+                          // Handle form submission
 
+                          debugPrint(_formKey.currentState?.value.toString());
+                          var request = Map.from(_formKey.currentState!.value);
 
+                          request['trenerId'] = _initialValue['trenerId'];
+
+                          if (result!.result
+                              .where((element) =>
+                                  element.seminarId.toString() ==
+                                  request['seminarId'])
+                              .isNotEmpty) {
+                            ErrorDialog(context, "Trener je odslušao odabrani seminar");
+                          } else {
+                            await trenerSeminarProvider.insert(request);
+
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    TrenerSeminarDetailsScreen(
+                                  trener: widget.trener,
+                                ),
+                              ),
+                            );
+                          }
+
+                          // Navigate to the SuplementDetailsScreen with the retrieved Suplement
+                        }
+                      },
+                      child: const Text('Dodaj'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 }
-
-
-
-
-
- 
-
