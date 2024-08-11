@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/nutricionist.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/providers/nutricionist_provider.dart';
-import 'package:ironvault_desktop/providers/trener_provider.dart';
 import 'package:ironvault_desktop/screen_details/nutricionist_details_screen.dart';
-import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
+import 'package:ironvault_desktop/screen_details/nutricionist_seminar_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
 
@@ -23,7 +21,6 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
   }
 
   @override
@@ -42,9 +39,7 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
     };
     result = await provider.get(filter: filter);
 
-
-    setState(() {
-    });
+    setState(() {});
   }
 
   SearchResult<Nutricionist>? result;
@@ -54,15 +49,13 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
         "Lista nutricionista",
         Container(
           child: Column(
-            children: [
-              _buildSearch(),
-              _buildResultView()
-            ],
+            children: [_buildSearch(), _buildResultView()],
           ),
         ));
   }
 
-  final TextEditingController _imePrezimeEditingController = TextEditingController();
+  final TextEditingController _imePrezimeEditingController =
+      TextEditingController();
 
   Widget _buildSearch() {
     return Padding(
@@ -93,7 +86,6 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                   ),
                 ),
               ),
-              
             ],
           ),
           const SizedBox(height: 18),
@@ -126,11 +118,11 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                 columnSpacing: 12,
                 dataRowMaxHeight: 70, // Set the height of the rows
                 columns: const [
-                  DataColumn(label: Text("Ime")),
-                  DataColumn(label: Text("Prezime")),
+                  DataColumn(label: Text("Ime i prezime")),
                   DataColumn(label: Text("Email")),
                   DataColumn(label: Text("Broj telefona")),
                   DataColumn(label: Text("Slika")),
+                  DataColumn(label: Text("")),
                 ],
                 rows: result?.result
                         .map((e) {
@@ -149,13 +141,8 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                               cells: [
                                 DataCell(Container(
                                   width: constraints.maxWidth *
-                                      0.1, // 40% of the available width
-                                  child: Text(e.ime ?? ""),
-                                )),
-                                DataCell(Container(
-                                  width: constraints.maxWidth *
-                                      0.1, // 40% of the available width
-                                  child: Text(e.prezime ?? ""),
+                                      0.3, // 40% of the available width
+                                  child: Text("${e.ime} ${e.prezime}"),
                                 )),
                                 DataCell(Container(
                                   width: constraints.maxWidth *
@@ -177,13 +164,29 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                                           child: Image.memory(
                                             base64Decode(e
                                                 .slika!), // Decode base64 string
-                                               
+
                                             fit: BoxFit
                                                 .fitHeight, // Ensures the image scales properly
-                                                
                                           ),
                                         )
                                       : const Text(""),
+                                ),
+                                DataCell(
+                                  Container(
+                                    width: constraints.maxWidth *
+                                        0.1, // 10% of the available width
+                                    child: ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NutricionistSeminarDetailsScreen(
+                                                      nutricionist: e,
+                                                    )));
+                                      },
+                                      child: Text('Seminari'),
+                                    ),
+                                  ),
                                 ),
                               ]);
                         })

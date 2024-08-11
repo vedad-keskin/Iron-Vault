@@ -6,32 +6,36 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
+import 'package:ironvault_desktop/models/nutricionist.dart';
+import 'package:ironvault_desktop/models/nutricionist_seminar.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/seminar.dart';
 import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/models/trener_seminar.dart';
+import 'package:ironvault_desktop/providers/nutricionist_seminar_provider.dart';
 import 'package:ironvault_desktop/providers/seminar_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
 import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
+import 'package:ironvault_desktop/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_desktop/screens/trener_list_screen.dart';
 import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
-class TrenerSeminarDetailsScreen extends StatefulWidget {
-  Trener? trener;
+class NutricionistSeminarDetailsScreen extends StatefulWidget {
+  Nutricionist? nutricionist;
 
-  TrenerSeminarDetailsScreen({super.key, this.trener});
+  NutricionistSeminarDetailsScreen({super.key, this.nutricionist});
 
   @override
-  State<TrenerSeminarDetailsScreen> createState() =>
-      _TrenerSeminarDetailsScreenState();
+  State<NutricionistSeminarDetailsScreen> createState() =>
+      _NutricionistSeminarDetailsScreenState();
 }
 
-class _TrenerSeminarDetailsScreenState
-    extends State<TrenerSeminarDetailsScreen> {
+class _NutricionistSeminarDetailsScreenState
+    extends State<NutricionistSeminarDetailsScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
-  late TrenerSeminarProvider provider;
+  late NutricionistSeminarProvider provider;
   late SeminarProvider seminarProvider;
   bool isLoading = true;
 
@@ -45,20 +49,20 @@ class _TrenerSeminarDetailsScreenState
 
   @override
   void initState() {
-    provider = context.read<TrenerSeminarProvider>();
+    provider = context.read<NutricionistSeminarProvider>();
     seminarProvider = context.read<SeminarProvider>();
 
     // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'trenerId': widget.trener?.trenerId,
-      'ime': widget.trener?.ime,
-      'prezime': widget.trener?.prezime,
-      'email': widget.trener?.email,
-      'brojTelefona': widget.trener?.brojTelefona,
+      'nutricionistId': widget.nutricionist?.nutricionistId,
+      'ime': widget.nutricionist?.ime,
+      'prezime': widget.nutricionist?.prezime,
+      'email': widget.nutricionist?.email,
+      'brojTelefona': widget.nutricionist?.brojTelefona,
       'slika':
-          widget.trener?.slika != null ? widget.trener!.slika.toString() : null
+          widget.nutricionist?.slika != null ? widget.nutricionist!.slika.toString() : null
     };
 
     initForm();
@@ -66,7 +70,7 @@ class _TrenerSeminarDetailsScreenState
 
   Future initForm() async {
     var filter = {
-      'trenerId': _initialValue['trenerId'],
+      'nutricionistId': _initialValue['nutricionistId'],
     };
     result = await provider.get(filter: filter);
     searchResult = await seminarProvider.get();
@@ -89,12 +93,12 @@ class _TrenerSeminarDetailsScreenState
     ),
   );
 
-  SearchResult<TrenerSeminar>? result;
+  SearchResult<NutricionistSeminar>? result;
   SearchResult<Seminar>? searchResult;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Odslušani seminari trenera",
+        "Odslušani seminari nutricioniste",
         Column(
           children: [
             isLoading ? Container() : _buildHeader(),
@@ -117,7 +121,7 @@ class _TrenerSeminarDetailsScreenState
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => const TrenerListScreen()),
+                        builder: (context) => const NutricionistListScreen()),
                   );
                 },
               ),
@@ -178,7 +182,7 @@ class _TrenerSeminarDetailsScreenState
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Trener",
+                        "Nutricionist",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -292,16 +296,14 @@ class _TrenerSeminarDetailsScreenState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.red),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Odustani")),
-                    const SizedBox(
-                      width: 8,
-                    ),
+                                ElevatedButton(
+                style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: const Text("Odustani")),
+          const SizedBox(width: 8,),
+            
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState?.saveAndValidate() ?? false) {
@@ -310,23 +312,22 @@ class _TrenerSeminarDetailsScreenState
                           debugPrint(_formKey.currentState?.value.toString());
                           var request = Map.from(_formKey.currentState!.value);
 
-                          request['trenerId'] = _initialValue['trenerId'];
+                          request['nutricionistId'] = _initialValue['nutricionistId'];
 
                           if (result!.result
                               .where((element) =>
                                   element.seminarId.toString() ==
                                   request['seminarId'])
                               .isNotEmpty) {
-                            ErrorDialog(
-                                context, "Trener je odslušao odabrani seminar");
+                            ErrorDialog(context, "Nutricionist je odslušao odabrani seminar");
                           } else {
                             await provider.insert(request);
 
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    TrenerSeminarDetailsScreen(
-                                  trener: widget.trener,
+                                    NutricionistSeminarDetailsScreen(
+                                  nutricionist: widget.nutricionist,
                                 ),
                               ),
                             );
