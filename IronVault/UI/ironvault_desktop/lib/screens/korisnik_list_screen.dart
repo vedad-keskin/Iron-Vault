@@ -194,27 +194,26 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                                       }
                                   },
                               cells: [
-                                 DataCell(
-  Text(
-    e.razina != null ? e.razina.toString() : '1',
-    style: const TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 20,
-
-    ),
-  ),
-),
+                                DataCell(
+                                  Text(
+                                    e.razina != null
+                                        ? e.razina.toString()
+                                        : '1',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ),
                                 DataCell(Container(
                                   width: constraints.maxWidth *
                                       0.1, // 40% of the available width
                                   child: Text("${e.ime} ${e.prezime}"),
                                 )),
-                            
-                 
                                 DataCell(Text(e.korisnickoIme ?? "")),
                                 DataCell(Text(e.email ?? "")),
-                                    DataCell(Text(e.brojTelefona.toString())),
-                                                               DataCell(Text(e.visina != null
+                                DataCell(Text(e.brojTelefona.toString())),
+                                DataCell(Text(e.visina != null
                                     ? '${e.visina!.toInt()} cm'
                                     : '')),
                                 DataCell(Text(e.tezina != null
@@ -222,7 +221,6 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                                     : '')),
                                 DataCell(Text(e.grad?.naziv ?? "")),
                                 DataCell(Text(e.spol?.naziv ?? "")),
-     
                                 DataCell(
                                   e.slika != null
                                       ? SizedBox(

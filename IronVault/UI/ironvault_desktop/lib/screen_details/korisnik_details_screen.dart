@@ -36,6 +36,9 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
   SearchResult<Grad>? gradoviResult;
   bool isLoading = true;
 
+  bool _obscureTextLozinka = true;
+  bool _obscureTextLozinkaPotvrda = true;
+
   File? _image;
   final _base64Placeholder =
       "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
@@ -104,229 +107,319 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
   );
 
   Widget _buildForm() {
-    return FormBuilder(
-      key: _formKey,
-      initialValue: _initialValue,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 0, 150, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              tooltip: "Nazad",
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const KorisnikListScreen()));
-              },
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Ime"),
-                    name: 'ime',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Prezime"),
-                    name: 'prezime',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration:
-                        commonDecoration.copyWith(labelText: "Korisničko ime"),
-                    name: 'korisnickoIme',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            widget.korisnik == null ? BarZaLozinku() : Container(),
-            widget.korisnik == null ? const SizedBox(height: 10) : Container(),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderDropdown(
-                    name: 'spolId',
-                    decoration: commonDecoration.copyWith(labelText: "Spol"),
-                    items: spoloviResult?.result
-                            .map((item) => DropdownMenuItem(
-                                value: item.spolId.toString(),
-                                child: Text(item.naziv ?? "")))
-                            .toList() ??
-                        [],
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderDropdown(
-                    name: 'gradId',
-                    decoration: commonDecoration.copyWith(
-                        labelText: "Grad prebivališta"),
-                    items: gradoviResult?.result
-                            .map((item) => DropdownMenuItem(
-                                value: item.gradId.toString(),
-                                child: Text(item.naziv ?? "")))
-                            .toList() ??
-                        [],
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderField(
-                    name: "imageId",
-                    builder: (field) {
-                      return InputDecorator(
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Slika"),
-                        child: ListTile(
-                          leading: const Icon(Icons.image),
-                          title: const Text("Odaberite sliku"),
-                          trailing: const Icon(Icons.file_upload),
-                          onTap: getImage,
-                        ),
-                      );
+    return Expanded(
+      child: Container(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: FormBuilder(
+            key: _formKey,
+            initialValue: _initialValue,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(150, 0, 150, 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    tooltip: "Nazad",
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const KorisnikListScreen()));
                     },
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
+                  const SizedBox(height: 20),
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: FormBuilderTextField(
-                              decoration: commonDecoration.copyWith(
-                                  labelText: "Visina"),
-                              name: 'visina',
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(),
-                              ]),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Ime"),
+                          name: 'ime',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
                             ),
-                          ),
-                          const SizedBox(
-                              width:
-                                  10), // Add some space between the text fields
-                          Expanded(
-                            child: FormBuilderTextField(
-                              decoration: commonDecoration.copyWith(
-                                  labelText: "Težina"),
-                              name: 'tezina',
-                              validator: FormBuilderValidators.compose([
-                                FormBuilderValidators.required(),
-                              ]),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Prezime"),
+                          name: 'prezime',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
                             ),
-                          ),
-                        ],
+                          ]),
+                        ),
                       ),
-                      const SizedBox(height: 10),
-                      FormBuilderTextField(
-                        decoration: commonDecoration.copyWith(
-                            labelText: "Broj telefona"),
-                        name: 'brojTelefona',
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.match(r'^\+?[0-9]\d{1,14}$',
-                              errorText: 'Telefon nije u ispravnom formatu'),
-                        ]),
-                      ),
-                      const SizedBox(height: 10),
-                      FormBuilderTextField(
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Email"),
-                        name: 'email',
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
-                          FormBuilderValidators.email(
-                              errorText: 'Email nije u ispravnom formatu'),
-                        ]),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration: commonDecoration.copyWith(
+                              labelText: "Korisničko ime"),
+                          name: 'korisnickoIme',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                          enabled: widget.korisnik == null,
+                        ),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: commonDecoration.fillColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.transparent),
+                  const SizedBox(height: 10),
+                  widget.korisnik == null ? BarZaLozinku() : Container(),
+                  widget.korisnik == null
+                      ? const SizedBox(height: 10)
+                      : Container(),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderDropdown(
+                          name: 'spolId',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Spol"),
+                          items: spoloviResult?.result
+                                  .map((item) => DropdownMenuItem(
+                                      value: item.spolId.toString(),
+                                      child: Text(item.naziv ?? "")))
+                                  .toList() ??
+                              [],
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderDropdown(
+                          name: 'gradId',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          decoration: commonDecoration.copyWith(
+                              labelText: "Grad prebivališta"),
+                          items: gradoviResult?.result
+                                  .map((item) => DropdownMenuItem(
+                                      value: item.gradId.toString(),
+                                      child: Text(item.naziv ?? "")))
+                                  .toList() ??
+                              [],
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.memory(
-                      _initialValue['slika'] == null
-                          ? base64Decode(_base64Placeholder)
-                          : base64Decode(_initialValue['slika']),
-                      fit: BoxFit.cover,
-                    ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderField(
+                          name: "imageId",
+                          builder: (field) {
+                            return InputDecorator(
+                              decoration:
+                                  commonDecoration.copyWith(labelText: "Slika"),
+                              child: ListTile(
+                                leading: const Icon(Icons.image),
+                                title: const Text("Odaberite sliku"),
+                                trailing: const Icon(Icons.file_upload),
+                                onTap: getImage,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: 10),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: FormBuilderTextField(
+                                    decoration: commonDecoration.copyWith(
+                                        labelText: "Visina"),
+                                    name: 'visina',
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(
+                                        errorText: 'Ovo polje je obavezno.',
+                                      ),
+                                    ]),
+                                  ),
+                                ),
+                                const SizedBox(
+                                    width:
+                                        10), // Add some space between the text fields
+                                Expanded(
+                                  child: FormBuilderTextField(
+                                    decoration: commonDecoration.copyWith(
+                                        labelText: "Težina"),
+                                    name: 'tezina',
+                                    autovalidateMode:
+                                        AutovalidateMode.onUserInteraction,
+                                    validator: FormBuilderValidators.compose([
+                                      FormBuilderValidators.required(
+                                        errorText: 'Ovo polje je obavezno.',
+                                      ),
+                                    ]),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 10),
+                            FormBuilderTextField(
+                              decoration: commonDecoration.copyWith(
+                                  labelText: "Broj telefona"),
+                              name: 'brojTelefona',
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: 'Ovo polje je obavezno.',
+                                ),
+                                FormBuilderValidators.match(
+                                    r'^\+?[0-9]\d{1,14}$',
+                                    errorText:
+                                        'Telefon nije u ispravnom formatu'),
+                              ]),
+                            ),
+                            const SizedBox(height: 10),
+                            FormBuilderTextField(
+                              decoration:
+                                  commonDecoration.copyWith(labelText: "Email"),
+                              name: 'email',
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: FormBuilderValidators.compose([
+                                FormBuilderValidators.required(
+                                  errorText: 'Ovo polje je obavezno.',
+                                ),
+                                FormBuilderValidators.email(
+                                    errorText:
+                                        'Email nije u ispravnom formatu'),
+                              ]),
+                              
+                              enabled: widget.korisnik == null,
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: commonDecoration.fillColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(color: Colors.transparent),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.memory(
+                            _initialValue['slika'] == null
+                                ? base64Decode(_base64Placeholder)
+                                : base64Decode(_initialValue['slika']),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
-          ],
+          ),
         ),
       ),
     );
   }
 
   Widget BarZaLozinku() {
-    return Row(
+     return Row(
       children: [
         Expanded(
           child: FormBuilderTextField(
-            decoration: commonDecoration.copyWith(labelText: "Lozinka"),
+            decoration: commonDecoration.copyWith(
+              labelText: "Lozinka",
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureTextLozinka ? Icons.visibility : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureTextLozinka = !_obscureTextLozinka;
+                  });
+                },
+              ),
+            ),
             name: 'lozinka',
+            obscureText: _obscureTextLozinka,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
+              FormBuilderValidators.required(
+                errorText: 'Lozinka je obavezna.',
+              ),
             ]),
           ),
         ),
         const SizedBox(width: 10),
         Expanded(
           child: FormBuilderTextField(
-            decoration: commonDecoration.copyWith(labelText: "Potvrda lozinke"),
+            decoration: commonDecoration.copyWith(
+              labelText: "Potvrda lozinke",
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscureTextLozinkaPotvrda
+                      ? Icons.visibility
+                      : Icons.visibility_off,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscureTextLozinkaPotvrda = !_obscureTextLozinkaPotvrda;
+                  });
+                },
+              ),
+            ),
             name: 'lozinkaPotvrda',
+            obscureText: _obscureTextLozinkaPotvrda,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
+              FormBuilderValidators.required(
+                errorText: 'Potvrda lozinke je obavezna.',
+              ),
+              (value) {
+                return FormBuilderValidators.equal<String>(
+                  _formKey.currentState?.value['lozinka'] ?? '',
+                  errorText: 'Lozinke nisu iste',
+                )(value);
+              },
             ]),
           ),
         ),
       ],
     );
+
   }
 
   Widget _saveRow() {
@@ -336,7 +429,7 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(150, 0, 10, 0),
+            padding: const EdgeInsets.fromLTRB(150, 0, 10, 10),
             child: ElevatedButton(
                 style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
                 onPressed: () {
@@ -346,7 +439,7 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
                 child: const Text("Odustani")),
           ),
           Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 150, 0),
+              padding: const EdgeInsets.fromLTRB(10, 0, 150, 10),
               child: ElevatedButton(
                 // Ako su polja validirana idi na dialog
 
