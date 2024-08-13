@@ -103,7 +103,11 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       ),
     );
 
-    return FormBuilder(
+     return Expanded(
+      child: Container(
+        width: double.infinity,
+        child: SingleChildScrollView(
+          child: FormBuilder(
       key: _formKey,
       initialValue: _initialValue,
       child: Padding(
@@ -301,7 +305,9 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
           ],
         ),
       ),
+          ),),),
     );
+       
   }
 
   Color _getColorForState(String? state) {
