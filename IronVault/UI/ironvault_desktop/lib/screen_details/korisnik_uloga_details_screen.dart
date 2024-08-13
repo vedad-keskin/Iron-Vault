@@ -241,12 +241,12 @@ class _KorisnikUlogaDetailsScreenState
                             return DataRow(cells: [
                               DataCell(Container(
                                 width: constraints.maxWidth *
-                                    0.6, // 40% of the available width
+                                    0.2, // 40% of the available width
                                 child: Text(e.uloga?.naziv ?? ""),
                               )),
                               DataCell(Container(
                                 width: constraints.maxWidth *
-                                    0.2, // 40% of the available width
+                                    0.6, // 40% of the available width
                                 child: Text(e.uloga?.opis ?? ""),
                               )),
                               DataCell(Container(

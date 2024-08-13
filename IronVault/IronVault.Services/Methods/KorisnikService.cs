@@ -83,8 +83,26 @@ namespace IronVault.Services.Methods
 
             entity.Razina = 1;
 
-
             base.BeforeInsert(request, entity);
+
+        }
+
+        public override void AfterInsert(KorisnikInsertRequest request, Korisnik entity)
+        {
+            // Dodati pocetnu ulogu korisnicima tj. User
+
+            var pocetnaKorisnikUloga = new KorisnikUloga()
+            {
+                KorisnikId = entity.KorisnikId,
+                UlogaId = 2,
+                DatumIzmjene = DateTime.Now
+            };
+
+
+            Context.KorisnikUlogas.Add(pocetnaKorisnikUloga);
+            Context.SaveChanges();
+
+            base.AfterInsert(request, entity);
         }
 
 
