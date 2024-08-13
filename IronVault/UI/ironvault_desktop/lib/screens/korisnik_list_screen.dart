@@ -5,6 +5,7 @@ import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/korisnik_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
+import 'package:ironvault_desktop/screen_details/korisnik_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/suplement_details_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:convert';
@@ -143,8 +144,8 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
             children: [
               ElevatedButton(
                 onPressed: () async {
-                  // Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  //     builder: (context) => SuplementDetailsScreen()));
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => KorisnikDetailsScreen()));
                 },
                 child: const Text("Dodaj novog korisnika"),
               ),
@@ -184,18 +185,25 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                               onSelectChanged: (selected) => {
                                     if (selected == true)
                                       {
-                                        // Navigator.of(context).pushReplacement(
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             SuplementDetailsScreen(
-                                        //               suplement: e,
-                                        //             )))
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    KorisnikDetailsScreen(
+                                                      korisnik: e,
+                                                    )))
                                       }
                                   },
                               cells: [
-                                               DataCell(Text(e.razina != null
-                                    ? e.razina.toString()
-                                    : '1')),
+                                 DataCell(
+  Text(
+    e.razina != null ? e.razina.toString() : '1',
+    style: const TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 20,
+
+    ),
+  ),
+),
                                 DataCell(Container(
                                   width: constraints.maxWidth *
                                       0.1, // 40% of the available width

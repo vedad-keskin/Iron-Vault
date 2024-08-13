@@ -1,4 +1,3 @@
-
 import 'package:ironvault_desktop/models/grad.dart';
 import 'package:ironvault_desktop/models/spol.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -22,6 +21,8 @@ class Korisnik {
   Grad? grad;
   int? spolId;
   Spol? spol;
+  String? lozinka;
+  String? lozinkaPotvrda;
 
   Korisnik({this.korisnikId});
 
