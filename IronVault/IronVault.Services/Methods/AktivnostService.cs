@@ -26,15 +26,39 @@ namespace IronVault.Services.Methods
             // razlikaIzmedjuDatuma predstavlja TimeSpan koji sadrzi koliko vremena je provedeno u teretani 
             // level predstavlja razinu koja se povecava svakih 10 sati provedenih u teretani 
 
+            TimeSpan? VrijemeProvedenoUTeretani = new TimeSpan(0,0,0,0);
+
+            var prethodneAktivnostiKorisnika = Context.Aktivnosts.Where(x => x.KorisnikId == entity.KorisnikId).ToList();
+
+            for (int i = 0; i < prethodneAktivnostiKorisnika.Count(); i++)
+            {
+                // osiguravamo da ne prolazi za ovaj zapis gdje je datum izlaska null
+                if (prethodneAktivnostiKorisnika[i].DatumVrijemeIzlaska != null)
+                {
+                    var razlikaIzmedjuPrethodnihDatuma = prethodneAktivnostiKorisnika[i].DatumVrijemeIzlaska - prethodneAktivnostiKorisnika[i].DatumVrijemeUlaska;
+
+                    VrijemeProvedenoUTeretani += razlikaIzmedjuPrethodnihDatuma; // 21 za Vedad
+
+                }
+            }
+
+
             var razlikaIzmedjuDatuma = request.DatumVrijemeIzlaska - entity.DatumVrijemeUlaska;
+
+            VrijemeProvedenoUTeretani += razlikaIzmedjuDatuma;
+
+            int level = (int)VrijemeProvedenoUTeretani?.TotalMinutes / 600 + 1;
+
+
+            var TekstZaBazu = $"{VrijemeProvedenoUTeretani?.Days} dana, {VrijemeProvedenoUTeretani?.Hours} sati i  {VrijemeProvedenoUTeretani?.Minutes} minuta";
+
 
             var korisnik = Context.Korisniks.Find(entity.KorisnikId);
 
-            korisnik.VrijemeUteretani += razlikaIzmedjuDatuma;
+            korisnik!.VrijemeUteretani = TekstZaBazu;
 
-            int level = (int)((TimeSpan)korisnik.VrijemeUteretani).TotalMinutes / 600 + 1;
+            korisnik!.Razina = level;
 
-            korisnik.Razina = level;
 
             Context.SaveChanges();
 

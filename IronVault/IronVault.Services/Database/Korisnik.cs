@@ -29,7 +29,7 @@ public partial class Korisnik
 
     public int? Razina { get; set; }
 
-    public TimeSpan? VrijemeUteretani { get; set; }
+    public string? VrijemeUteretani { get; set; }
 
     public int GradId { get; set; }
 

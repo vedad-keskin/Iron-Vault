@@ -19,6 +19,5 @@ namespace IronVault.Model.Requests
         public float Tezina { get; set; }
         public int GradId { get; set; }
         public int SpolId { get; set; }
-        public int TeretanaId { get; set; }
     }
 }

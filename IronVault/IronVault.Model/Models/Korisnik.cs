@@ -16,10 +16,11 @@ namespace IronVault.Model.Models
         public float Visina { get; set; }
         public float Tezina { get; set; }
         public int? Razina { get; set; }
-        public TimeSpan? VrijemeUteretani { get; set; }
+        public string? VrijemeUteretani { get; set; }
         public int GradId { get; set; }
+        public Grad Grad { get; set; }
         public int SpolId { get; set; }
-        public int TeretanaId { get; set; }
+        public Spol Spol { get; set; }
 
         public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
         public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();

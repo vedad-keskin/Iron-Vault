@@ -38,9 +38,10 @@ namespace IronVault.Services.Methods
 
             var entity = set.Find(id);
 
+            BeforeUpdate(request, entity);
+
             Mapper.Map(request, entity);
 
-            BeforeUpdate(request, entity);
 
             Context.SaveChanges();
 

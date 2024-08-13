@@ -28,41 +28,43 @@ namespace IronVault.Services.Methods
 
         public override IQueryable<Database.Korisnik> AddFilter(KorisnikSearchObject searchObject, IQueryable<Database.Korisnik> query)
         {
-            query = base.AddFilter(searchObject, query);
+            var filteredQuery = base.AddFilter(searchObject, query);
+
+            filteredQuery = filteredQuery.Include(x => x.Spol).Include(x => x.Grad);
 
             if (!string.IsNullOrWhiteSpace(searchObject?.ImeGTE))
             {
-                query = query.Where(x => x.Ime.StartsWith(searchObject.ImeGTE));
+                filteredQuery = filteredQuery.Where(x => x.Ime.StartsWith(searchObject.ImeGTE));
             }
 
             if (!string.IsNullOrWhiteSpace(searchObject?.PrezimeGTE))
             {
-                query = query.Where(x => x.Prezime.StartsWith(searchObject.PrezimeGTE));
+                filteredQuery = filteredQuery.Where(x => x.Prezime.StartsWith(searchObject.PrezimeGTE));
             }
 
             if (!string.IsNullOrWhiteSpace(searchObject?.Email))
             {
-                query = query.Where(x => x.Email == searchObject.Email);
+                filteredQuery = filteredQuery.Where(x => x.Email == searchObject.Email);
             }
 
             if (!string.IsNullOrWhiteSpace(searchObject?.KorisnickoIme))
             {
-                query = query.Where(x => x.KorisnickoIme == searchObject.KorisnickoIme);
+                filteredQuery = filteredQuery.Where(x => x.KorisnickoIme.Contains(searchObject.KorisnickoIme));
             }
 
             if (searchObject.IsKorisnikUlogaIncluded == true)
             {
-                query = query.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
+                filteredQuery = filteredQuery.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
 
             if (searchObject.IsAktivnostIncluded == true)
             {
-                query = query.Include(x => x.Aktivnosts);
+                filteredQuery = filteredQuery.Include(x => x.Aktivnosts);
             }
 
-            query.Include(x => x.Spol).Include(x => x.Grad);
+            filteredQuery.Include(x => x.Spol).Include(x => x.Grad);
 
-            return query;
+            return filteredQuery;
         }
 
 
@@ -80,7 +82,7 @@ namespace IronVault.Services.Methods
 
 
             entity.Razina = 1;
-            entity.VrijemeUteretani = new TimeSpan(00, 00, 00);
+
 
             base.BeforeInsert(request, entity);
         }
