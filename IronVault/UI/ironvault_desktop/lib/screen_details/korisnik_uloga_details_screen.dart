@@ -6,33 +6,41 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
+import 'package:ironvault_desktop/models/korisnik.dart';
+import 'package:ironvault_desktop/models/korisnik_uloga.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/seminar.dart';
 import 'package:ironvault_desktop/models/trener.dart';
 import 'package:ironvault_desktop/models/trener_seminar.dart';
+import 'package:ironvault_desktop/models/uloga.dart';
+import 'package:ironvault_desktop/providers/korisnik_provider.dart';
+import 'package:ironvault_desktop/providers/korisnik_uloga_provider.dart';
 import 'package:ironvault_desktop/providers/seminar_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
+import 'package:ironvault_desktop/providers/uloga_provider.dart';
+import 'package:ironvault_desktop/screen_details/korisnik_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
+import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
 import 'package:ironvault_desktop/screens/trener_list_screen.dart';
 import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
-class TrenerSeminarDetailsScreen extends StatefulWidget {
-  Trener? trener;
+class KorisnikUlogaDetailsScreen extends StatefulWidget {
+  Korisnik? korisnik;
 
-  TrenerSeminarDetailsScreen({super.key, this.trener});
+  KorisnikUlogaDetailsScreen({super.key, this.korisnik});
 
   @override
-  State<TrenerSeminarDetailsScreen> createState() =>
-      _TrenerSeminarDetailsScreenState();
+  State<KorisnikUlogaDetailsScreen> createState() =>
+      _KorisnikUlogaDetailsScreenState();
 }
 
-class _TrenerSeminarDetailsScreenState
-    extends State<TrenerSeminarDetailsScreen> {
+class _KorisnikUlogaDetailsScreenState
+    extends State<KorisnikUlogaDetailsScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
-  late TrenerSeminarProvider provider;
-  late SeminarProvider seminarProvider;
+  late KorisnikUlogaProvider provider;
+  late UlogaProvider ulogaProvider;
   bool isLoading = true;
 
   final _base64Placeholder =
@@ -45,20 +53,26 @@ class _TrenerSeminarDetailsScreenState
 
   @override
   void initState() {
-    provider = context.read<TrenerSeminarProvider>();
-    seminarProvider = context.read<SeminarProvider>();
+    provider = context.read<KorisnikUlogaProvider>();
+    ulogaProvider = context.read<UlogaProvider>();
 
     // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'trenerId': widget.trener?.trenerId,
-      'ime': widget.trener?.ime,
-      'prezime': widget.trener?.prezime,
-      'email': widget.trener?.email,
-      'brojTelefona': widget.trener?.brojTelefona,
-      'slika':
-          widget.trener?.slika != null ? widget.trener!.slika.toString() : null
+      'korisnikId' : widget.korisnik?.korisnikId,
+      'ime': widget.korisnik?.ime,
+      'prezime': widget.korisnik?.prezime,
+      'korisnickoIme': widget.korisnik?.korisnickoIme,
+      'email': widget.korisnik?.email,
+      'brojTelefona': widget.korisnik?.brojTelefona,
+      'gradId': widget.korisnik?.gradId.toString(),
+      'spolId': widget.korisnik?.spolId.toString(),
+      'visina': widget.korisnik?.visina.toString(),
+      'tezina': widget.korisnik?.tezina.toString(),
+      'slika': widget.korisnik?.slika != null
+          ? widget.korisnik!.slika.toString()
+          : null
     };
 
     initForm();
@@ -66,10 +80,10 @@ class _TrenerSeminarDetailsScreenState
 
   Future initForm() async {
     var filter = {
-      'trenerId': _initialValue['trenerId'],
+      'korisnikId': _initialValue['korisnikId'],
     };
     result = await provider.get(filter: filter);
-    searchResult = await seminarProvider.get();
+    searchResult = await ulogaProvider.get();
 
     setState(() {
       isLoading = false;
@@ -89,12 +103,12 @@ class _TrenerSeminarDetailsScreenState
     ),
   );
 
-  SearchResult<TrenerSeminar>? result;
-  SearchResult<Seminar>? searchResult;
+  SearchResult<KorisnikUloga>? result;
+  SearchResult<Uloga>? searchResult;
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Odslušani seminari trenera",
+        "Uloge korisnika",
         Column(
           children: [
             isLoading ? Container() : _buildHeader(),
@@ -117,7 +131,7 @@ class _TrenerSeminarDetailsScreenState
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => const TrenerListScreen()),
+                        builder: (context) => const KorisnikListScreen()),
                   );
                 },
               ),
@@ -178,7 +192,7 @@ class _TrenerSeminarDetailsScreenState
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Trener",
+                        "${_initialValue['korisnickoIme']}",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
@@ -195,7 +209,7 @@ class _TrenerSeminarDetailsScreenState
             children: [
               ElevatedButton(
                 onPressed: () => {_showChoiceDialog(context)},
-                child: const Text('Dodaj novi seminar'),
+                child: const Text('Dodaj novu ulogu'),
               )
             ],
           ),
@@ -218,9 +232,9 @@ class _TrenerSeminarDetailsScreenState
                   columnSpacing: 12,
                   dataRowMaxHeight: 70, // Set the height of the rows
                   columns: const [
-                    DataColumn(label: Text("Tema")),
-                    DataColumn(label: Text("Predavač")),
-                    DataColumn(label: Text("Datum održavanja")),
+                    DataColumn(label: Text("Uloga")),
+                    DataColumn(label: Text("Opis")),
+                    DataColumn(label: Text("Datum")),
                   ],
                   rows: result?.result
                           .map((e) {
@@ -228,18 +242,18 @@ class _TrenerSeminarDetailsScreenState
                               DataCell(Container(
                                 width: constraints.maxWidth *
                                     0.6, // 40% of the available width
-                                child: Text(e.seminar?.tema ?? ""),
+                                child: Text(e.uloga?.naziv ?? ""),
                               )),
                               DataCell(Container(
                                 width: constraints.maxWidth *
                                     0.2, // 40% of the available width
-                                child: Text(e.seminar?.predavac ?? ""),
+                                child: Text(e.uloga?.opis ?? ""),
                               )),
                               DataCell(Container(
                                   width: constraints.maxWidth *
                                       0.2, // 40% of the available width
                                   child: Text(DateFormat('dd MMM yyyy')
-                                      .format(e.seminar!.datum!)))),
+                                      .format(e.datumIzmjene!)))),
                             ]);
                           })
                           .toList()
@@ -261,7 +275,7 @@ class _TrenerSeminarDetailsScreenState
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Odaberite seminar'),
+          title: const Text('Odaberite ulogu'),
           content: FormBuilder(
             key: _formKey,
             child: Column(
@@ -271,13 +285,13 @@ class _TrenerSeminarDetailsScreenState
                   children: [
                     Expanded(
                       child: FormBuilderDropdown(
-                        name: 'seminarId',
+                        name: 'ulogaId',
                         decoration:
-                            commonDecoration.copyWith(labelText: "Seminar"),
+                            commonDecoration.copyWith(labelText: "Uloga"),
                         items: searchResult?.result
                                 .map((item) => DropdownMenuItem(
-                                    value: item.seminarId.toString(),
-                                    child: Text(item.tema ?? "")))
+                                    value: item.ulogaId.toString(),
+                                    child: Text(item.naziv ?? "")))
                                 .toList() ??
                             [],
                         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -313,23 +327,23 @@ class _TrenerSeminarDetailsScreenState
                           debugPrint(_formKey.currentState?.value.toString());
                           var request = Map.from(_formKey.currentState!.value);
 
-                          request['trenerId'] = _initialValue['trenerId'];
+                          request['korisnikId'] = _initialValue['korisnikId'];
 
                           if (result!.result
                               .where((element) =>
-                                  element.seminarId.toString() ==
-                                  request['seminarId'])
+                                  element.ulogaId.toString() ==
+                                  request['ulogaId'])
                               .isNotEmpty) {
                             ErrorDialog(
-                                context, "Trener je odslušao odabrani seminar");
+                                context, "Korisnik već ima dodatu ulogu");
                           } else {
                             await provider.insert(request);
 
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
                                 builder: (context) =>
-                                    TrenerSeminarDetailsScreen(
-                                  trener: widget.trener,
+                                    KorisnikUlogaDetailsScreen(
+                                  korisnik: widget.korisnik,
                                 ),
                               ),
                             );
