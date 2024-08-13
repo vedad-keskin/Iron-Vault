@@ -280,8 +280,11 @@ class _TrenerSeminarDetailsScreenState
                                     child: Text(item.tema ?? "")))
                                 .toList() ??
                             [],
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
+                          FormBuilderValidators.required(
+                            errorText: 'Ovo polje je obavezno.',
+                          ),
                         ]),
                       ),
                     ),

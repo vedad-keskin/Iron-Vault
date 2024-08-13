@@ -102,8 +102,11 @@ class _DobavljacDetailsScreenState extends State<DobavljacDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Naziv"),
                     name: 'naziv',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),

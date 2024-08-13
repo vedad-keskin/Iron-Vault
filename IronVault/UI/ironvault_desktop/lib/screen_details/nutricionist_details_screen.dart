@@ -116,8 +116,11 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Ime"),
                     name: 'ime',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -126,8 +129,11 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Prezime"),
                     name: 'prezime',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -165,8 +171,11 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
                         decoration: commonDecoration.copyWith(
                             labelText: "Broj telefona"),
                         name: 'brojTelefona',
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
+                          FormBuilderValidators.required(
+                            errorText: 'Ovo polje je obavezno.',
+                          ),
                           FormBuilderValidators.match(r'^\+?[0-9]\d{1,14}$',
                               errorText: 'Telefon nije u ispravnom formatu'),
                         ]),
@@ -176,8 +185,11 @@ class _TrenerDetailsScreenState extends State<NutricionistDetailsScreen> {
                         decoration:
                             commonDecoration.copyWith(labelText: "Email"),
                         name: 'email',
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
+                          FormBuilderValidators.required(
+                            errorText: 'Ovo polje je obavezno.',
+                          ),
                           FormBuilderValidators.email(
                               errorText: 'Email nije u ispravnom formatu'),
                         ]),

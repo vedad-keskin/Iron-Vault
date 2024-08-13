@@ -103,211 +103,240 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
       ),
     );
 
-     return Expanded(
+    return Expanded(
       child: Container(
         width: double.infinity,
         child: SingleChildScrollView(
           child: FormBuilder(
-      key: _formKey,
-      initialValue: _initialValue,
-      child: Padding(
-        padding: const EdgeInsets.fromLTRB(150, 0, 150, 15),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(
-              icon: Icon(Icons.arrow_back),
-              tooltip: "Nazad",
-              onPressed: () {
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const SuplementListScreen()));
-              },
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Naziv"),
-                    name: 'naziv',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Cijena"),
-                    name: 'cijena',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.numeric()
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Gramaža"),
-                    name: 'gramaza',
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                      FormBuilderValidators.numeric()
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderDropdown(
-                    name: 'kategorijaId',
-                    decoration:
-                        commonDecoration.copyWith(labelText: "Kategorija"),
-                    items: kategorijeResult?.result
-                            .map((item) => DropdownMenuItem(
-                                value: item.kategorijaId.toString(),
-                                child: Text(item.naziv ?? "")))
-                            .toList() ??
-                        [],
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: FormBuilderDropdown(
-                    name: 'dobavljacId',
-                    decoration:
-                        commonDecoration.copyWith(labelText: "Proizvođač"),
-                    items: dobavljaciResult?.result
-                            .map((item) => DropdownMenuItem(
-                                value: item.dobavljacId.toString(),
-                                child: Text(item.naziv ?? "")))
-                            .toList() ??
-                        [],
-                    validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
-                    ]),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: FormBuilderField(
-                    name: "imageId",
-                    builder: (field) {
-                      return InputDecorator(
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Slika"),
-                        child: ListTile(
-                          leading: const Icon(Icons.image),
-                          title: const Text("Odaberite sliku"),
-                          trailing: const Icon(Icons.file_upload),
-                          onTap: getImage,
-                        ),
-                      );
+            key: _formKey,
+            initialValue: _initialValue,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(150, 0, 150, 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    tooltip: "Nazad",
+                    onPressed: () {
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                          builder: (context) => const SuplementListScreen()));
                     },
                   ),
-                ),
-              ],
+                  const SizedBox(height: 20),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Naziv"),
+                          name: 'naziv',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Cijena"),
+                          name: 'cijena',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                            FormBuilderValidators.numeric(
+                              errorText: 'Vrijednost mora biti numerička.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Gramaža"),
+                          name: 'gramaza',
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                            FormBuilderValidators.numeric(
+                              errorText: 'Vrijednost mora biti numerička.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderDropdown(
+                          name: 'kategorijaId',
+                          decoration: commonDecoration.copyWith(
+                              labelText: "Kategorija"),
+                          items: kategorijeResult?.result
+                                  .map((item) => DropdownMenuItem(
+                                      value: item.kategorijaId.toString(),
+                                      child: Text(item.naziv ?? "")))
+                                  .toList() ??
+                              [],
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: FormBuilderDropdown(
+                          name: 'dobavljacId',
+                          decoration: commonDecoration.copyWith(
+                              labelText: "Proizvođač"),
+                          items: dobavljaciResult?.result
+                                  .map((item) => DropdownMenuItem(
+                                      value: item.dobavljacId.toString(),
+                                      child: Text(item.naziv ?? "")))
+                                  .toList() ??
+                              [],
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: FormBuilderValidators.compose([
+                            FormBuilderValidators.required(
+                              errorText: 'Ovo polje je obavezno.',
+                            ),
+                          ]),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: FormBuilderField(
+                          name: "imageId",
+                          builder: (field) {
+                            return InputDecorator(
+                              decoration:
+                                  commonDecoration.copyWith(labelText: "Slika"),
+                              child: ListTile(
+                                leading: const Icon(Icons.image),
+                                title: const Text("Odaberite sliku"),
+                                trailing: const Icon(Icons.file_upload),
+                                onTap: getImage,
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 200,
+                          child: FormBuilderTextField(
+                            decoration:
+                                commonDecoration.copyWith(labelText: "Opis"),
+                            name: 'opis',
+                            maxLines: 7,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Ovo polje je obavezno.',
+                              ),
+                            ]),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      Container(
+                        height: 200,
+                        width: 200,
+                        decoration: BoxDecoration(
+                          color: commonDecoration.fillColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                          border: Border.all(color: Colors.transparent),
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.memory(
+                            _initialValue['slika'] == null
+                                ? base64Decode(_base64Placeholder)
+                                : base64Decode(_initialValue['slika']),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Container(
+                        height: 60,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          color: _getColorForState(_initialValue[
+                              'stateMachine']), // Method to determine color
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: FormBuilderTextField(
+                          decoration:
+                              commonDecoration.copyWith(labelText: "Stanje"),
+                          name: 'stateMachine',
+                          enabled: false,
+                        ),
+                      ),
+                      const SizedBox(width: 10),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: widget.suplement != null
+                              ? Colors.grey[200]
+                              : Colors
+                                  .grey, // Change color based on enabled state
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0, vertical: 8.0),
+                          side: BorderSide.none, // No border
+                          elevation: 2, // Shadow
+                        ),
+                        onPressed: widget.suplement != null
+                            ? () {
+                                _showChoiceDialog(context);
+                              }
+                            : null, // Disable button if widget.suplement is null
+                        child: const Text(
+                          'Promijeni stanje',
+                          style: TextStyle(
+                            color: Colors.black, // Adjust text color as needed
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    height: 200,
-                    child: FormBuilderTextField(
-                      decoration: commonDecoration.copyWith(labelText: "Opis"),
-                      name: 'opis',
-                      maxLines: 7,
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
-                    ),
-                  ),
-                ),
-                const SizedBox(width: 10),
-                Container(
-                  height: 200,
-                  width: 200,
-                  decoration: BoxDecoration(
-                    color: commonDecoration.fillColor,
-                    borderRadius: BorderRadius.circular(10.0),
-                    border: Border.all(color: Colors.transparent),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.memory(
-                      _initialValue['slika'] == null
-                          ? base64Decode(_base64Placeholder)
-                          : base64Decode(_initialValue['slika']),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Row(
-              children: [
-                Container(
-                  height: 60,
-                  width: 250,
-                  decoration: BoxDecoration(
-                    color: _getColorForState(_initialValue[
-                        'stateMachine']), // Method to determine color
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: FormBuilderTextField(
-                    decoration: commonDecoration.copyWith(labelText: "Stanje"),
-                    name: 'stateMachine',
-                    enabled: false,
-                    
-                  ),
-                ),
-                const SizedBox(width: 10),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: widget.suplement != null
-                        ? Colors.grey[200]
-                        : Colors.grey, // Change color based on enabled state
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    side: BorderSide.none, // No border
-                    elevation: 2, // Shadow
-                  ),
-                  onPressed: widget.suplement != null
-                      ? () {
-                          _showChoiceDialog(context);
-                        }
-                      : null, // Disable button if widget.suplement is null
-                  child: const Text(
-                    'Promijeni stanje',
-                    style: TextStyle(
-                      color: Colors.black, // Adjust text color as needed
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ],
+          ),
         ),
       ),
-          ),),),
     );
-       
   }
 
   Color _getColorForState(String? state) {
@@ -466,11 +495,13 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                       // Activate
 
                       if (widget.suplement != null &&
-                          _initialValue['stateMachine'] != "draft" && _initialValue['stateMachine'] != "active") {
+                          _initialValue['stateMachine'] != "draft" &&
+                          _initialValue['stateMachine'] != "active") {
                         await suplementProvider.Edit(
                             widget.suplement!.suplementId!);
 
-                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
+                        final suplement = await suplementProvider
+                            .getbyid(widget.suplement!.suplementId!);
 
                         // Navigate to the SuplementDetailsScreen with the retrieved Suplement
                         Navigator.of(context).pushReplacement(
@@ -503,7 +534,8 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                         await suplementProvider.Activate(
                             widget.suplement!.suplementId!);
 
-                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
+                        final suplement = await suplementProvider
+                            .getbyid(widget.suplement!.suplementId!);
 
                         // Navigate to the SuplementDetailsScreen with the retrieved Suplement
                         Navigator.of(context).pushReplacement(
@@ -536,7 +568,8 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                         await suplementProvider.Hide(
                             widget.suplement!.suplementId!);
 
-                        final suplement = await suplementProvider.getbyid(widget.suplement!.suplementId!);
+                        final suplement = await suplementProvider
+                            .getbyid(widget.suplement!.suplementId!);
 
                         // Navigate to the SuplementDetailsScreen with the retrieved Suplement
                         Navigator.of(context).pushReplacement(
@@ -546,8 +579,6 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                             ),
                           ),
                         );
-
-
                       } else {
                         ErrorDialog(context,
                             "Promjena u odabrano stanje nije dozvoljena");

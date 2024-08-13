@@ -282,6 +282,10 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
                                       FormBuilderValidators.required(
                                         errorText: 'Ovo polje je obavezno.',
                                       ),
+                                                          FormBuilderValidators.numeric(
+errorText: 'Vrijednost mora biti numerička.',
+
+                      ),
                                     ]),
                                   ),
                                 ),

@@ -104,8 +104,11 @@ class _SeminarDetailsScreenState extends State<SeminarDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Tema"),
                     name: 'tema',
+                                        autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -121,8 +124,11 @@ class _SeminarDetailsScreenState extends State<SeminarDetailsScreen> {
                     decoration:
                         commonDecoration.copyWith(labelText: "Predavač"),
                     name: 'predavac',
+                                        autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -137,9 +143,12 @@ class _SeminarDetailsScreenState extends State<SeminarDetailsScreen> {
                           .both, // You can use InputType.both for both date and time
                       format: DateFormat(
                           'dd MMM yyyy'), // Customize the format as needed
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
-                      ]),
+                                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
+                    ]),
                     ),
                   ),
                 ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -22,7 +21,6 @@ class _GradDetailsScreenState extends State<GradDetailsScreen> {
   final _formKey = GlobalKey<FormBuilderState>();
   Map<String, dynamic> _initialValue = {};
   late GradProvider gradProvider;
-
 
   SearchResult<Grad>? gradResult;
 
@@ -84,16 +82,16 @@ class _GradDetailsScreenState extends State<GradDetailsScreen> {
       child: Padding(
         padding: const EdgeInsets.fromLTRB(150, 180, 150, 15),
         child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          IconButton(
-            icon: Icon(Icons.arrow_back),
-            tooltip: "Nazad",
-            onPressed: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) => const GradListScreen()));
-            },
-          ),
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            IconButton(
+              icon: Icon(Icons.arrow_back),
+              tooltip: "Nazad",
+              onPressed: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => const GradListScreen()));
+              },
+            ),
             const SizedBox(height: 20),
             Row(
               children: [
@@ -101,8 +99,11 @@ class _GradDetailsScreenState extends State<GradDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Naziv"),
                     name: 'naziv',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -146,78 +147,71 @@ class _GradDetailsScreenState extends State<GradDetailsScreen> {
     );
   }
 
-
   void _showConfirmationDialog(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Potvrda'),
-        content: const Text('Da li želite spasiti izmjene'),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('Otkaži'),
-            onPressed: () {
-              Navigator.of(context).pop(); // Dismiss the dialog
-            },
-          ),
-          TextButton(
-            child: const Text('Potvrdi'),
-            onPressed: () async {
-              
-              debugPrint(_formKey.currentState?.value.toString());
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Potvrda'),
+          content: const Text('Da li želite spasiti izmjene'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Otkaži'),
+              onPressed: () {
+                Navigator.of(context).pop(); // Dismiss the dialog
+              },
+            ),
+            TextButton(
+              child: const Text('Potvrdi'),
+              onPressed: () async {
+                debugPrint(_formKey.currentState?.value.toString());
 
-              var request = Map.from(_formKey.currentState!.value);
+                var request = Map.from(_formKey.currentState!.value);
 
-
-              try {
-                if (widget.grad == null) {
-                  await gradProvider.insert(request);
-                } else {
-                  await gradProvider.update(
-                      widget.grad!.gradId!, request);
-                }
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const GradListScreen()));
-              } on Exception catch (e) {
-                
-
-                showDialog(
-                  
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: const Text(
-                      "Greška",
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    content: Text(
-                      e.toString().replaceFirst('Exception: ', ''),
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context),
-                        child: const Text(
-                          "OK",
-                          style: TextStyle(
-                            color: Colors.blue,
-                          ),
+                try {
+                  if (widget.grad == null) {
+                    await gradProvider.insert(request);
+                  } else {
+                    await gradProvider.update(widget.grad!.gradId!, request);
+                  }
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) => const GradListScreen()));
+                } on Exception catch (e) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                      title: const Text(
+                        "Greška",
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                    ],
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+                      content: Text(
+                        e.toString().replaceFirst('Exception: ', ''),
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ),
+                      actions: [
+                        TextButton(
+                          onPressed: () => Navigator.pop(context),
+                          child: const Text(
+                            "OK",
+                            style: TextStyle(
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

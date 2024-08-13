@@ -61,8 +61,9 @@ class _NutricionistSeminarDetailsScreenState
       'prezime': widget.nutricionist?.prezime,
       'email': widget.nutricionist?.email,
       'brojTelefona': widget.nutricionist?.brojTelefona,
-      'slika':
-          widget.nutricionist?.slika != null ? widget.nutricionist!.slika.toString() : null
+      'slika': widget.nutricionist?.slika != null
+          ? widget.nutricionist!.slika.toString()
+          : null
     };
 
     initForm();
@@ -284,8 +285,11 @@ class _NutricionistSeminarDetailsScreenState
                                     child: Text(item.tema ?? "")))
                                 .toList() ??
                             [],
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(),
+                          FormBuilderValidators.required(
+                            errorText: 'Ovo polje je obavezno.',
+                          ),
                         ]),
                       ),
                     ),
@@ -296,14 +300,16 @@ class _NutricionistSeminarDetailsScreenState
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                                ElevatedButton(
-                style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Odustani")),
-          const SizedBox(width: 8,),
-            
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.red),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Odustani")),
+                    const SizedBox(
+                      width: 8,
+                    ),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState?.saveAndValidate() ?? false) {
@@ -312,14 +318,16 @@ class _NutricionistSeminarDetailsScreenState
                           debugPrint(_formKey.currentState?.value.toString());
                           var request = Map.from(_formKey.currentState!.value);
 
-                          request['nutricionistId'] = _initialValue['nutricionistId'];
+                          request['nutricionistId'] =
+                              _initialValue['nutricionistId'];
 
                           if (result!.result
                               .where((element) =>
                                   element.seminarId.toString() ==
                                   request['seminarId'])
                               .isNotEmpty) {
-                            ErrorDialog(context, "Nutricionist je odslušao odabrani seminar");
+                            ErrorDialog(context,
+                                "Nutricionist je odslušao odabrani seminar");
                           } else {
                             await provider.insert(request);
 

@@ -101,8 +101,11 @@ class _FaqDetailsScreenState extends State<FaqDetailsScreen> {
                   child: FormBuilderTextField(
                     decoration: commonDecoration.copyWith(labelText: "Pitanje"),
                     name: 'pitanje',
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
-                      FormBuilderValidators.required(),
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
+                      ),
                     ]),
                   ),
                 ),
@@ -119,8 +122,11 @@ class _FaqDetailsScreenState extends State<FaqDetailsScreen> {
                           commonDecoration.copyWith(labelText: "Odgovor"),
                       name: 'odgovor',
                       maxLines: 5,
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
                       validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(),
+                        FormBuilderValidators.required(
+                          errorText: 'Ovo polje je obavezno.',
+                        ),
                       ]),
                     ),
                   ),
