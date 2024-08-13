@@ -319,7 +319,6 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
                                     errorText:
                                         'Email nije u ispravnom formatu'),
                               ]),
-                              
                               enabled: widget.korisnik == null,
                             ),
                           ],
@@ -356,7 +355,7 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
   }
 
   Widget BarZaLozinku() {
-     return Row(
+    return Row(
       children: [
         Expanded(
           child: FormBuilderTextField(
@@ -386,40 +385,44 @@ class _SuplementDetailsScreenState extends State<KorisnikDetailsScreen> {
         const SizedBox(width: 10),
         Expanded(
           child: FormBuilderTextField(
-            decoration: commonDecoration.copyWith(
-              labelText: "Potvrda lozinke",
-              suffixIcon: IconButton(
-                icon: Icon(
-                  _obscureTextLozinkaPotvrda
-                      ? Icons.visibility
-                      : Icons.visibility_off,
+              decoration: commonDecoration.copyWith(
+                labelText: "Potvrda lozinke",
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureTextLozinkaPotvrda
+                        ? Icons.visibility
+                        : Icons.visibility_off,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureTextLozinkaPotvrda = !_obscureTextLozinkaPotvrda;
+                    });
+                  },
                 ),
-                onPressed: () {
-                  setState(() {
-                    _obscureTextLozinkaPotvrda = !_obscureTextLozinkaPotvrda;
-                  });
+              ),
+              name: 'lozinkaPotvrda',
+              obscureText: _obscureTextLozinkaPotvrda,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              onChanged: (value) => {
+                    setState(() {
+
+                    })
+                  },
+              validator: FormBuilderValidators.compose([
+                FormBuilderValidators.required(
+                errorText: 'Lozinka je obavezna.',
+              ),
+                (value) {
+                  var password = _formKey.currentState?.instantValue['lozinka'];
+                  return null;
                 },
-              ),
-            ),
-            name: 'lozinkaPotvrda',
-            obscureText: _obscureTextLozinkaPotvrda,
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            validator: FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                errorText: 'Potvrda lozinke je obavezna.',
-              ),
-              (value) {
-                return FormBuilderValidators.equal<String>(
-                  _formKey.currentState?.value['lozinka'] ?? '',
-                  errorText: 'Lozinke nisu iste',
-                )(value);
-              },
-            ]),
-          ),
+                FormBuilderValidators.equal(
+                    _formKey.currentState?.instantValue['lozinka'] ?? '',
+                    errorText: 'Lozinke nisu iste'),
+              ])),
         ),
       ],
     );
-
   }
 
   Widget _saveRow() {
