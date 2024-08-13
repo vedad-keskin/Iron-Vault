@@ -28,6 +28,7 @@ builder.Services.AddTransient<ITrenerService, TrenerService>();
 builder.Services.AddTransient<INutricionistService, NutricionistService>();
 builder.Services.AddTransient<ITrenerSeminarService, TrenerSeminarService>();
 builder.Services.AddTransient<INutricionistSeminarService, NutricionistSeminarService>();
+builder.Services.AddTransient<ISpolService, SpolService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();

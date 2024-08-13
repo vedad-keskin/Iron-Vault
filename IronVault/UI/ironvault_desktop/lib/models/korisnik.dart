@@ -1,8 +1,5 @@
-import 'dart:ffi';
 
-import 'package:ironvault_desktop/models/dobavljac.dart';
 import 'package:ironvault_desktop/models/grad.dart';
-import 'package:ironvault_desktop/models/kategorija.dart';
 import 'package:ironvault_desktop/models/spol.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -19,8 +16,8 @@ class Korisnik {
   String? brojTelefona;
   double? visina;
   double? tezina;
+  String? vrijemeUteretani;
   int? razina;
-  // Duration? vrijemeUteretani;
   int? gradId;
   Grad? grad;
   int? spolId;
