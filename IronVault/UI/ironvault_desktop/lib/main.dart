@@ -16,6 +16,7 @@ import 'package:ironvault_desktop/providers/spol_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/providers/trener_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
+import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
 import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -144,7 +145,7 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
-                        SuplementProvider provider = new SuplementProvider();
+                        KorisnikProvider provider = new KorisnikProvider();
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
@@ -153,7 +154,7 @@ class LoginPage extends StatelessWidget {
                         try {
                           var data = await provider.get();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SuplementListScreen()));
+                              builder: (context) => KorisnikListScreen()));
                         } on Exception catch (e) {
                           showDialog(
                             context: context,
