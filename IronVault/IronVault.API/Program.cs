@@ -31,6 +31,8 @@ builder.Services.AddTransient<INutricionistSeminarService, NutricionistSeminarSe
 builder.Services.AddTransient<ISpolService, SpolService>();
 builder.Services.AddTransient<IUlogaService, UlogaService>();
 builder.Services.AddTransient<IKorisnikUlogaService, KorisnikUlogaService>();
+builder.Services.AddTransient<INarudzbaService, NarudzbaService>();
+builder.Services.AddTransient<INarudzbaStavkaService, NarudzbaStavkaService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
