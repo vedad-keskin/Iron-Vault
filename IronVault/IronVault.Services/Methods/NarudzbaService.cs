@@ -19,6 +19,51 @@ namespace IronVault.Services.Methods
         {
         }
 
+
+        public override void AfterInsert(NarudzbaInsertRequest request, Narudzba entity)
+        {
+            
+            if(entity.NarudzbaId.ToString().Length == 1)
+            {
+                entity.Sifra = $"SIF-000-00{entity.NarudzbaId}";
+            }
+            else if (entity.NarudzbaId.ToString().Length == 2)
+            {
+                entity.Sifra = $"SIF-000-0{entity.NarudzbaId}";
+            }
+            else if (entity.NarudzbaId.ToString().Length == 3)
+            {
+                entity.Sifra = $"SIF-000-{entity.NarudzbaId}";
+            }
+            else if (entity.NarudzbaId.ToString().Length == 4)
+            {
+                entity.Sifra = $"SIF-00{entity.NarudzbaId}";
+            }
+            else if (entity.NarudzbaId.ToString().Length == 5)
+            {
+                entity.Sifra = $"SIF-0{entity.NarudzbaId}";
+            }
+            else if (entity.NarudzbaId.ToString().Length == 6)
+            {
+                entity.Sifra = $"SIF-{entity.NarudzbaId}";
+            }
+            else
+            {
+                entity.Sifra = "SIF-000-000";
+            }
+
+            entity.Status = true;
+            entity.Otkazano = false;
+
+            Context.Update(entity);
+            Context.SaveChanges();
+
+
+            base.AfterInsert(request, entity);
+        }
+
+        
+
         public override IQueryable<Narudzba> AddFilter(NarudzbaSearchObject search, IQueryable<Narudzba> query)
         {
             var filteredQuery = base.AddFilter(search, query);

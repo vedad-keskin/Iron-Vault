@@ -9,6 +9,7 @@ part of 'narudzba.dart';
 Narudzba _$NarudzbaFromJson(Map<String, dynamic> json) => Narudzba(
       narudzbaId: (json['narudzbaId'] as num?)?.toInt(),
     )
+      ..sifra = json['sifra'] as String?
       ..korisnikId = (json['korisnikId'] as num?)?.toInt()
       ..korisnik = json['korisnik'] == null
           ? null
@@ -21,6 +22,7 @@ Narudzba _$NarudzbaFromJson(Map<String, dynamic> json) => Narudzba(
 
 Map<String, dynamic> _$NarudzbaToJson(Narudzba instance) => <String, dynamic>{
       'narudzbaId': instance.narudzbaId,
+      'sifra': instance.sifra,
       'korisnikId': instance.korisnikId,
       'korisnik': instance.korisnik,
       'datumVrijemeNarudzbe': instance.datumVrijemeNarudzbe?.toIso8601String(),

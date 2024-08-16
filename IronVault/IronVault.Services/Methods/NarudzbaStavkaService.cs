@@ -25,9 +25,9 @@ namespace IronVault.Services.Methods
 
             filteredQuery = filteredQuery.Include(x => x.Suplement);
 
-            if (!string.IsNullOrWhiteSpace(search?.SuplementId))
+            if (!string.IsNullOrWhiteSpace(search?.NarudzbaId))
             {
-                filteredQuery = filteredQuery.Where(x => x.SuplementId.ToString() == search.SuplementId );
+                filteredQuery = filteredQuery.Where(x => x.NarudzbaId.ToString() == search.NarudzbaId );
             }
 
 

@@ -11,7 +11,6 @@ namespace IronVault.Model.Requests
 
         public DateTime DatumVrijemeNarudzbe { get; set; }
 
-        public bool Status { get; set; }
 
 
     }

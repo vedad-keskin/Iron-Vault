@@ -9,9 +9,11 @@ public partial class Narudzba
 
     public int KorisnikId { get; set; }
 
+    public string? Sifra { get; set; } = null!;
+
     public DateTime DatumVrijemeNarudzbe { get; set; }
 
-    public bool Status { get; set; }
+    public bool? Status { get; set; }
 
     public bool? Otkazano { get; set; }
 

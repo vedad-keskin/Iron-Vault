@@ -1,39 +1,31 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:intl/intl.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
+import 'package:ironvault_desktop/models/narudzba.dart';
+import 'package:ironvault_desktop/models/narudzba_stavka.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/models/seminar.dart';
-import 'package:ironvault_desktop/models/trener.dart';
-import 'package:ironvault_desktop/models/trener_seminar.dart';
-import 'package:ironvault_desktop/providers/seminar_provider.dart';
-import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
-import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
-import 'package:ironvault_desktop/screens/trener_list_screen.dart';
-import 'package:ironvault_desktop/utils/error_dialog.dart';
+import 'package:ironvault_desktop/providers/narudzba_stavka_provider.dart';
+import 'package:ironvault_desktop/screens/narudzba_list_screen.dart';
 import 'package:provider/provider.dart';
 
-class TrenerSeminarDetailsScreen extends StatefulWidget {
-  Trener? trener;
+class NarudzbaStavkaDetailsScreen extends StatefulWidget {
+  Narudzba? narudzba;
 
-  TrenerSeminarDetailsScreen({super.key, this.trener});
+  NarudzbaStavkaDetailsScreen({super.key, this.narudzba});
 
   @override
-  State<TrenerSeminarDetailsScreen> createState() =>
-      _TrenerSeminarDetailsScreenState();
+  State<NarudzbaStavkaDetailsScreen> createState() =>
+      _NarudzbaStavkaDetailsScreenState();
 }
 
-class _TrenerSeminarDetailsScreenState
-    extends State<TrenerSeminarDetailsScreen> {
-
+class _NarudzbaStavkaDetailsScreenState
+    extends State<NarudzbaStavkaDetailsScreen> {
   Map<String, dynamic> _initialValue = {};
-  late TrenerSeminarProvider provider;
-  late SeminarProvider seminarProvider;
-  bool isLoading = true;
+
+  late NarudzbaStavkaProvider provider;
+
+
 
   final _base64Placeholder =
       "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
@@ -45,20 +37,19 @@ class _TrenerSeminarDetailsScreenState
 
   @override
   void initState() {
-    provider = context.read<TrenerSeminarProvider>();
-    seminarProvider = context.read<SeminarProvider>();
+    provider = context.read<NarudzbaStavkaProvider>();
 
     // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'trenerId': widget.trener?.trenerId,
-      'ime': widget.trener?.ime,
-      'prezime': widget.trener?.prezime,
-      'email': widget.trener?.email,
-      'brojTelefona': widget.trener?.brojTelefona,
-      'slika':
-          widget.trener?.slika != null ? widget.trener!.slika.toString() : null
+      'narudzbaId': widget.narudzba?.narudzbaId,
+      'korisnikId': widget.narudzba?.korisnikId,
+      'sifra': widget.narudzba?.sifra,
+      'korisnik': widget.narudzba?.korisnik,
+      'datumVrijemeNarudzbe': widget.narudzba?.datumVrijemeNarudzbe,
+      'status': widget.narudzba?.status,
+      'otkazano': widget.narudzba?.otkazano
     };
 
     initForm();
@@ -66,13 +57,12 @@ class _TrenerSeminarDetailsScreenState
 
   Future initForm() async {
     var filter = {
-      'trenerId': _initialValue['trenerId'],
+      'narudzbaId': _initialValue['narudzbaId'],
     };
     result = await provider.get(filter: filter);
-    searchResult = await seminarProvider.get();
 
     setState(() {
-      isLoading = false;
+
     });
   }
 
@@ -89,16 +79,17 @@ class _TrenerSeminarDetailsScreenState
     ),
   );
 
-  SearchResult<TrenerSeminar>? result;
-  SearchResult<Seminar>? searchResult;
+  SearchResult<NarudzbaStavka>? result;
+
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Odslušani seminari trenera",
+        "Detalji narudžbe",
         Column(
           children: [
-            isLoading ? Container() : _buildHeader(),
+            _buildHeader(),
             _buildResultView(),
+            result != null ? _buildOverallResultView() : Container()
           ],
         ));
   }
@@ -117,7 +108,7 @@ class _TrenerSeminarDetailsScreenState
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => const TrenerListScreen()),
+                        builder: (context) => const NarudzbaListScreen()),
                   );
                 },
               ),
@@ -140,9 +131,9 @@ class _TrenerSeminarDetailsScreenState
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: Image.memory(
-                    _initialValue['slika'] == null
+                    _initialValue['korisnik'].slika == null
                         ? base64Decode(_base64Placeholder)
-                        : base64Decode(_initialValue['slika']),
+                        : base64Decode(_initialValue['korisnik'].slika),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -173,30 +164,19 @@ class _TrenerSeminarDetailsScreenState
                         CrossAxisAlignment.start, // Center content horizontally
                     children: [
                       Text(
-                        "${_initialValue['ime']} ${_initialValue['prezime']}",
+                       "Kupac : ${_initialValue['korisnik'].ime} ${_initialValue['korisnik'].prezime}",
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        "Trener",
+                        
+                         "Sifra narudžbe : ${_initialValue['sifra']}",
                         style: Theme.of(context).textTheme.bodyLarge,
                       ),
                     ],
                   ),
                 ),
               ),
-            ],
-          ),
-          const SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ElevatedButton(
-                onPressed: () => {_showChoiceDialog(context)},
-                child: const Text('Dodaj novi seminar'),
-              )
             ],
           ),
         ],
@@ -218,9 +198,9 @@ class _TrenerSeminarDetailsScreenState
                   columnSpacing: 12,
                   dataRowMaxHeight: 70, // Set the height of the rows
                   columns: const [
-                    DataColumn(label: Text("Tema")),
-                    DataColumn(label: Text("Predavač")),
-                    DataColumn(label: Text("Datum održavanja")),
+                    DataColumn(label: Text("Suplement")),
+                    DataColumn(label: Text("Količina")),
+                    DataColumn(label: Text("Cijena")),
                   ],
                   rows: result?.result
                           .map((e) {
@@ -228,18 +208,16 @@ class _TrenerSeminarDetailsScreenState
                               DataCell(Container(
                                 width: constraints.maxWidth *
                                     0.6, // 40% of the available width
-                                child: Text(e.seminar?.tema ?? ""),
+                                child: Text(e.suplement?.naziv ?? ""),
                               )),
                               DataCell(Container(
                                 width: constraints.maxWidth *
                                     0.2, // 40% of the available width
-                                child: Text(e.seminar?.predavac ?? ""),
+                                child: Text(e.kolicina.toString() ?? ""),
                               )),
-                              DataCell(Container(
-                                  width: constraints.maxWidth *
-                                      0.2, // 40% of the available width
-                                  child: Text(DateFormat('dd MMM yyyy')
-                                      .format(e.seminar!.datum!)))),
+                              DataCell(Text(
+                                ("${(e.suplement?.cijena ?? 0) * (e.kolicina ?? 0)} KM"),
+                              ))
                             ]);
                           })
                           .toList()
@@ -254,99 +232,38 @@ class _TrenerSeminarDetailsScreenState
     );
   }
 
-  void _showChoiceDialog(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+Widget _buildOverallResultView() {
+  // Calculate the total price
+  double totalPrice = result?.result.fold(0.0, (sum, e) {
+    return sum! + (e.suplement?.cijena ?? 0) * (e.kolicina ?? 0);
+  }) ?? 0.0;
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Odaberite seminar'),
-          content: FormBuilder(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: FormBuilderDropdown(
-                        name: 'seminarId',
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Seminar"),
-                        items: searchResult?.result
-                                .map((item) => DropdownMenuItem(
-                                    value: item.seminarId.toString(),
-                                    child: Text(item.tema ?? "")))
-                                .toList() ??
-                            [],
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Ovo polje je obavezno.',
-                          ),
-                        ]),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                    height: 20), // Adds space between dropdown and button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.red),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Odustani")),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState?.saveAndValidate() ?? false) {
-                          // Handle form submission
-
-                          debugPrint(_formKey.currentState?.value.toString());
-                          var request = Map.from(_formKey.currentState!.value);
-
-                          request['trenerId'] = _initialValue['trenerId'];
-
-                          if (result!.result
-                              .where((element) =>
-                                  element.seminarId.toString() ==
-                                  request['seminarId'])
-                              .isNotEmpty) {
-                            ErrorDialog(
-                                context, "Trener je odslušao odabrani seminar");
-                          } else {
-                            await provider.insert(request);
-
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    TrenerSeminarDetailsScreen(
-                                  trener: widget.trener,
-                                ),
-                              ),
-                            );
-                          }
-
-                          // Navigate to the SuplementDetailsScreen with the retrieved Suplement
-                        }
-                      },
-                      child: const Text('Dodaj'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+  return Padding(
+    padding: const EdgeInsets.fromLTRB(700, 20, 0, 20), // Adjust padding as needed
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.end, // Align content to the start (left)
+      children: [
+        Container(
+          padding: const EdgeInsets.all(16.0),
+          decoration: BoxDecoration(
+            color: Colors.grey[200], // Background color
+            borderRadius: BorderRadius.circular(10.0), // Rounded corners
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 4,
+                offset: const Offset(0, 3),
+              ),
+            ],
           ),
-        );
-      },
-    );
-  }
+          child: Text(
+            "Ukupna cijena: ${totalPrice.toStringAsFixed(2)} KM", // Format to 2 decimal places
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+      ],
+    ),
+  );
+}
 }

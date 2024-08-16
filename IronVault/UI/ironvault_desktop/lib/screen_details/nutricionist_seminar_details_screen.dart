@@ -33,7 +33,7 @@ class NutricionistSeminarDetailsScreen extends StatefulWidget {
 
 class _NutricionistSeminarDetailsScreenState
     extends State<NutricionistSeminarDetailsScreen> {
-  final _formKey = GlobalKey<FormBuilderState>();
+
   Map<String, dynamic> _initialValue = {};
   late NutricionistSeminarProvider provider;
   late SeminarProvider seminarProvider;

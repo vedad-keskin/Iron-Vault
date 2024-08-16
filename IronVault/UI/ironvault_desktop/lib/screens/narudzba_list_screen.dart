@@ -8,6 +8,7 @@ import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/narudzba_provider.dart';
 import 'package:ironvault_desktop/providers/recenzija_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
+import 'package:ironvault_desktop/screen_details/narudzba_stavka_details_screen.dart';
 import 'package:provider/provider.dart';
 
 class NarudzbaListScreen extends StatefulWidget {
@@ -126,12 +127,18 @@ class _NarudzbaListScreenState extends State<NarudzbaListScreen> {
                   DataColumn(label: Text("Datum i vrijeme narudžbe")),
                   DataColumn(label: Text("Status")),
                   DataColumn(label: Text("Otkazano")),
+                  
                 ],
                 rows: result?.result
                         .map((e) {
                           return DataRow(
                               onSelectChanged: (selected) => {
-                                      // zbog izgleda, ljepse je kad je clickable 
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NarudzbaStavkaDetailsScreen(
+                                                      narudzba: e,
+                                                    )))
                                   },
                               cells: [
                                 DataCell(Container(

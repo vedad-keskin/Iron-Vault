@@ -6,6 +6,6 @@ namespace IronVault.Model.SearchObjects
 {
     public class NarudzbaStavkaSearchObject : BaseSearchObject
     {
-        public string? SuplementId { get; set; }
+        public string? NarudzbaId { get; set; }
     }
 }

@@ -6,6 +6,7 @@ part 'narudzba.g.dart';
 @JsonSerializable()
 class Narudzba {
   int? narudzbaId;
+  String? sifra;
   int? korisnikId;
   Korisnik? korisnik;
   DateTime? datumVrijemeNarudzbe;
