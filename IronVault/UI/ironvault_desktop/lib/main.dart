@@ -9,6 +9,8 @@ import 'package:ironvault_desktop/providers/grad_provider.dart';
 import 'package:ironvault_desktop/providers/kategorija_provider.dart';
 import 'package:ironvault_desktop/providers/korisnik_provider.dart';
 import 'package:ironvault_desktop/providers/korisnik_uloga_provider.dart';
+import 'package:ironvault_desktop/providers/narudzba_provider.dart';
+import 'package:ironvault_desktop/providers/narudzba_stavka_provider.dart';
 import 'package:ironvault_desktop/providers/nutricionist_provider.dart';
 import 'package:ironvault_desktop/providers/nutricionist_seminar_provider.dart';
 import 'package:ironvault_desktop/providers/recenzija_provider.dart';
@@ -41,6 +43,8 @@ void main() {
       ChangeNotifierProvider<SpolProvider>(create: (_) => SpolProvider()),
       ChangeNotifierProvider<UlogaProvider>(create: (_) => UlogaProvider()),
       ChangeNotifierProvider<KorisnikUlogaProvider>(create: (_) => KorisnikUlogaProvider()),
+      ChangeNotifierProvider<NarudzbaProvider>(create: (_) => NarudzbaProvider()),
+      ChangeNotifierProvider<NarudzbaStavkaProvider>(create: (_) => NarudzbaStavkaProvider()),
     ],
     child: const MyApp(),));
 }

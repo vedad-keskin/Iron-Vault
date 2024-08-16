@@ -6,6 +6,7 @@ import 'package:ironvault_desktop/screens/faq_list_screen.dart';
 import 'package:ironvault_desktop/screens/grad_list_screen.dart';
 import 'package:ironvault_desktop/screens/kategorija_list_screen.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
+import 'package:ironvault_desktop/screens/narudzba_list_screen.dart';
 import 'package:ironvault_desktop/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_desktop/screens/recenzija_list_screen.dart';
 import 'package:ironvault_desktop/screens/seminar_list_screen.dart';
@@ -52,6 +53,12 @@ class _MasterScreenState extends State<MasterScreen> {
               title: const Text("Korisnici"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const KorisnikListScreen()));
+              },
+            ),
+            ListTile(
+              title: const Text("Narudžbe"),
+              onTap: () {
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NarudzbaListScreen()));
               },
             ),
             ListTile(

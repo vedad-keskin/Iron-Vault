@@ -25,9 +25,9 @@ namespace IronVault.Services.Methods
 
             filteredQuery = filteredQuery.Include(x => x.Korisnik);
 
-            if (!string.IsNullOrWhiteSpace(search?.KorisnikId))
+            if (!string.IsNullOrWhiteSpace(search?.ImePrezime))
             {
-                filteredQuery = filteredQuery.Where(x => x.KorisnikId.ToString() == search.KorisnikId );
+                filteredQuery = filteredQuery.Where(x => x.Korisnik.Ime.Contains(search.ImePrezime) || x.Korisnik.Prezime.Contains(search.ImePrezime));
             }
 
 
