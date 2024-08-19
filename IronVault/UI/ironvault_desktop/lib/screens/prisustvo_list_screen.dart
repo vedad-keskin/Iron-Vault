@@ -1,11 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:ironvault_desktop/layouts/master_screen.dart';
+import 'package:ironvault_desktop/models/korisnik.dart';
 import 'package:ironvault_desktop/models/prisustvo.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
+import 'package:ironvault_desktop/providers/korisnik_provider.dart';
 import 'package:ironvault_desktop/providers/prisustvo_provider.dart';
+import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
 class PrisustvoListScreen extends StatefulWidget {
@@ -18,23 +23,23 @@ class PrisustvoListScreen extends StatefulWidget {
 class _PrisustvoListScreenState extends State<PrisustvoListScreen> {
   late PrisustvoProvider provider;
   SearchResult<Prisustvo>? result;
+  SearchResult<Korisnik>? searchResult;
+  late KorisnikProvider korisnikProvider;
 
   @override
   void initState() {
     super.initState();
     provider = context.read<PrisustvoProvider>();
+    korisnikProvider = context.read<KorisnikProvider>();
+
     initForm();
   }
 
   Future initForm() async {
     var filter = {'korisnikPrisutan': "true"};
     result = await provider.get(filter: filter);
-    setState(() {});
-  }
+    searchResult = await korisnikProvider.get();
 
-  void _refreshData() async {
-    var filter = {'korisnikPrisutan': "true"};
-    result = await provider.get(filter: filter);
     setState(() {});
   }
 
@@ -45,10 +50,199 @@ class _PrisustvoListScreenState extends State<PrisustvoListScreen> {
       Container(
         child: Column(
           children: [
+            _buildAddView(),
             _buildResultView(),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildAddView() {
+    return Padding(
+      padding:
+          const EdgeInsets.fromLTRB(40, 20, 40, 0), // Adjusted right padding
+      child: Row(
+        children: [
+          // Existing icon and text on the left
+          IconButton(
+            icon: const Icon(
+              Icons.add_circle_outline,
+              color: Colors.green,
+              size: 30,
+            ),
+            onPressed: () {
+              _showChoiceDialog(context);
+            },
+          ),
+          const SizedBox(width: 10),
+          Text(
+            'Dodaj korisnika u teretanu',
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                  color: Colors.black,
+                ),
+          ),
+          const Spacer(), // Pushes the legend container to the right
+          // Legend section on the right
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            decoration: BoxDecoration(
+              color: Colors.grey[200],
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 1,
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.cancel_sharp,
+                      color: Colors.redAccent,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Izbaciti korisnika nakon što napusti teretanu',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    const Icon(
+                      Icons.add_circle_outline,
+                      color: Colors.green,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Dodati korisnika nakon što dođe u teretanu',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  final commonDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.grey[200],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: const BorderSide(color: Colors.blue),
+    ),
+  );
+
+  void _showChoiceDialog(BuildContext context) {
+    final _formKey = GlobalKey<FormBuilderState>();
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Odaberite korisnika'),
+          content: FormBuilder(
+            key: _formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormBuilderDropdown(
+                        name: 'korisnikId',
+                        decoration:
+                            commonDecoration.copyWith(labelText: "Korisnik"),
+                        items: searchResult?.result
+                                .map((item) => DropdownMenuItem(
+                                    value: item.korisnikId.toString(),
+                                    child: Text("${item.ime} ${item.prezime}")))
+                                .toList() ??
+                            [],
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: FormBuilderValidators.compose([
+                          FormBuilderValidators.required(
+                            errorText: 'Ovo polje je obavezno.',
+                          ),
+                        ]),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                    height: 20), // Adds space between dropdown and button
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.red),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text("Odustani")),
+                    const SizedBox(
+                      width: 8,
+                    ),
+                    ElevatedButton(
+                      onPressed: () async {
+                        if (_formKey.currentState?.saveAndValidate() ?? false) {
+                          // Handle form submission
+
+                          debugPrint(_formKey.currentState?.value.toString());
+                          var request = Map.from(_formKey.currentState!.value);
+
+                          
+
+                          if (result!.result
+                              .where((element) =>
+                                  element.korisnikId.toString() ==
+                                  request['korisnikId'])
+                              .isNotEmpty) {
+                            ErrorDialog(
+                                context, "Korisnik je već u teretani");
+                          } else {
+                            await provider.insert(request);
+
+                            await initForm();
+
+                             Navigator.pop(context);
+                          }
+
+                          
+                        }
+                      },
+                      child: const Text('Dodaj'),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -195,12 +389,10 @@ class CardItem extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           "${e.korisnik?.ime} ${e.korisnik?.prezime}",
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyLarge
-                              ?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                           textAlign: TextAlign.center,
                         ),
                       ),

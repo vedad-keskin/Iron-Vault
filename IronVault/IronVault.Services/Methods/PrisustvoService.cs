@@ -65,8 +65,9 @@ namespace IronVault.Services.Methods
                 }
             }
 
+            entity.DatumVrijemeIzlaska = DateTime.Now;
 
-            var razlikaIzmedjuDatuma = request.DatumVrijemeIzlaska - entity.DatumVrijemeUlaska;
+            var razlikaIzmedjuDatuma = entity.DatumVrijemeIzlaska - entity.DatumVrijemeUlaska;
 
             VrijemeProvedenoUTeretani += razlikaIzmedjuDatuma;
 
@@ -87,6 +88,14 @@ namespace IronVault.Services.Methods
 
 
             base.BeforeUpdate(request, entity);
+        }
+
+        public override void BeforeInsert(PrisustvoInsertRequest request, Prisustvo entity)
+        {
+
+            entity.DatumVrijemeUlaska = DateTime.Now;
+
+            base.BeforeInsert(request, entity);
         }
 
     }

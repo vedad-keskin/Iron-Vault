@@ -51,7 +51,7 @@ class _MasterScreenState extends State<MasterScreen> {
               ),
            ),
               ListTile(
-              title: const Text("Aktivnosti"),
+              title: const Text("Korisnici u teretani"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PrisustvoListScreen()));
               },
