@@ -39,6 +39,14 @@ namespace IronVault.Services.Methods
             return filteredQuery;
         }
 
+        public override void BeforeInsert(KorisnikUlogaUpsertRequest request, KorisnikUloga entity)
+        {
+
+            entity.DatumIzmjene = DateTime.Now;
+
+            base.BeforeInsert(request, entity);
+        }
+
 
     }
 }

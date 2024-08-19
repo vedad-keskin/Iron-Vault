@@ -29,7 +29,6 @@ class TrenerSeminarDetailsScreen extends StatefulWidget {
 
 class _TrenerSeminarDetailsScreenState
     extends State<TrenerSeminarDetailsScreen> {
-
   Map<String, dynamic> _initialValue = {};
   late TrenerSeminarProvider provider;
   late SeminarProvider seminarProvider;
@@ -64,7 +63,7 @@ class _TrenerSeminarDetailsScreenState
     initForm();
   }
 
-  Future initForm() async {
+  Future<void> initForm() async {
     var filter = {
       'trenerId': _initialValue['trenerId'],
     };
@@ -325,14 +324,8 @@ class _TrenerSeminarDetailsScreenState
                           } else {
                             await provider.insert(request);
 
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    TrenerSeminarDetailsScreen(
-                                  trener: widget.trener,
-                                ),
-                              ),
-                            );
+                            await initForm();
+                             Navigator.pop(context);
                           }
 
                           // Navigate to the SuplementDetailsScreen with the retrieved Suplement

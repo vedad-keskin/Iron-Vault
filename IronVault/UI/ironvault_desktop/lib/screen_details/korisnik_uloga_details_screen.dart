@@ -9,19 +9,11 @@ import 'package:ironvault_desktop/layouts/master_screen.dart';
 import 'package:ironvault_desktop/models/korisnik.dart';
 import 'package:ironvault_desktop/models/korisnik_uloga.dart';
 import 'package:ironvault_desktop/models/search_result.dart';
-import 'package:ironvault_desktop/models/seminar.dart';
-import 'package:ironvault_desktop/models/trener.dart';
-import 'package:ironvault_desktop/models/trener_seminar.dart';
 import 'package:ironvault_desktop/models/uloga.dart';
 import 'package:ironvault_desktop/providers/korisnik_provider.dart';
 import 'package:ironvault_desktop/providers/korisnik_uloga_provider.dart';
-import 'package:ironvault_desktop/providers/seminar_provider.dart';
-import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
 import 'package:ironvault_desktop/providers/uloga_provider.dart';
-import 'package:ironvault_desktop/screen_details/korisnik_details_screen.dart';
-import 'package:ironvault_desktop/screen_details/trener_details_screen.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
-import 'package:ironvault_desktop/screens/trener_list_screen.dart';
 import 'package:ironvault_desktop/utils/error_dialog.dart';
 import 'package:provider/provider.dart';
 
@@ -44,23 +36,17 @@ class _KorisnikUlogaDetailsScreenState
   bool isLoading = true;
 
   final _base64Placeholder =
-      "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
+      "iVBORw0KGgoAAAANSUhEUgAAAbUAAADnCAYAAACZm8iVAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAAEnQAABJ0Ad5mH3gAAANhSURBVHhe7dVBEQAwEAOh+hcbC1cfOzzQwNt2AFAgNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAGRIDYAMqQGQITUAMqQGQIbUAMiQGgAZUgMgQ2oAZEgNgAypAZAhNQAypAZAhtQAyJAaABlSAyBDagBkSA2ADKkBkCE1ADKkBkCG1ADIkBoAGVIDIENqAETsPkrQ65jNFb26AAAAAElFTkSuQmCC";
 
   @override
   void initState() {
     provider = context.read<KorisnikUlogaProvider>();
     ulogaProvider = context.read<UlogaProvider>();
 
-    // TODO: implement initState
     super.initState();
 
     _initialValue = {
-      'korisnikId' : widget.korisnik?.korisnikId,
+      'korisnikId': widget.korisnik?.korisnikId,
       'ime': widget.korisnik?.ime,
       'prezime': widget.korisnik?.prezime,
       'korisnickoIme': widget.korisnik?.korisnickoIme,
@@ -78,7 +64,7 @@ class _KorisnikUlogaDetailsScreenState
     initForm();
   }
 
-  Future initForm() async {
+  Future<void> initForm() async {
     var filter = {
       'korisnikId': _initialValue['korisnikId'],
     };
@@ -105,16 +91,18 @@ class _KorisnikUlogaDetailsScreenState
 
   SearchResult<KorisnikUloga>? result;
   SearchResult<Uloga>? searchResult;
+
   @override
   Widget build(BuildContext context) {
     return MasterScreen(
-        "Uloge korisnika",
-        Column(
-          children: [
-            isLoading ? Container() : _buildHeader(),
-            _buildResultView(),
-          ],
-        ));
+      "Uloge korisnika",
+      Column(
+        children: [
+          isLoading ? Container() : _buildHeader(),
+          _buildResultView(),
+        ],
+      ),
+    );
   }
 
   Widget _buildHeader() {
@@ -131,7 +119,8 @@ class _KorisnikUlogaDetailsScreenState
                 onPressed: () {
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
-                        builder: (context) => const KorisnikListScreen()),
+                      builder: (context) => const KorisnikListScreen(),
+                    ),
                   );
                 },
               ),
@@ -146,8 +135,7 @@ class _KorisnikUlogaDetailsScreenState
                 height: 100,
                 width: 100,
                 decoration: BoxDecoration(
-                  color: Colors.grey[
-                      200], // Use a common decoration fill color or define a new one
+                  color: Colors.grey[200], // Use a common decoration fill color or define a new one
                   borderRadius: BorderRadius.circular(10.0),
                   border: Border.all(color: Colors.transparent),
                 ),
@@ -161,8 +149,7 @@ class _KorisnikUlogaDetailsScreenState
                   ),
                 ),
               ),
-              const SizedBox(
-                  width: 20), // Space between image and text container
+              const SizedBox(width: 20), // Space between image and text container
               // Text Container
               SizedBox(
                 width: 300, // Set the width of the container
@@ -181,10 +168,8 @@ class _KorisnikUlogaDetailsScreenState
                     ],
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize
-                        .min, // Ensures column size is based on content
-                    crossAxisAlignment:
-                        CrossAxisAlignment.start, // Center content horizontally
+                    mainAxisSize: MainAxisSize.min, // Ensures column size is based on content
+                    crossAxisAlignment: CrossAxisAlignment.start, // Center content horizontally
                     children: [
                       Text(
                         "${_initialValue['ime']} ${_initialValue['prezime']}",
@@ -201,16 +186,14 @@ class _KorisnikUlogaDetailsScreenState
               ),
             ],
           ),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               ElevatedButton(
                 onPressed: () => {_showChoiceDialog(context)},
                 child: const Text('Dodaj novu ulogu'),
-              )
+              ),
             ],
           ),
         ],
@@ -240,25 +223,22 @@ class _KorisnikUlogaDetailsScreenState
                           .map((e) {
                             return DataRow(cells: [
                               DataCell(Container(
-                                width: constraints.maxWidth *
-                                    0.2, // 40% of the available width
+                                width: constraints.maxWidth * 0.2, // 20% of the available width
                                 child: Text(e.uloga?.naziv ?? ""),
                               )),
                               DataCell(Container(
-                                width: constraints.maxWidth *
-                                    0.6, // 40% of the available width
+                                width: constraints.maxWidth * 0.6, // 60% of the available width
                                 child: Text(e.uloga?.opis ?? ""),
                               )),
                               DataCell(Container(
-                                  width: constraints.maxWidth *
-                                      0.2, // 40% of the available width
+                                  width: constraints.maxWidth * 0.2, // 20% of the available width
                                   child: Text(DateFormat('dd MMM yyyy')
-                                      .format(e.datumIzmjene!)))),
+                                      .format(e.datumIzmjene!))),
+                              ),
                             ]);
                           })
                           .toList()
-                          .cast<DataRow>() ??
-                      [], // Convert Iterable to List
+                          .cast<DataRow>() ?? [], // Convert Iterable to List
                 );
               },
             ),
@@ -286,14 +266,12 @@ class _KorisnikUlogaDetailsScreenState
                     Expanded(
                       child: FormBuilderDropdown(
                         name: 'ulogaId',
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Uloga"),
+                        decoration: commonDecoration.copyWith(labelText: "Uloga"),
                         items: searchResult?.result
                                 .map((item) => DropdownMenuItem(
                                     value: item.ulogaId.toString(),
                                     child: Text(item.naziv ?? "")))
-                                .toList() ??
-                            [],
+                                .toList() ?? [],
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         validator: FormBuilderValidators.compose([
                           FormBuilderValidators.required(
@@ -304,8 +282,7 @@ class _KorisnikUlogaDetailsScreenState
                     ),
                   ],
                 ),
-                const SizedBox(
-                    height: 20), // Adds space between dropdown and button
+                const SizedBox(height: 20), // Adds space between dropdown and button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -316,9 +293,7 @@ class _KorisnikUlogaDetailsScreenState
                           Navigator.pop(context);
                         },
                         child: const Text("Odustani")),
-                    const SizedBox(
-                      width: 8,
-                    ),
+                    const SizedBox(width: 8),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState?.saveAndValidate() ?? false) {
@@ -338,18 +313,10 @@ class _KorisnikUlogaDetailsScreenState
                                 context, "Korisnik već ima dodatu ulogu");
                           } else {
                             await provider.insert(request);
+                            await initForm(); // Reload data
 
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    KorisnikUlogaDetailsScreen(
-                                  korisnik: widget.korisnik,
-                                ),
-                              ),
-                            );
+                            Navigator.of(context).pop(); // Close the dialog
                           }
-
-                          // Navigate to the SuplementDetailsScreen with the retrieved Suplement
                         }
                       },
                       child: const Text('Dodaj'),

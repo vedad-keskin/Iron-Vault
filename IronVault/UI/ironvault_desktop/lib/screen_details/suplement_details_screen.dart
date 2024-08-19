@@ -71,7 +71,7 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     initForm();
   }
 
-  Future initForm() async {
+  Future<void> initForm() async {
     kategorijeResult = await kategorijaProvider.get();
     dobavljaciResult = await dobavljacProvider.get();
 
@@ -435,6 +435,9 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
                     await suplementProvider.update(
                         widget.suplement!.suplementId!, request);
                   }
+
+  
+
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
                       builder: (context) => const SuplementListScreen()));
                 } on Exception catch (e) {

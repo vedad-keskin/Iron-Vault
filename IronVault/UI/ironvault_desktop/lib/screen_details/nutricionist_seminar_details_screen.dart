@@ -328,17 +328,11 @@ class _NutricionistSeminarDetailsScreenState
                               .isNotEmpty) {
                             ErrorDialog(context,
                                 "Nutricionist je odslušao odabrani seminar");
-                          } else {
+                           } else {
                             await provider.insert(request);
 
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (context) =>
-                                    NutricionistSeminarDetailsScreen(
-                                  nutricionist: widget.nutricionist,
-                                ),
-                              ),
-                            );
+                            await initForm();
+                             Navigator.pop(context);
                           }
 
                           // Navigate to the SuplementDetailsScreen with the retrieved Suplement
