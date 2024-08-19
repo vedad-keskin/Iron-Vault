@@ -23,6 +23,5 @@ namespace IronVault.Model.Models
         public Spol Spol { get; set; }
 
         public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
-        public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
     }
 }

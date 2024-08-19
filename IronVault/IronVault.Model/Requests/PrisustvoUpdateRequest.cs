@@ -4,8 +4,8 @@ using System.Text;
 
 namespace IronVault.Model.Requests
 {
-    public partial class AktivnostUpdateRequest
+    public partial class PrisustvoUpdateRequest
     {
-        public DateTime DatumVrijemeIzlaska { get; set; }
+        public DateTime? DatumVrijemeIzlaska { get; set; }
     }
 }

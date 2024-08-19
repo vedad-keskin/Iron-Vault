@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace IronVault.Model.Models
+namespace IronVault.Model.Requests
 {
-    public partial class Aktivnost
+    public partial class PrisustvoInsertRequest
     {
-        public int AktivnostId { get; set; }
         public int KorisnikId { get; set; }
+
         public DateTime DatumVrijemeUlaska { get; set; }
-        public DateTime? DatumVrijemeIzlaska { get; set; }
     }
 }

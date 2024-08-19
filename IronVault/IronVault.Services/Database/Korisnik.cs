@@ -35,8 +35,6 @@ public partial class Korisnik
 
     public int SpolId { get; set; }
 
-    public virtual ICollection<Aktivnost> Aktivnosts { get; set; } = new List<Aktivnost>();
-
     public virtual Grad Grad { get; set; } = null!;
 
     public virtual ICollection<KorisnikClanarina> KorisnikClanarinas { get; set; } = new List<KorisnikClanarina>();
@@ -48,6 +46,8 @@ public partial class Korisnik
     public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
 
     public virtual ICollection<Narudzba> Narudzbas { get; set; } = new List<Narudzba>();
+
+    public virtual ICollection<Prisustvo> Prisustvos { get; set; } = new List<Prisustvo>();
 
     public virtual ICollection<Recenzija> Recenzijas { get; set; } = new List<Recenzija>();
 

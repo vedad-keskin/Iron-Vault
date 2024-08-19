@@ -15,8 +15,6 @@ public partial class GmsDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Aktivnost> Aktivnosts { get; set; }
-
     public virtual DbSet<Clanarina> Clanarinas { get; set; }
 
     public virtual DbSet<Dobavljac> Dobavljacs { get; set; }
@@ -45,6 +43,8 @@ public partial class GmsDbContext : DbContext
 
     public virtual DbSet<NutricionistSeminar> NutricionistSeminars { get; set; }
 
+    public virtual DbSet<Prisustvo> Prisustvos { get; set; }
+
     public virtual DbSet<Recenzija> Recenzijas { get; set; }
 
     public virtual DbSet<Seminar> Seminars { get; set; }
@@ -65,20 +65,6 @@ public partial class GmsDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Aktivnost>(entity =>
-        {
-            entity.ToTable("Aktivnost");
-
-            entity.HasIndex(e => e.KorisnikId, "IX_Aktivnost_KorisnikID");
-
-            entity.Property(e => e.AktivnostId).HasColumnName("AktivnostID");
-            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
-
-            entity.HasOne(d => d.Korisnik).WithMany(p => p.Aktivnosts)
-                .HasForeignKey(d => d.KorisnikId)
-                .OnDelete(DeleteBehavior.ClientSetNull);
-        });
-
         modelBuilder.Entity<Clanarina>(entity =>
         {
             entity.ToTable("Clanarina");
@@ -282,6 +268,20 @@ public partial class GmsDbContext : DbContext
 
             entity.HasOne(d => d.Seminar).WithMany(p => p.NutricionistSeminars)
                 .HasForeignKey(d => d.SeminarId)
+                .OnDelete(DeleteBehavior.ClientSetNull);
+        });
+
+        modelBuilder.Entity<Prisustvo>(entity =>
+        {
+            entity.ToTable("Prisustvo");
+
+            entity.HasIndex(e => e.KorisnikId, "IX_Prisustvo_KorisnikID");
+
+            entity.Property(e => e.PrisustvoId).HasColumnName("PrisustvoID");
+            entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
+
+            entity.HasOne(d => d.Korisnik).WithMany(p => p.Prisustvos)
+                .HasForeignKey(d => d.KorisnikId)
                 .OnDelete(DeleteBehavior.ClientSetNull);
         });
 

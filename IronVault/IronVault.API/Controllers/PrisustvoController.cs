@@ -10,35 +10,39 @@ namespace IronVault.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class AktivnostController : BaseCRUDController<Aktivnost, AktivnostSearchObject, AktivnostInsertRequest, AktivnostUpdateRequest>
+    public class PrisustvoController : BaseCRUDController<Prisustvo,PrisustvoSearchObject,PrisustvoInsertRequest, PrisustvoUpdateRequest>
     {
-        public AktivnostController(IAktivnostService service) : base(service)
-        {
 
+
+        public PrisustvoController(IPrisustvoService service):base(service)
+        {
+           
         }
 
         [Authorize(Roles = "Administrator")]
-        public override Aktivnost Insert(AktivnostInsertRequest request)
+        public override Prisustvo Insert(PrisustvoInsertRequest request)
         {
             return base.Insert(request);
         }
 
         [Authorize(Roles = "Administrator")]
-        public override Aktivnost Update(int id, AktivnostUpdateRequest request)
+        public override Prisustvo Update(int id, PrisustvoUpdateRequest request)
         {
             return base.Update(id, request);
         }
 
         [AllowAnonymous]
-        public override PagedResult<Aktivnost> GetList([FromQuery] AktivnostSearchObject searchObject)
+        public override PagedResult<Prisustvo> GetList([FromQuery] PrisustvoSearchObject searchObject)
         {
             return base.GetList(searchObject);
         }
 
         [AllowAnonymous]
-        public override Aktivnost GetById(int id)
+        public override Prisustvo GetById(int id)
         {
             return base.GetById(id);
         }
+
+
     }
 }

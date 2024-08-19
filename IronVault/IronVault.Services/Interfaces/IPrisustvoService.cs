@@ -9,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services.Interfaces
 {
-    public interface IAktivnostService : ICRUDService<Aktivnost, AktivnostSearchObject, AktivnostInsertRequest, AktivnostUpdateRequest>
+    public interface IPrisustvoService : ICRUDService<Prisustvo, PrisustvoSearchObject, PrisustvoInsertRequest, PrisustvoUpdateRequest>
     {
+
     }
 }

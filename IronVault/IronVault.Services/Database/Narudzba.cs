@@ -9,7 +9,7 @@ public partial class Narudzba
 
     public int KorisnikId { get; set; }
 
-    public string? Sifra { get; set; } = null!;
+    public string? Sifra { get; set; }
 
     public DateTime DatumVrijemeNarudzbe { get; set; }
 

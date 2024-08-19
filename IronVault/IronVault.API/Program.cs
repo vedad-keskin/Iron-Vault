@@ -17,7 +17,6 @@ builder.Services.AddTransient<ISuplementService, SuplementService>();
 //builder.Services.AddTransient<ISuplementiService, DummySuplementiService>();
 builder.Services.AddTransient<IKorisnikService, KorisnikService>();
 builder.Services.AddTransient<IDobavljacService, DobavljacService>();
-builder.Services.AddTransient<IAktivnostService, AktivnostService>();
 builder.Services.AddTransient<IKategorijaService, KategorijaService>();
 builder.Services.AddTransient<IGradService, GradService>();
 builder.Services.AddTransient<IRecenzijaService, RecenzijaService>();
@@ -33,6 +32,7 @@ builder.Services.AddTransient<IUlogaService, UlogaService>();
 builder.Services.AddTransient<IKorisnikUlogaService, KorisnikUlogaService>();
 builder.Services.AddTransient<INarudzbaService, NarudzbaService>();
 builder.Services.AddTransient<INarudzbaStavkaService, NarudzbaStavkaService>();
+builder.Services.AddTransient<IPrisustvoService, PrisustvoService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();

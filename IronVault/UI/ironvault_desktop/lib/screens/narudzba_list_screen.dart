@@ -144,7 +144,7 @@ class _NarudzbaListScreenState extends State<NarudzbaListScreen> {
                                 DataCell(Container(
                                   width: constraints.maxWidth *
                                       0.1, // 40% of the available width
-                                  child: Text("SIF-000-00${e.narudzbaId}"),
+                                  child: Text("${e.sifra}"),
                                 )),
                                 DataCell(Container(
                                   width: constraints.maxWidth *

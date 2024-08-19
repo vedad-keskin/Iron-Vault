@@ -57,10 +57,7 @@ namespace IronVault.Services.Methods
                 filteredQuery = filteredQuery.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
 
-            if (searchObject.IsAktivnostIncluded == true)
-            {
-                filteredQuery = filteredQuery.Include(x => x.Aktivnosts);
-            }
+
 
             filteredQuery.Include(x => x.Spol).Include(x => x.Grad);
 

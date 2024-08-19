@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ironvault_desktop/providers/prisustvo_provider.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
 import 'package:ironvault_desktop/providers/clanarina_provider.dart';
 import 'package:ironvault_desktop/providers/dobavljac_provider.dart';
@@ -21,7 +22,6 @@ import 'package:ironvault_desktop/providers/trener_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
 import 'package:ironvault_desktop/providers/uloga_provider.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
-import 'package:ironvault_desktop/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -45,6 +45,7 @@ void main() {
       ChangeNotifierProvider<KorisnikUlogaProvider>(create: (_) => KorisnikUlogaProvider()),
       ChangeNotifierProvider<NarudzbaProvider>(create: (_) => NarudzbaProvider()),
       ChangeNotifierProvider<NarudzbaStavkaProvider>(create: (_) => NarudzbaStavkaProvider()),
+      ChangeNotifierProvider<PrisustvoProvider>(create: (_) => PrisustvoProvider()),
     ],
     child: const MyApp(),));
 }
@@ -84,10 +85,10 @@ class MyApp extends StatelessWidget {
 }
 
 class LoginPage extends StatelessWidget {
-  LoginPage({Key? key}) : super(key: key);
+  LoginPage({super.key});
 
-  TextEditingController _usernameController = new TextEditingController();
-  TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +154,7 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () async {
-                        KorisnikProvider provider = new KorisnikProvider();
+                        KorisnikProvider provider = KorisnikProvider();
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");

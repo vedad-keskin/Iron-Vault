@@ -1,9 +1,9 @@
-﻿using IronVault.Model.Models;
-using IronVault.Model.Requests;
+﻿using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using IronVault.Services.Interfaces;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,23 +12,46 @@ using System.Threading.Tasks;
 
 namespace IronVault.Services.Methods
 {
-    public class AktivnostService : BaseCRUDService<Model.Models.Aktivnost, AktivnostSearchObject, Database.Aktivnost, AktivnostInsertRequest, AktivnostUpdateRequest>, IAktivnostService
+    public class PrisustvoService : BaseCRUDService<Model.Models.Prisustvo, PrisustvoSearchObject, Database.Prisustvo, PrisustvoInsertRequest, PrisustvoUpdateRequest>, IPrisustvoService
     {
-        public AktivnostService(GmsDbContext context, IMapper mapper) : base(context, mapper)
+
+
+        public PrisustvoService(GmsDbContext context, IMapper mapper) : base(context, mapper)
         {
+
         }
 
-     
+        public override IQueryable<Prisustvo> AddFilter(PrisustvoSearchObject search, IQueryable<Prisustvo> query)
+        {
+            var filteredQuery = base.AddFilter(search, query);
 
-        public override void BeforeUpdate(AktivnostUpdateRequest request, Database.Aktivnost entity)
+            filteredQuery = filteredQuery.Include(x => x.Korisnik);
+
+            if (!string.IsNullOrWhiteSpace(search?.KorisnikId))
+            {
+                filteredQuery = filteredQuery.Where(x => x.KorisnikId.ToString() == search.KorisnikId);
+            }
+            if (!string.IsNullOrWhiteSpace(search?.KorisnikPrisutan) && search?.KorisnikPrisutan == "true")
+            {
+                filteredQuery = filteredQuery.Where(x => x.DatumVrijemeIzlaska == null);
+            }
+
+
+
+
+            return filteredQuery;
+        }
+
+
+        public override void BeforeUpdate(PrisustvoUpdateRequest request, Database.Prisustvo entity)
         {
             // racunanje razine korisnika i provedenog vremena u teretani za svaku aktivnost
             // razlikaIzmedjuDatuma predstavlja TimeSpan koji sadrzi koliko vremena je provedeno u teretani 
             // level predstavlja razinu koja se povecava svakih 10 sati provedenih u teretani 
 
-            TimeSpan? VrijemeProvedenoUTeretani = new TimeSpan(0,0,0,0);
+            TimeSpan? VrijemeProvedenoUTeretani = new TimeSpan(0, 0, 0, 0);
 
-            var prethodneAktivnostiKorisnika = Context.Aktivnosts.Where(x => x.KorisnikId == entity.KorisnikId).ToList();
+            var prethodneAktivnostiKorisnika = Context.Prisustvos.Where(x => x.KorisnikId == entity.KorisnikId).ToList();
 
             for (int i = 0; i < prethodneAktivnostiKorisnika.Count(); i++)
             {
@@ -64,22 +87,6 @@ namespace IronVault.Services.Methods
 
 
             base.BeforeUpdate(request, entity);
-        }
-
-        public override IQueryable<Database.Aktivnost> AddFilter(AktivnostSearchObject search, IQueryable<Database.Aktivnost> query)
-        {
-
-            query = base.AddFilter(search, query);
-
-            if (search?.KorisnikId != null)
-            {
-                query = query.Where(x => x.KorisnikId == search.KorisnikId);
-            }
-
-          
-
-
-            return query;
         }
 
     }
