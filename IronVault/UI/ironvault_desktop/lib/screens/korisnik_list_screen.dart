@@ -5,6 +5,7 @@ import 'package:ironvault_desktop/models/search_result.dart';
 import 'package:ironvault_desktop/models/suplement.dart';
 import 'package:ironvault_desktop/providers/korisnik_provider.dart';
 import 'package:ironvault_desktop/providers/suplement_provider.dart';
+import 'package:ironvault_desktop/screen_details/korisnik_clanarina_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/korisnik_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/korisnik_uloga_details_screen.dart';
 import 'package:ironvault_desktop/screen_details/suplement_details_screen.dart';
@@ -180,6 +181,7 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                   DataColumn(label: Text("Spol")),
                   DataColumn(label: Text("Slika")),
                   DataColumn(label: Text("")),
+                  DataColumn(label: Text("")),
                 ],
                 rows: result?.result
                         .map((e) {
@@ -238,6 +240,25 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                                           ),
                                         )
                                       : const Text(""),
+                                ),
+                                DataCell(
+                                  Container(
+                                    width: constraints.maxWidth *
+                                        0.1, // 10% of the available width
+                                    child: ElevatedButton(
+                                      onPressed: () {
+
+                                        Navigator.of(context).pushReplacement(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    KorisnikClanarinaDetailsScreen(
+                                                      korisnik: e,
+                                                    )));
+                                                    
+                                      },
+                                      child: const Text('Članarine'),
+                                    ),
+                                  ),
                                 ),
                                 DataCell(
                                   Container(

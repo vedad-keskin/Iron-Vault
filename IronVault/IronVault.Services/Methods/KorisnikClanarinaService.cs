@@ -32,7 +32,8 @@ namespace IronVault.Services.Methods
             {
                 filteredQuery = filteredQuery.Where(x => x.KorisnikId.ToString() == search.KorisnikId);
             }
-         
+
+            filteredQuery = filteredQuery.OrderByDescending( x=> x.KorisnikClanarinaId);
 
 
 

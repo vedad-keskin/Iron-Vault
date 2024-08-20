@@ -142,7 +142,7 @@ class _SeminarDetailsScreenState extends State<SeminarDetailsScreen> {
                       inputType: InputType
                           .both, // You can use InputType.both for both date and time
                       format: DateFormat(
-                          'dd MMM yyyy'), // Customize the format as needed
+                          'd MMM yyyy'), // Customize the format as needed
                                           autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: FormBuilderValidators.compose([
                       FormBuilderValidators.required(
