@@ -399,7 +399,7 @@ class CardItem extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          "Ulazak : ${DateFormat('hh:mm:ss').format(e.datumVrijemeUlaska!)}",
+                          "Ulazak : ${DateFormat('HH:mm:ss').format(e.datumVrijemeUlaska!)}",
                           style: Theme.of(context).textTheme.bodySmall,
                           textAlign: TextAlign.center,
                         ),
