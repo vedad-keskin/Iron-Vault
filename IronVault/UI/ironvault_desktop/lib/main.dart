@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ironvault_desktop/providers/biznis_report_provider.dart';
 import 'package:ironvault_desktop/providers/korisnik_clanarina_provider.dart';
 import 'package:ironvault_desktop/providers/prisustvo_provider.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
@@ -22,6 +23,7 @@ import 'package:ironvault_desktop/providers/suplement_provider.dart';
 import 'package:ironvault_desktop/providers/trener_provider.dart';
 import 'package:ironvault_desktop/providers/trener_seminar_provider.dart';
 import 'package:ironvault_desktop/providers/uloga_provider.dart';
+import 'package:ironvault_desktop/screens/biznis_report_screen.dart';
 import 'package:ironvault_desktop/screens/korisnik_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -48,6 +50,7 @@ void main() {
       ChangeNotifierProvider<NarudzbaStavkaProvider>(create: (_) => NarudzbaStavkaProvider()),
       ChangeNotifierProvider<PrisustvoProvider>(create: (_) => PrisustvoProvider()),
       ChangeNotifierProvider<KorisnikClanarinaProvider>(create: (_) => KorisnikClanarinaProvider()),
+      ChangeNotifierProvider<BiznisReportProvider>(create: (_) => BiznisReportProvider()),
     ],
     child: const MyApp(),));
 }
@@ -165,7 +168,7 @@ class LoginPage extends StatelessWidget {
                         try {
                           var data = await provider.get();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => KorisnikListScreen()));
+                              builder: (context) => BiznisReportScreen()));
                         } on Exception catch (e) {
                           showDialog(
                             context: context,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ironvault_desktop/main.dart';
+import 'package:ironvault_desktop/screens/biznis_report_screen.dart';
 import 'package:ironvault_desktop/screens/prisustvo_list_screen.dart';
 import 'package:ironvault_desktop/screens/clanarina_list_screen.dart';
 import 'package:ironvault_desktop/screens/dobavljac_list_screen.dart';
@@ -51,6 +52,12 @@ class _MasterScreenState extends State<MasterScreen> {
               ),
            ),
               ListTile(
+              title: const Text("Biznis Report"),
+              onTap: () {
+               Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const BiznisReportScreen()));
+              },
+            ),
+             ListTile(
               title: const Text("Korisnici u teretani"),
               onTap: () {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const PrisustvoListScreen()));

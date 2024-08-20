@@ -26,7 +26,7 @@ namespace IronVault.Services.Methods
             Mapper = mapper;
         }
 
-        public virtual BiznisReport GetUkupnoKorisnici()
+        public virtual BiznisReport GetBiznisReport()
         {
             var biznisReport = new BiznisReport();
 
@@ -64,6 +64,71 @@ namespace IronVault.Services.Methods
 
             biznisReport.ZaradaMjesecaNaKupovinama = ukupnaZaradaKupovina;
 
+            // ukupna zarada i na članarinama i na kupovinama
+
+            biznisReport.UkupnaZaradaMjeseca = ukupnaZaradaKupovina + ukupnaZaradaClanarina;
+
+            // najbolje ocjenjeni suplement
+
+            var sviSuplementi = Context.Suplements.ToList();
+
+            Model.Models.Suplement NajboljeOcjenjeniSuplement = new Model.Models.Suplement();
+
+            double MIN = 0;
+            for (int i = 0; i < sviSuplementi.Count(); i++)
+            {
+                if (sviSuplementi[i].ProsjecnaOcjena.HasValue && sviSuplementi[i].ProsjecnaOcjena > MIN)
+                {
+                    MIN = sviSuplementi[i].ProsjecnaOcjena.Value;
+                    NajboljeOcjenjeniSuplement = Mapper.Map<Model.Models.Suplement>(sviSuplementi[i]);
+                }
+            }
+
+            biznisReport.NajboljaOcjenaSuplement = NajboljeOcjenjeniSuplement;
+
+            // najprodavaniji suplement
+
+
+            var svekupovineStavke = Context.NarudzbaStavkas
+                 .Include(x => x.Suplement)
+                 .GroupBy(g => g.Suplement)
+                 .Select(group => new
+                 {
+                     Suplement = group.Key,
+                     TotalSold = group.Sum(g => g.Kolicina)
+                 })
+                 .OrderByDescending(g => g.TotalSold)
+                 .FirstOrDefault();
+
+            // Check if svekupovineStavke is not null
+            if (svekupovineStavke != null)
+            {
+                biznisReport.NajprodavanijiSuplement = Mapper.Map<Model.Models.Suplement>(svekupovineStavke.Suplement); // Assign the most sold supplement
+                biznisReport.NajprodavanijiSuplementCount = svekupovineStavke.TotalSold; // Assign the total count sold
+            }
+            else
+            {
+                biznisReport.NajprodavanijiSuplement = null; // Handle the case where no supplement was sold
+                biznisReport.NajprodavanijiSuplementCount = 0; // Handle the case where no supplements were sold
+            }
+
+
+            // korisnik sa najvecom razinom
+
+
+            var korisnikSaNajvecomRazinom = Context.Korisniks
+                .OrderByDescending(k => k.Razina) 
+                .FirstOrDefault();
+
+            if(korisnikSaNajvecomRazinom != null)
+            {
+                biznisReport.NajaktivnijiKorisnik = Mapper.Map<Model.Models.Korisnik>(korisnikSaNajvecomRazinom);
+
+            }
+            else
+            {
+                biznisReport.NajaktivnijiKorisnik = null;
+            }
 
 
             return biznisReport;

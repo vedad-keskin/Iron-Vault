@@ -13,5 +13,13 @@ namespace IronVault.Model.Models
         public float ZaradaMjesecaNaClanarinama { get; set; }
         public float ZaradaMjesecaNaKupovinama { get; set; }
 
+        public Suplement? NajprodavanijiSuplement { get; set; }
+        public int? NajprodavanijiSuplementCount { get; set; }
+
+        public Suplement? NajboljaOcjenaSuplement { get; set; }
+
+        public Korisnik? NajaktivnijiKorisnik { get; set; }
+
+
     }
 }

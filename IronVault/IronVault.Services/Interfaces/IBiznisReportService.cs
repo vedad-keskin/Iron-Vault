@@ -11,6 +11,6 @@ namespace IronVault.Services.Interfaces
 {
     public interface IBiznisReportService 
     {
-        public BiznisReport GetUkupnoKorisnici();
+        public BiznisReport GetBiznisReport();
     }
 }

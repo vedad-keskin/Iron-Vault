@@ -19,11 +19,11 @@ namespace IronVault.API.Controllers
            _service = service;
         }
 
-        [HttpGet]
+        [HttpGet("/GetReport")]
         [AllowAnonymous]
-        public BiznisReport GetUkupnoKorisnici()
+        public BiznisReport GetBiznisReport()
         {
-            return (_service as IBiznisReportService).GetUkupnoKorisnici();
+            return (_service as IBiznisReportService).GetBiznisReport();
         }
 
 
