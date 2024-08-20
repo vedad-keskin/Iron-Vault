@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:ironvault_desktop/providers/korisnik_clanarina_provider.dart';
 import 'package:ironvault_desktop/providers/prisustvo_provider.dart';
 import 'package:ironvault_desktop/providers/auth_provider.dart';
 import 'package:ironvault_desktop/providers/clanarina_provider.dart';
@@ -46,6 +47,7 @@ void main() {
       ChangeNotifierProvider<NarudzbaProvider>(create: (_) => NarudzbaProvider()),
       ChangeNotifierProvider<NarudzbaStavkaProvider>(create: (_) => NarudzbaStavkaProvider()),
       ChangeNotifierProvider<PrisustvoProvider>(create: (_) => PrisustvoProvider()),
+      ChangeNotifierProvider<KorisnikClanarinaProvider>(create: (_) => KorisnikClanarinaProvider()),
     ],
     child: const MyApp(),));
 }
