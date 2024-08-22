@@ -81,21 +81,22 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
     switch (index) {
       case 0:
         return _buildSupplementCard(
-          title: "Najviše realizovanih prodaja",
-          title2: "Broj prodaja : ${result?.najprodavanijiSuplementCount}",
+          title: "Najprodavaniji suplement",
           supplement: result?.najprodavanijiSuplement,
+          subtext:
+              "Realizovano prodaja : ${result?.najprodavanijiSuplementCount}",
         );
       case 1:
         return _buildUserCard(
           title: "Najaktivniji korisnik",
-          title2: "Razina ${result?.najaktivnijiKorisnik?.razina}",
           korisnik: result?.najaktivnijiKorisnik,
+          subtext: "Razina korisnika : ${result?.najaktivnijiKorisnik?.razina}",
         );
       case 2:
         return _buildSupplementCard(
-          title: "Najbolje ocjenjeni suplement",
-          title2: "Prosječna ocjena : ${result?.najboljaOcjenaSuplement?.prosjecnaOcjena}",
+          title: "Najbolje ocjenjeni",
           supplement: result?.najboljaOcjenaSuplement,
+          subtext: "${result?.najboljaOcjenaSuplement?.prosjecnaOcjena}★",
         );
       case 3:
         return _buildIncomeCard(
@@ -203,7 +204,7 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
 
   Widget _buildSupplementCard({
     required String title,
-    required String title2,
+    required String subtext,
     required Suplement? supplement,
   }) {
     return Column(
@@ -219,13 +220,14 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
                 fontWeight: FontWeight.w600,
               ),
         ),
+        const SizedBox(height: 1.0),
 
         Text(
-          title2,
+          supplement?.naziv ?? 'Nepoznat proizvod',
           textAlign: TextAlign.center, // Center the text
           style: Theme.of(context)
               .textTheme
-              .labelLarge
+              .headlineSmall
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
 
@@ -248,16 +250,14 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
             ),
           ),
         ),
-        SizedBox(height: 8.0), // Space between picture and name
 
-        // Supplement name below the picture, centered
         Text(
-          supplement?.naziv ?? 'N/A',
+          subtext,
           textAlign: TextAlign.center, // Center the text
           style: Theme.of(context)
               .textTheme
               .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
+              ?.copyWith(fontWeight: FontWeight.w600),
         ),
       ],
     );
@@ -265,8 +265,8 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
 
   Widget _buildUserCard({
     required String title,
-    required String title2,
     required Korisnik? korisnik,
+    required String subtext,
   }) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center, // Center items vertically
@@ -281,13 +281,14 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
                 fontWeight: FontWeight.w600,
               ),
         ),
+        const SizedBox(height: 1.0),
 
         Text(
-          title2,
+          "${korisnik?.ime} ${korisnik?.prezime}",
           textAlign: TextAlign.center, // Center the text
           style: Theme.of(context)
               .textTheme
-              .labelLarge
+              .headlineSmall
               ?.copyWith(fontWeight: FontWeight.bold),
         ),
 
@@ -311,15 +312,14 @@ class _BiznisReportScreenState extends State<BiznisReportScreen> {
           ),
         ), // Space between picture and name
 
-
         // Supplement name below the picture, centered
         Text(
-          "${korisnik?.ime} ${korisnik?.prezime}" ?? 'N/A',
+          subtext,
           textAlign: TextAlign.center, // Center the text
           style: Theme.of(context)
               .textTheme
               .headlineSmall
-              ?.copyWith(fontWeight: FontWeight.bold),
+              ?.copyWith(fontWeight: FontWeight.w600),
         ),
       ],
     );
