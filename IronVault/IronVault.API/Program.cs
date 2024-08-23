@@ -97,18 +97,18 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    //var dataContext = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
+    var dataContext = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
 
 
-    //var pendingMigrations = dataContext.Database.GetPendingMigrations().Any();
+    var pendingMigrations = dataContext.Database.GetPendingMigrations().Any();
 
-    //if (pendingMigrations)
-    //{
+    if (pendingMigrations)
+    {
 
-    //    dataContext.Database.Migrate();
+        dataContext.Database.Migrate();
 
 
-    //}
+    }
 }
 
 app.Run();

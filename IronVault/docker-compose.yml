@@ -20,7 +20,7 @@ services:
     build:
       context: .
     environment:
-      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=IronVaultVjezbe2024;User=sa;Password=QWElkj132!;ConnectRetryCount=0; TrustServerCertificate=True
+      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=DBIronVault;User=sa;Password=QWElkj132!;ConnectRetryCount=0; TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 44340:44340
