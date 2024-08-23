@@ -89,8 +89,7 @@ namespace IronVault.Services.Migrations
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    SlikaThumb = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -135,8 +134,7 @@ namespace IronVault.Services.Migrations
                     Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    SlikaThumb = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,26 +156,6 @@ namespace IronVault.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Teretana",
-                columns: table => new
-                {
-                    TeretanaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GradID = table.Column<int>(type: "int", nullable: false),
-                    Adresa = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Teretana", x => x.TeretanaID);
-                    table.ForeignKey(
-                        name: "FK_Teretana_Grad_GradID",
-                        column: x => x.GradID,
-                        principalTable: "Grad",
-                        principalColumn: "GradID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Suplement",
                 columns: table => new
                 {
@@ -187,8 +165,7 @@ namespace IronVault.Services.Migrations
                     Cijena = table.Column<float>(type: "real", nullable: false),
                     Gramaza = table.Column<float>(type: "real", nullable: false),
                     Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    SlikaThumb = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StateMachine = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ProsjecnaOcjena = table.Column<double>(type: "float", nullable: true),
                     DobavljacID = table.Column<int>(type: "int", nullable: false),
@@ -234,6 +211,42 @@ namespace IronVault.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Korisnik",
+                columns: table => new
+                {
+                    KorisnikID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KorisnickoIme = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LozinkaHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LozinkaSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slika = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Visina = table.Column<float>(type: "real", nullable: false),
+                    Tezina = table.Column<float>(type: "real", nullable: false),
+                    Razina = table.Column<int>(type: "int", nullable: true),
+                    VrijemeUTeretani = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GradID = table.Column<int>(type: "int", nullable: false),
+                    SpolID = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Korisnik", x => x.KorisnikID);
+                    table.ForeignKey(
+                        name: "FK_Korisnik_Grad_GradID",
+                        column: x => x.GradID,
+                        principalTable: "Grad",
+                        principalColumn: "GradID");
+                    table.ForeignKey(
+                        name: "FK_Korisnik_Spol_SpolID",
+                        column: x => x.SpolID,
+                        principalTable: "Spol",
+                        principalColumn: "SpolID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Trener_Seminar",
                 columns: table => new
                 {
@@ -255,75 +268,6 @@ namespace IronVault.Services.Migrations
                         column: x => x.TrenerID,
                         principalTable: "Trener",
                         principalColumn: "TrenerID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Korisnik",
-                columns: table => new
-                {
-                    KorisnikID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KorisnickoIme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LozinkaHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LozinkaSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    SlikaThumb = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Visina = table.Column<float>(type: "real", nullable: false),
-                    Tezina = table.Column<float>(type: "real", nullable: false),
-                    Razina = table.Column<int>(type: "int", nullable: true),
-                    VrijemeUTeretani = table.Column<TimeSpan>(type: "time", nullable: true),
-                    GradID = table.Column<int>(type: "int", nullable: false),
-                    SpolID = table.Column<int>(type: "int", nullable: false),
-                    TeretanaID = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Korisnik", x => x.KorisnikID);
-                    table.ForeignKey(
-                        name: "FK_Korisnik_Grad_GradID",
-                        column: x => x.GradID,
-                        principalTable: "Grad",
-                        principalColumn: "GradID");
-                    table.ForeignKey(
-                        name: "FK_Korisnik_Spol_SpolID",
-                        column: x => x.SpolID,
-                        principalTable: "Spol",
-                        principalColumn: "SpolID");
-                    table.ForeignKey(
-                        name: "FK_Korisnik_Teretana_TeretanaID",
-                        column: x => x.TeretanaID,
-                        principalTable: "Teretana",
-                        principalColumn: "TeretanaID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Aktivnost",
-                columns: table => new
-                {
-                    AktivnostID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    TeretanaID = table.Column<int>(type: "int", nullable: false),
-                    DatumVrijemeUlaska = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DatumVrijemeIzlaska = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Aktivnost", x => x.AktivnostID);
-                    table.ForeignKey(
-                        name: "FK_Aktivnost_Korisnik_KorisnikID",
-                        column: x => x.KorisnikID,
-                        principalTable: "Korisnik",
-                        principalColumn: "KorisnikID");
-                    table.ForeignKey(
-                        name: "FK_Aktivnost_Teretana_TeretanaID",
-                        column: x => x.TeretanaID,
-                        principalTable: "Teretana",
-                        principalColumn: "TeretanaID");
                 });
 
             migrationBuilder.CreateTable(
@@ -379,33 +323,6 @@ namespace IronVault.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Korisnik_Suplement",
-                columns: table => new
-                {
-                    Korisnik_SuplementID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    SuplementID = table.Column<int>(type: "int", nullable: false),
-                    DatumVrijemeNarudzbe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Kolicina = table.Column<int>(type: "int", nullable: false),
-                    Isporuceno = table.Column<bool>(type: "bit", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Korisnik_Suplement", x => x.Korisnik_SuplementID);
-                    table.ForeignKey(
-                        name: "FK_Korisnik_Suplement_Korisnik_KorisnikID",
-                        column: x => x.KorisnikID,
-                        principalTable: "Korisnik",
-                        principalColumn: "KorisnikID");
-                    table.ForeignKey(
-                        name: "FK_Korisnik_Suplement_Suplement_SuplementID",
-                        column: x => x.SuplementID,
-                        principalTable: "Suplement",
-                        principalColumn: "SuplementID");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Korisnik_Trener",
                 columns: table => new
                 {
@@ -457,6 +374,48 @@ namespace IronVault.Services.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Narudzba",
+                columns: table => new
+                {
+                    NarudzbaID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KorisnikID = table.Column<int>(type: "int", nullable: false),
+                    Sifra = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DatumVrijemeNarudzbe = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: true),
+                    Otkazano = table.Column<bool>(type: "bit", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Narudzba", x => x.NarudzbaID);
+                    table.ForeignKey(
+                        name: "FK_Narudzba_Korisnik_KorisnikID",
+                        column: x => x.KorisnikID,
+                        principalTable: "Korisnik",
+                        principalColumn: "KorisnikID");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Prisustvo",
+                columns: table => new
+                {
+                    PrisustvoID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    KorisnikID = table.Column<int>(type: "int", nullable: false),
+                    DatumVrijemeUlaska = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DatumVrijemeIzlaska = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prisustvo", x => x.PrisustvoID);
+                    table.ForeignKey(
+                        name: "FK_Prisustvo_Korisnik_KorisnikID",
+                        column: x => x.KorisnikID,
+                        principalTable: "Korisnik",
+                        principalColumn: "KorisnikID");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Recenzija",
                 columns: table => new
                 {
@@ -482,15 +441,30 @@ namespace IronVault.Services.Migrations
                         principalColumn: "SuplementID");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Aktivnost_KorisnikID",
-                table: "Aktivnost",
-                column: "KorisnikID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Aktivnost_TeretanaID",
-                table: "Aktivnost",
-                column: "TeretanaID");
+            migrationBuilder.CreateTable(
+                name: "Narudzba_Stavka",
+                columns: table => new
+                {
+                    Narudzba_StavkaID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    NarudzbaID = table.Column<int>(type: "int", nullable: false),
+                    SuplementID = table.Column<int>(type: "int", nullable: false),
+                    Kolicina = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Narudzba_Stavka", x => x.Narudzba_StavkaID);
+                    table.ForeignKey(
+                        name: "FK_Narudzba_Stavka_Narudzba_NarudzbaID",
+                        column: x => x.NarudzbaID,
+                        principalTable: "Narudzba",
+                        principalColumn: "NarudzbaID");
+                    table.ForeignKey(
+                        name: "FK_Narudzba_Stavka_Suplement_SuplementID",
+                        column: x => x.SuplementID,
+                        principalTable: "Suplement",
+                        principalColumn: "SuplementID");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Korisnik_GradID",
@@ -501,11 +475,6 @@ namespace IronVault.Services.Migrations
                 name: "IX_Korisnik_SpolID",
                 table: "Korisnik",
                 column: "SpolID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Korisnik_TeretanaID",
-                table: "Korisnik",
-                column: "TeretanaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Korisnik_Clanarina_ClanarinaID",
@@ -528,16 +497,6 @@ namespace IronVault.Services.Migrations
                 column: "NutricionistID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Korisnik_Suplement_KorisnikID",
-                table: "Korisnik_Suplement",
-                column: "KorisnikID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Korisnik_Suplement_SuplementID",
-                table: "Korisnik_Suplement",
-                column: "SuplementID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Korisnik_Trener_KorisnikID",
                 table: "Korisnik_Trener",
                 column: "KorisnikID");
@@ -558,6 +517,21 @@ namespace IronVault.Services.Migrations
                 column: "UlogaID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Narudzba_KorisnikID",
+                table: "Narudzba",
+                column: "KorisnikID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Narudzba_Stavka_NarudzbaID",
+                table: "Narudzba_Stavka",
+                column: "NarudzbaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Narudzba_Stavka_SuplementID",
+                table: "Narudzba_Stavka",
+                column: "SuplementID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Nutricionist_Seminar_NutricionistID",
                 table: "Nutricionist_Seminar",
                 column: "NutricionistID");
@@ -566,6 +540,11 @@ namespace IronVault.Services.Migrations
                 name: "IX_Nutricionist_Seminar_SeminarID",
                 table: "Nutricionist_Seminar",
                 column: "SeminarID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Prisustvo_KorisnikID",
+                table: "Prisustvo",
+                column: "KorisnikID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Recenzija_KorisnikID",
@@ -588,11 +567,6 @@ namespace IronVault.Services.Migrations
                 column: "KategorijaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Teretana_GradID",
-                table: "Teretana",
-                column: "GradID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Trener_Seminar_SeminarID",
                 table: "Trener_Seminar",
                 column: "SeminarID");
@@ -607,9 +581,6 @@ namespace IronVault.Services.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Aktivnost");
-
-            migrationBuilder.DropTable(
                 name: "FAQ");
 
             migrationBuilder.DropTable(
@@ -619,16 +590,19 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik_Nutricionst");
 
             migrationBuilder.DropTable(
-                name: "Korisnik_Suplement");
-
-            migrationBuilder.DropTable(
                 name: "Korisnik_Trener");
 
             migrationBuilder.DropTable(
                 name: "Korisnik_Uloga");
 
             migrationBuilder.DropTable(
+                name: "Narudzba_Stavka");
+
+            migrationBuilder.DropTable(
                 name: "Nutricionist_Seminar");
+
+            migrationBuilder.DropTable(
+                name: "Prisustvo");
 
             migrationBuilder.DropTable(
                 name: "Recenzija");
@@ -643,10 +617,10 @@ namespace IronVault.Services.Migrations
                 name: "Uloga");
 
             migrationBuilder.DropTable(
-                name: "Nutricionist");
+                name: "Narudzba");
 
             migrationBuilder.DropTable(
-                name: "Korisnik");
+                name: "Nutricionist");
 
             migrationBuilder.DropTable(
                 name: "Suplement");
@@ -658,10 +632,7 @@ namespace IronVault.Services.Migrations
                 name: "Trener");
 
             migrationBuilder.DropTable(
-                name: "Spol");
-
-            migrationBuilder.DropTable(
-                name: "Teretana");
+                name: "Korisnik");
 
             migrationBuilder.DropTable(
                 name: "Dobavljac");
@@ -671,6 +642,9 @@ namespace IronVault.Services.Migrations
 
             migrationBuilder.DropTable(
                 name: "Grad");
+
+            migrationBuilder.DropTable(
+                name: "Spol");
         }
     }
 }

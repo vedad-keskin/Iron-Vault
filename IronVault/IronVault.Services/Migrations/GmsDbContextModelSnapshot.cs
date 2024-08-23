@@ -22,38 +22,6 @@ namespace IronVault.Services.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("IronVault.Services.Database.Aktivnost", b =>
-                {
-                    b.Property<int>("AktivnostId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("AktivnostID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AktivnostId"));
-
-                    b.Property<DateTime?>("DatumVrijemeIzlaska")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DatumVrijemeUlaska")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
-                        .HasColumnName("KorisnikID");
-
-                    b.Property<int>("TeretanaId")
-                        .HasColumnType("int")
-                        .HasColumnName("TeretanaID");
-
-                    b.HasKey("AktivnostId");
-
-                    b.HasIndex(new[] { "KorisnikId" }, "IX_Aktivnost_KorisnikID");
-
-                    b.HasIndex(new[] { "TeretanaId" }, "IX_Aktivnost_TeretanaID");
-
-                    b.ToTable("Aktivnost", (string)null);
-                });
-
             modelBuilder.Entity("IronVault.Services.Database.Clanarina", b =>
                 {
                     b.Property<int>("ClanarinaId")
@@ -199,19 +167,12 @@ namespace IronVault.Services.Migrations
                     b.Property<int?>("Razina")
                         .HasColumnType("int");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("SlikaThumb")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SpolId")
                         .HasColumnType("int")
                         .HasColumnName("SpolID");
-
-                    b.Property<int>("TeretanaId")
-                        .HasColumnType("int")
-                        .HasColumnName("TeretanaID");
 
                     b.Property<float>("Tezina")
                         .HasColumnType("real");
@@ -219,8 +180,8 @@ namespace IronVault.Services.Migrations
                     b.Property<float>("Visina")
                         .HasColumnType("real");
 
-                    b.Property<TimeSpan?>("VrijemeUteretani")
-                        .HasColumnType("time")
+                    b.Property<string>("VrijemeUteretani")
+                        .HasColumnType("nvarchar(max)")
                         .HasColumnName("VrijemeUTeretani");
 
                     b.HasKey("KorisnikId");
@@ -228,8 +189,6 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "GradId" }, "IX_Korisnik_GradID");
 
                     b.HasIndex(new[] { "SpolId" }, "IX_Korisnik_SpolID");
-
-                    b.HasIndex(new[] { "TeretanaId" }, "IX_Korisnik_TeretanaID");
 
                     b.ToTable("Korisnik", (string)null);
                 });
@@ -298,41 +257,6 @@ namespace IronVault.Services.Migrations
                     b.ToTable("Korisnik_Nutricionst", (string)null);
                 });
 
-            modelBuilder.Entity("IronVault.Services.Database.KorisnikSuplement", b =>
-                {
-                    b.Property<int>("KorisnikSuplementId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Korisnik_SuplementID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikSuplementId"));
-
-                    b.Property<DateTime>("DatumVrijemeNarudzbe")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("Isporuceno")
-                        .HasColumnType("bit");
-
-                    b.Property<int>("Kolicina")
-                        .HasColumnType("int");
-
-                    b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
-                        .HasColumnName("KorisnikID");
-
-                    b.Property<int>("SuplementId")
-                        .HasColumnType("int")
-                        .HasColumnName("SuplementID");
-
-                    b.HasKey("KorisnikSuplementId");
-
-                    b.HasIndex(new[] { "KorisnikId" }, "IX_Korisnik_Suplement_KorisnikID");
-
-                    b.HasIndex(new[] { "SuplementId" }, "IX_Korisnik_Suplement_SuplementID");
-
-                    b.ToTable("Korisnik_Suplement", (string)null);
-                });
-
             modelBuilder.Entity("IronVault.Services.Database.KorisnikTrener", b =>
                 {
                     b.Property<int>("KorisnikTrenerId")
@@ -394,6 +318,67 @@ namespace IronVault.Services.Migrations
                     b.ToTable("Korisnik_Uloga", (string)null);
                 });
 
+            modelBuilder.Entity("IronVault.Services.Database.Narudzba", b =>
+                {
+                    b.Property<int>("NarudzbaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("NarudzbaID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NarudzbaId"));
+
+                    b.Property<DateTime>("DatumVrijemeNarudzbe")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("KorisnikId")
+                        .HasColumnType("int")
+                        .HasColumnName("KorisnikID");
+
+                    b.Property<bool?>("Otkazano")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Sifra")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("Status")
+                        .HasColumnType("bit");
+
+                    b.HasKey("NarudzbaId");
+
+                    b.HasIndex(new[] { "KorisnikId" }, "IX_Narudzba_KorisnikID");
+
+                    b.ToTable("Narudzba", (string)null);
+                });
+
+            modelBuilder.Entity("IronVault.Services.Database.NarudzbaStavka", b =>
+                {
+                    b.Property<int>("NarudzbaStavkaId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Narudzba_StavkaID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NarudzbaStavkaId"));
+
+                    b.Property<int>("Kolicina")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NarudzbaId")
+                        .HasColumnType("int")
+                        .HasColumnName("NarudzbaID");
+
+                    b.Property<int>("SuplementId")
+                        .HasColumnType("int")
+                        .HasColumnName("SuplementID");
+
+                    b.HasKey("NarudzbaStavkaId");
+
+                    b.HasIndex(new[] { "NarudzbaId" }, "IX_Narudzba_Stavka_NarudzbaID");
+
+                    b.HasIndex(new[] { "SuplementId" }, "IX_Narudzba_Stavka_SuplementID");
+
+                    b.ToTable("Narudzba_Stavka", (string)null);
+                });
+
             modelBuilder.Entity("IronVault.Services.Database.Nutricionist", b =>
                 {
                     b.Property<int>("NutricionistId")
@@ -419,11 +404,8 @@ namespace IronVault.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("SlikaThumb")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("NutricionistId");
 
@@ -454,6 +436,32 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "SeminarId" }, "IX_Nutricionist_Seminar_SeminarID");
 
                     b.ToTable("Nutricionist_Seminar", (string)null);
+                });
+
+            modelBuilder.Entity("IronVault.Services.Database.Prisustvo", b =>
+                {
+                    b.Property<int>("PrisustvoId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("PrisustvoID");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrisustvoId"));
+
+                    b.Property<DateTime?>("DatumVrijemeIzlaska")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DatumVrijemeUlaska")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("KorisnikId")
+                        .HasColumnType("int")
+                        .HasColumnName("KorisnikID");
+
+                    b.HasKey("PrisustvoId");
+
+                    b.HasIndex(new[] { "KorisnikId" }, "IX_Prisustvo_KorisnikID");
+
+                    b.ToTable("Prisustvo", (string)null);
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Recenzija", b =>
@@ -566,11 +574,8 @@ namespace IronVault.Services.Migrations
                     b.Property<double?>("ProsjecnaOcjena")
                         .HasColumnType("float");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("SlikaThumb")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("StateMachine")
                         .HasColumnType("nvarchar(max)");
@@ -582,34 +587,6 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "KategorijaId" }, "IX_Suplement_KategorijaID");
 
                     b.ToTable("Suplement", (string)null);
-                });
-
-            modelBuilder.Entity("IronVault.Services.Database.Teretana", b =>
-                {
-                    b.Property<int>("TeretanaId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("TeretanaID");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TeretanaId"));
-
-                    b.Property<string>("Adresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("GradId")
-                        .HasColumnType("int")
-                        .HasColumnName("GradID");
-
-                    b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("TeretanaId");
-
-                    b.HasIndex(new[] { "GradId" }, "IX_Teretana_GradID");
-
-                    b.ToTable("Teretana", (string)null);
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Trener", b =>
@@ -637,11 +614,8 @@ namespace IronVault.Services.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
-
-                    b.Property<byte[]>("SlikaThumb")
-                        .HasColumnType("varbinary(max)");
+                    b.Property<string>("Slika")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("TrenerId");
 
@@ -695,23 +669,6 @@ namespace IronVault.Services.Migrations
                     b.ToTable("Uloga", (string)null);
                 });
 
-            modelBuilder.Entity("IronVault.Services.Database.Aktivnost", b =>
-                {
-                    b.HasOne("IronVault.Services.Database.Korisnik", "Korisnik")
-                        .WithMany("Aktivnosts")
-                        .HasForeignKey("KorisnikId")
-                        .IsRequired();
-
-                    b.HasOne("IronVault.Services.Database.Teretana", "Teretana")
-                        .WithMany("Aktivnosts")
-                        .HasForeignKey("TeretanaId")
-                        .IsRequired();
-
-                    b.Navigation("Korisnik");
-
-                    b.Navigation("Teretana");
-                });
-
             modelBuilder.Entity("IronVault.Services.Database.Korisnik", b =>
                 {
                     b.HasOne("IronVault.Services.Database.Grad", "Grad")
@@ -724,16 +681,9 @@ namespace IronVault.Services.Migrations
                         .HasForeignKey("SpolId")
                         .IsRequired();
 
-                    b.HasOne("IronVault.Services.Database.Teretana", "Teretana")
-                        .WithMany("Korisniks")
-                        .HasForeignKey("TeretanaId")
-                        .IsRequired();
-
                     b.Navigation("Grad");
 
                     b.Navigation("Spol");
-
-                    b.Navigation("Teretana");
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.KorisnikClanarina", b =>
@@ -770,23 +720,6 @@ namespace IronVault.Services.Migrations
                     b.Navigation("Nutricionist");
                 });
 
-            modelBuilder.Entity("IronVault.Services.Database.KorisnikSuplement", b =>
-                {
-                    b.HasOne("IronVault.Services.Database.Korisnik", "Korisnik")
-                        .WithMany("KorisnikSuplements")
-                        .HasForeignKey("KorisnikId")
-                        .IsRequired();
-
-                    b.HasOne("IronVault.Services.Database.Suplement", "Suplement")
-                        .WithMany("KorisnikSuplements")
-                        .HasForeignKey("SuplementId")
-                        .IsRequired();
-
-                    b.Navigation("Korisnik");
-
-                    b.Navigation("Suplement");
-                });
-
             modelBuilder.Entity("IronVault.Services.Database.KorisnikTrener", b =>
                 {
                     b.HasOne("IronVault.Services.Database.Korisnik", "Korisnik")
@@ -821,6 +754,33 @@ namespace IronVault.Services.Migrations
                     b.Navigation("Uloga");
                 });
 
+            modelBuilder.Entity("IronVault.Services.Database.Narudzba", b =>
+                {
+                    b.HasOne("IronVault.Services.Database.Korisnik", "Korisnik")
+                        .WithMany("Narudzbas")
+                        .HasForeignKey("KorisnikId")
+                        .IsRequired();
+
+                    b.Navigation("Korisnik");
+                });
+
+            modelBuilder.Entity("IronVault.Services.Database.NarudzbaStavka", b =>
+                {
+                    b.HasOne("IronVault.Services.Database.Narudzba", "Narudzba")
+                        .WithMany("NarudzbaStavkas")
+                        .HasForeignKey("NarudzbaId")
+                        .IsRequired();
+
+                    b.HasOne("IronVault.Services.Database.Suplement", "Suplement")
+                        .WithMany("NarudzbaStavkas")
+                        .HasForeignKey("SuplementId")
+                        .IsRequired();
+
+                    b.Navigation("Narudzba");
+
+                    b.Navigation("Suplement");
+                });
+
             modelBuilder.Entity("IronVault.Services.Database.NutricionistSeminar", b =>
                 {
                     b.HasOne("IronVault.Services.Database.Nutricionist", "Nutricionist")
@@ -836,6 +796,16 @@ namespace IronVault.Services.Migrations
                     b.Navigation("Nutricionist");
 
                     b.Navigation("Seminar");
+                });
+
+            modelBuilder.Entity("IronVault.Services.Database.Prisustvo", b =>
+                {
+                    b.HasOne("IronVault.Services.Database.Korisnik", "Korisnik")
+                        .WithMany("Prisustvos")
+                        .HasForeignKey("KorisnikId")
+                        .IsRequired();
+
+                    b.Navigation("Korisnik");
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Recenzija", b =>
@@ -872,16 +842,6 @@ namespace IronVault.Services.Migrations
                     b.Navigation("Kategorija");
                 });
 
-            modelBuilder.Entity("IronVault.Services.Database.Teretana", b =>
-                {
-                    b.HasOne("IronVault.Services.Database.Grad", "Grad")
-                        .WithMany("Teretanas")
-                        .HasForeignKey("GradId")
-                        .IsRequired();
-
-                    b.Navigation("Grad");
-                });
-
             modelBuilder.Entity("IronVault.Services.Database.TrenerSeminar", b =>
                 {
                     b.HasOne("IronVault.Services.Database.Seminar", "Seminar")
@@ -912,8 +872,6 @@ namespace IronVault.Services.Migrations
             modelBuilder.Entity("IronVault.Services.Database.Grad", b =>
                 {
                     b.Navigation("Korisniks");
-
-                    b.Navigation("Teretanas");
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Kategorija", b =>
@@ -923,19 +881,24 @@ namespace IronVault.Services.Migrations
 
             modelBuilder.Entity("IronVault.Services.Database.Korisnik", b =>
                 {
-                    b.Navigation("Aktivnosts");
-
                     b.Navigation("KorisnikClanarinas");
 
                     b.Navigation("KorisnikNutricionsts");
-
-                    b.Navigation("KorisnikSuplements");
 
                     b.Navigation("KorisnikTreners");
 
                     b.Navigation("KorisnikUlogas");
 
+                    b.Navigation("Narudzbas");
+
+                    b.Navigation("Prisustvos");
+
                     b.Navigation("Recenzijas");
+                });
+
+            modelBuilder.Entity("IronVault.Services.Database.Narudzba", b =>
+                {
+                    b.Navigation("NarudzbaStavkas");
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Nutricionist", b =>
@@ -959,16 +922,9 @@ namespace IronVault.Services.Migrations
 
             modelBuilder.Entity("IronVault.Services.Database.Suplement", b =>
                 {
-                    b.Navigation("KorisnikSuplements");
+                    b.Navigation("NarudzbaStavkas");
 
                     b.Navigation("Recenzijas");
-                });
-
-            modelBuilder.Entity("IronVault.Services.Database.Teretana", b =>
-                {
-                    b.Navigation("Aktivnosts");
-
-                    b.Navigation("Korisniks");
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Trener", b =>

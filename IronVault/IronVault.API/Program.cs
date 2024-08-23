@@ -101,6 +101,17 @@ using (var scope = app.Services.CreateScope())
     // dataContext.Database.EnsureCreated();
 
     // dataContext.Database.Migrate();  // prilikom dockera da migrira
+
+    //var pendingMigrations = dataContext.Database.GetPendingMigrations().Any();
+
+    //if (pendingMigrations)
+    //{
+
+    //    dataContext.Database.Migrate();
+
+    //}
+
+
 }
 
 app.Run();
