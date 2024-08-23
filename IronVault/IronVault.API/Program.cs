@@ -97,10 +97,8 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var dataContext = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
-    // dataContext.Database.EnsureCreated();
+    //var dataContext = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
 
-    // dataContext.Database.Migrate();  // prilikom dockera da migrira
 
     //var pendingMigrations = dataContext.Database.GetPendingMigrations().Any();
 
@@ -109,9 +107,8 @@ using (var scope = app.Services.CreateScope())
 
     //    dataContext.Database.Migrate();
 
+
     //}
-
-
 }
 
 app.Run();

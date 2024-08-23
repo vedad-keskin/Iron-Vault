@@ -45,6 +45,29 @@ namespace IronVault.Services.Migrations
                     b.HasKey("ClanarinaId");
 
                     b.ToTable("Clanarina", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            ClanarinaId = 1,
+                            Cijena = 50f,
+                            Naziv = "Fit Plus",
+                            Opis = "Teretane predstavljaju oazu zdravlja pružajući nam prostor gdje možemo ojačati svoje tijelo i smanjiti stres. Članstvo u teretani nije samo ulaganje u tjelesno zdravlje već i putovanje prema boljoj verziji sebe."
+                        },
+                        new
+                        {
+                            ClanarinaId = 2,
+                            Cijena = 40f,
+                            Naziv = "Student Fit Plus",
+                            Opis = "Studentska članarina u teretani nije samo investicija u tjelesno zdravlje, već i u opću dobrobit studenata. Zahvaljujući ovim povlasticama, teretane postaju pristupačne za studente svih financijskih mogućnosti, čime se stvara zdraviji i sretniji studentski život. Zbog toga mi nudimo popust od čak 20% za sve studente!"
+                        },
+                        new
+                        {
+                            ClanarinaId = 3,
+                            Cijena = 25f,
+                            Naziv = "Partner Fit Duo",
+                            Opis = "Teretane nude posebne članarine za parove koje omogućuju partnerima da zajedno uživaju u prednostima vježbanja. Podijelite iznos jedne članarine i uživajte u jačanju tijela i uma!"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Dobavljac", b =>
@@ -63,6 +86,58 @@ namespace IronVault.Services.Migrations
                     b.HasKey("DobavljacId");
 
                     b.ToTable("Dobavljac", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            DobavljacId = 1,
+                            Naziv = "MUSCLE FREAK"
+                        },
+                        new
+                        {
+                            DobavljacId = 2,
+                            Naziv = "MUSCLETECH"
+                        },
+                        new
+                        {
+                            DobavljacId = 3,
+                            Naziv = "OPTIMUM NUTRITION"
+                        },
+                        new
+                        {
+                            DobavljacId = 4,
+                            Naziv = "SELF OMNINUTRITION"
+                        },
+                        new
+                        {
+                            DobavljacId = 5,
+                            Naziv = "CW-CHEMICAL WARFARE"
+                        },
+                        new
+                        {
+                            DobavljacId = 6,
+                            Naziv = "BSN"
+                        },
+                        new
+                        {
+                            DobavljacId = 7,
+                            Naziv = "CELLUCOR"
+                        },
+                        new
+                        {
+                            DobavljacId = 8,
+                            Naziv = "EVOLITE"
+                        },
+                        new
+                        {
+                            DobavljacId = 9,
+                            Naziv = "SUPERIOR"
+                        },
+                        new
+                        {
+                            DobavljacId = 10,
+                            Naziv = "TESLA"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Faq", b =>
@@ -85,6 +160,38 @@ namespace IronVault.Services.Migrations
                     b.HasKey("Faqid");
 
                     b.ToTable("FAQ", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Faqid = 1,
+                            Odgovor = "Cijene mjesečnih članarina variraju ovisno o paketu koji odaberete. Imamo različite opcije prilagođene različitim potrebama i budžetima. Detaljne informacije o cijenama možete pronaći na recepciji naše teretane.",
+                            Pitanje = "Koja je cijena članarina u vašoj teretani?"
+                        },
+                        new
+                        {
+                            Faqid = 2,
+                            Odgovor = "Da, imamo stručne trenere koji vam mogu pomoći u postizanju vaših fitness ciljeva. Oni će raditi s vama kako bi razvili personalizirani plan vježbanja. Pored njih, imamo i naš tim nutricionista.",
+                            Pitanje = "Da li u sklopu teretane imate personalne trenere?"
+                        },
+                        new
+                        {
+                            Faqid = 3,
+                            Odgovor = "Vrlo jednostavno! Posjetite našu recepciju, odaberite željeni paket i dobit ćete svoju člansku karticu!",
+                            Pitanje = "Kako da postanem član vaše teretane?"
+                        },
+                        new
+                        {
+                            Faqid = 4,
+                            Odgovor = "Razinu povećavate na sljedeću razinu svakih 10 sati provedenih u teretani.",
+                            Pitanje = "Kako da povećam svoju razinu?"
+                        },
+                        new
+                        {
+                            Faqid = 5,
+                            Odgovor = "Kupovinu suplemenata izvršavate klikom naruči preko Stripe servisa, nakon kojeg dobijete potvrdu kupovine na mail.",
+                            Pitanje = "Kako izvršiti kupovinu suplemenata?"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Grad", b =>
@@ -103,6 +210,178 @@ namespace IronVault.Services.Migrations
                     b.HasKey("GradId");
 
                     b.ToTable("Grad", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            GradId = 1,
+                            Naziv = "Banja Luka"
+                        },
+                        new
+                        {
+                            GradId = 2,
+                            Naziv = "Bihać"
+                        },
+                        new
+                        {
+                            GradId = 3,
+                            Naziv = "Bijeljina"
+                        },
+                        new
+                        {
+                            GradId = 4,
+                            Naziv = "Bosnaska Krupa"
+                        },
+                        new
+                        {
+                            GradId = 5,
+                            Naziv = "Cazin"
+                        },
+                        new
+                        {
+                            GradId = 6,
+                            Naziv = "Čapljina"
+                        },
+                        new
+                        {
+                            GradId = 7,
+                            Naziv = "Drventa"
+                        },
+                        new
+                        {
+                            GradId = 8,
+                            Naziv = "Doboj"
+                        },
+                        new
+                        {
+                            GradId = 9,
+                            Naziv = "Goražde"
+                        },
+                        new
+                        {
+                            GradId = 10,
+                            Naziv = "Gračanica"
+                        },
+                        new
+                        {
+                            GradId = 11,
+                            Naziv = "Gradačac"
+                        },
+                        new
+                        {
+                            GradId = 12,
+                            Naziv = "Gradiška"
+                        },
+                        new
+                        {
+                            GradId = 13,
+                            Naziv = "Konjic"
+                        },
+                        new
+                        {
+                            GradId = 14,
+                            Naziv = "Laktaši"
+                        },
+                        new
+                        {
+                            GradId = 15,
+                            Naziv = "Livno"
+                        },
+                        new
+                        {
+                            GradId = 16,
+                            Naziv = "Lukavac"
+                        },
+                        new
+                        {
+                            GradId = 17,
+                            Naziv = "Ljubuški"
+                        },
+                        new
+                        {
+                            GradId = 18,
+                            Naziv = "Mostar"
+                        },
+                        new
+                        {
+                            GradId = 19,
+                            Naziv = "Orašje"
+                        },
+                        new
+                        {
+                            GradId = 20,
+                            Naziv = "Prijedor"
+                        },
+                        new
+                        {
+                            GradId = 21,
+                            Naziv = "Prnjavor"
+                        },
+                        new
+                        {
+                            GradId = 22,
+                            Naziv = "Sarajevo"
+                        },
+                        new
+                        {
+                            GradId = 23,
+                            Naziv = "Srebrenik"
+                        },
+                        new
+                        {
+                            GradId = 24,
+                            Naziv = "Stolac"
+                        },
+                        new
+                        {
+                            GradId = 25,
+                            Naziv = "Široki Brijeg"
+                        },
+                        new
+                        {
+                            GradId = 26,
+                            Naziv = "Travnik"
+                        },
+                        new
+                        {
+                            GradId = 27,
+                            Naziv = "Tuzla"
+                        },
+                        new
+                        {
+                            GradId = 28,
+                            Naziv = "Visoko"
+                        },
+                        new
+                        {
+                            GradId = 29,
+                            Naziv = "Zavidovići"
+                        },
+                        new
+                        {
+                            GradId = 30,
+                            Naziv = "Zenica"
+                        },
+                        new
+                        {
+                            GradId = 31,
+                            Naziv = "Zvornik"
+                        },
+                        new
+                        {
+                            GradId = 32,
+                            Naziv = "Živinice"
+                        },
+                        new
+                        {
+                            GradId = 33,
+                            Naziv = "Donji Vakuf"
+                        },
+                        new
+                        {
+                            GradId = 34,
+                            Naziv = "Zavidovići"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Kategorija", b =>
@@ -121,6 +400,28 @@ namespace IronVault.Services.Migrations
                     b.HasKey("KategorijaId");
 
                     b.ToTable("Kategorija", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            KategorijaId = 1,
+                            Naziv = "Proteini"
+                        },
+                        new
+                        {
+                            KategorijaId = 2,
+                            Naziv = "Amino kiseline"
+                        },
+                        new
+                        {
+                            KategorijaId = 3,
+                            Naziv = "Preworkout"
+                        },
+                        new
+                        {
+                            KategorijaId = 4,
+                            Naziv = "Mass gaineri"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Korisnik", b =>
@@ -191,6 +492,74 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "SpolId" }, "IX_Korisnik_SpolID");
 
                     b.ToTable("Korisnik", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            KorisnikId = 1,
+                            BrojTelefona = "0644076290",
+                            Email = "vedad.keskin98@gmail.com",
+                            GradId = 18,
+                            Ime = "Vedad",
+                            KorisnickoIme = "vedadke",
+                            LozinkaHash = "g7FHgT4d85m0BouhHe1t0KYM2wA=",
+                            LozinkaSalt = "QZ4IoSnKb7hg8L7nDFizTg==",
+                            Prezime = "Keskin",
+                            Razina = 3,
+                            SpolId = 1,
+                            Tezina = 80f,
+                            Visina = 170f,
+                            VrijemeUteretani = "0 dana, 21 sati i 0 minuta"
+                        },
+                        new
+                        {
+                            KorisnikId = 2,
+                            BrojTelefona = "062709689",
+                            Email = "vedad.keskin98@gmail.com",
+                            GradId = 33,
+                            Ime = "Amel",
+                            KorisnickoIme = "amelm",
+                            LozinkaHash = "Yya6va1Yoa/gtyLz5Z4IXYfFt5Q=",
+                            LozinkaSalt = "tXOzvBnYM/kaUy/CDd7V/g==",
+                            Prezime = "Musić",
+                            Razina = 2,
+                            SpolId = 1,
+                            Tezina = 82f,
+                            Visina = 185f,
+                            VrijemeUteretani = "0 dana, 12 sati i 0 minuta"
+                        },
+                        new
+                        {
+                            KorisnikId = 3,
+                            BrojTelefona = "061000000",
+                            Email = "vedad.keskin98@gmail.com",
+                            GradId = 18,
+                            Ime = "Denis",
+                            KorisnickoIme = "denism",
+                            LozinkaHash = "2Kfy1C0XBFtOApv4hlUaEQH4aqs=",
+                            LozinkaSalt = "QLSAf12F9XkD+4ZLEFZz+w==",
+                            Prezime = "Mušić",
+                            Razina = 1,
+                            SpolId = 1,
+                            Tezina = 83f,
+                            Visina = 186f
+                        },
+                        new
+                        {
+                            KorisnikId = 4,
+                            BrojTelefona = "062000000",
+                            Email = "vedad.keskin98@gmail.com",
+                            GradId = 34,
+                            Ime = "Elmir",
+                            KorisnickoIme = "elmirb",
+                            LozinkaHash = "1wrfyYURG83rXcpYOK7LxbASzxY=",
+                            LozinkaSalt = "gu5g9kJouJlB19/DNtCtaw==",
+                            Prezime = "Babović",
+                            Razina = 1,
+                            SpolId = 1,
+                            Tezina = 86f,
+                            Visina = 189f
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.KorisnikClanarina", b =>
@@ -223,6 +592,112 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "KorisnikId" }, "IX_Korisnik_Clanarina_KorisnikID");
 
                     b.ToTable("Korisnik_Clanarina", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            KorisnikClanarinaId = 1,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2023, 10, 1, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2023, 9, 1, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 2,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2023, 11, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 3,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2023, 12, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2023, 11, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 4,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 1, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2023, 12, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 5,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 2, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 1, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 6,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 3, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 2, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 7,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 5, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 4, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 8,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 6, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 5, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 9,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 6, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 10,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 11,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 6, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 12,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 13,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.KorisnikNutricionst", b =>
@@ -316,6 +791,50 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "UlogaId" }, "IX_Korisnik_Uloga_UlogaID");
 
                     b.ToTable("Korisnik_Uloga", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            KorisnikUlogaId = 1,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1,
+                            UlogaId = 1
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 2,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1,
+                            UlogaId = 2
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 3,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2,
+                            UlogaId = 1
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 4,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2,
+                            UlogaId = 2
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 5,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 3,
+                            UlogaId = 2
+                        },
+                        new
+                        {
+                            KorisnikUlogaId = 6,
+                            DatumIzmjene = new DateTime(2023, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 4,
+                            UlogaId = 2
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Narudzba", b =>
@@ -348,6 +867,62 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "KorisnikId" }, "IX_Narudzba_KorisnikID");
 
                     b.ToTable("Narudzba", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            NarudzbaId = 1,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 9, 1, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1,
+                            Otkazano = false,
+                            Sifra = "SIF-000-001",
+                            Status = false
+                        },
+                        new
+                        {
+                            NarudzbaId = 2,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 10, 1, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2,
+                            Otkazano = false,
+                            Sifra = "SIF-000-002",
+                            Status = false
+                        },
+                        new
+                        {
+                            NarudzbaId = 3,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 10, 4, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1,
+                            Otkazano = false,
+                            Sifra = "SIF-000-003",
+                            Status = false
+                        },
+                        new
+                        {
+                            NarudzbaId = 4,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 10, 9, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2,
+                            Otkazano = true,
+                            Sifra = "SIF-000-004",
+                            Status = false
+                        },
+                        new
+                        {
+                            NarudzbaId = 5,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 11, 7, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1,
+                            Otkazano = false,
+                            Sifra = "SIF-000-005",
+                            Status = false
+                        },
+                        new
+                        {
+                            NarudzbaId = 6,
+                            DatumVrijemeNarudzbe = new DateTime(2023, 11, 8, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 3,
+                            Otkazano = false,
+                            Sifra = "SIF-000-006",
+                            Status = false
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.NarudzbaStavka", b =>
@@ -377,6 +952,85 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "SuplementId" }, "IX_Narudzba_Stavka_SuplementID");
 
                     b.ToTable("Narudzba_Stavka", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            NarudzbaStavkaId = 1,
+                            Kolicina = 2,
+                            NarudzbaId = 1,
+                            SuplementId = 1
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 2,
+                            Kolicina = 1,
+                            NarudzbaId = 1,
+                            SuplementId = 4
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 3,
+                            Kolicina = 2,
+                            NarudzbaId = 2,
+                            SuplementId = 3
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 4,
+                            Kolicina = 3,
+                            NarudzbaId = 2,
+                            SuplementId = 9
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 5,
+                            Kolicina = 2,
+                            NarudzbaId = 3,
+                            SuplementId = 11
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 6,
+                            Kolicina = 1,
+                            NarudzbaId = 4,
+                            SuplementId = 16
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 7,
+                            Kolicina = 1,
+                            NarudzbaId = 4,
+                            SuplementId = 7
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 8,
+                            Kolicina = 2,
+                            NarudzbaId = 5,
+                            SuplementId = 2
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 9,
+                            Kolicina = 1,
+                            NarudzbaId = 5,
+                            SuplementId = 8
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 10,
+                            Kolicina = 6,
+                            NarudzbaId = 6,
+                            SuplementId = 20
+                        },
+                        new
+                        {
+                            NarudzbaStavkaId = 11,
+                            Kolicina = 1,
+                            NarudzbaId = 6,
+                            SuplementId = 21
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Nutricionist", b =>
@@ -410,6 +1064,24 @@ namespace IronVault.Services.Migrations
                     b.HasKey("NutricionistId");
 
                     b.ToTable("Nutricionist", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            NutricionistId = 1,
+                            BrojTelefona = "062709689",
+                            Email = "vedad.keskin98@gmail.com",
+                            Ime = "Marijana",
+                            Prezime = "Zubac"
+                        },
+                        new
+                        {
+                            NutricionistId = 2,
+                            BrojTelefona = "062709689",
+                            Email = "vedad.keskin98@gmail.com",
+                            Ime = "Amela",
+                            Prezime = "Ivković"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.NutricionistSeminar", b =>
@@ -436,6 +1108,32 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "SeminarId" }, "IX_Nutricionist_Seminar_SeminarID");
 
                     b.ToTable("Nutricionist_Seminar", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            NutricionistSeminarId = 1,
+                            NutricionistId = 1,
+                            SeminarId = 2
+                        },
+                        new
+                        {
+                            NutricionistSeminarId = 2,
+                            NutricionistId = 1,
+                            SeminarId = 3
+                        },
+                        new
+                        {
+                            NutricionistSeminarId = 3,
+                            NutricionistId = 2,
+                            SeminarId = 1
+                        },
+                        new
+                        {
+                            NutricionistSeminarId = 4,
+                            NutricionistId = 2,
+                            SeminarId = 3
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Prisustvo", b =>
@@ -462,6 +1160,117 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "KorisnikId" }, "IX_Prisustvo_KorisnikID");
 
                     b.ToTable("Prisustvo", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            PrisustvoId = 1,
+                            DatumVrijemeIzlaska = new DateTime(2024, 3, 3, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 3, 3, 18, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 2,
+                            DatumVrijemeIzlaska = new DateTime(2024, 3, 5, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 3, 5, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 3,
+                            DatumVrijemeIzlaska = new DateTime(2024, 3, 8, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 3, 8, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 4,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 7, 21, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 7, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 5,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 9, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 9, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 6,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 13, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 13, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 7,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 16, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 16, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 8,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 21, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 21, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 9,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 25, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 25, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 10,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 26, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 26, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            PrisustvoId = 11,
+                            DatumVrijemeIzlaska = new DateTime(2024, 4, 29, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 4, 29, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            PrisustvoId = 12,
+                            DatumVrijemeIzlaska = new DateTime(2024, 5, 3, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 5, 3, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            PrisustvoId = 13,
+                            DatumVrijemeIzlaska = new DateTime(2024, 5, 9, 22, 0, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeUlaska = new DateTime(2024, 5, 9, 19, 0, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            PrisustvoId = 14,
+                            DatumVrijemeUlaska = new DateTime(2024, 8, 19, 20, 52, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            PrisustvoId = 15,
+                            DatumVrijemeUlaska = new DateTime(2024, 8, 19, 21, 22, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
+                        },
+                        new
+                        {
+                            PrisustvoId = 16,
+                            DatumVrijemeUlaska = new DateTime(2024, 8, 19, 17, 12, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 3
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Recenzija", b =>
@@ -495,6 +1304,136 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "SuplementId" }, "IX_Recenzija_SuplementID");
 
                     b.ToTable("Recenzija", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            RecenzijaId = 1,
+                            KorisnikId = 1,
+                            Ocjena = 5,
+                            Opis = "Prozivod mi je mnogo pomogao, tople preporuke.",
+                            SuplementId = 1
+                        },
+                        new
+                        {
+                            RecenzijaId = 2,
+                            KorisnikId = 2,
+                            Ocjena = 4,
+                            Opis = "Dobar proizvod, samo je dostava trajala duže od dogovorenog.",
+                            SuplementId = 1
+                        },
+                        new
+                        {
+                            RecenzijaId = 3,
+                            KorisnikId = 1,
+                            Ocjena = 5,
+                            Opis = "Odličan proizvod.",
+                            SuplementId = 2
+                        },
+                        new
+                        {
+                            RecenzijaId = 4,
+                            KorisnikId = 2,
+                            Ocjena = 2,
+                            Opis = "Loš ukus.",
+                            SuplementId = 2
+                        },
+                        new
+                        {
+                            RecenzijaId = 5,
+                            KorisnikId = 3,
+                            Ocjena = 1,
+                            Opis = "Katastrofa.",
+                            SuplementId = 3
+                        },
+                        new
+                        {
+                            RecenzijaId = 6,
+                            KorisnikId = 1,
+                            Ocjena = 4,
+                            Opis = "Ukus nije baš najbolji ali je progres očigledan.",
+                            SuplementId = 4
+                        },
+                        new
+                        {
+                            RecenzijaId = 7,
+                            KorisnikId = 3,
+                            Ocjena = 5,
+                            Opis = "Odličan suplement.",
+                            SuplementId = 5
+                        },
+                        new
+                        {
+                            RecenzijaId = 8,
+                            KorisnikId = 1,
+                            Ocjena = 4,
+                            Opis = "Jako dobar.",
+                            SuplementId = 6
+                        },
+                        new
+                        {
+                            RecenzijaId = 9,
+                            KorisnikId = 2,
+                            Ocjena = 5,
+                            Opis = "Perfektan proizvod.",
+                            SuplementId = 7
+                        },
+                        new
+                        {
+                            RecenzijaId = 10,
+                            KorisnikId = 3,
+                            Ocjena = 4,
+                            Opis = "Jako dobar proizvod.",
+                            SuplementId = 7
+                        },
+                        new
+                        {
+                            RecenzijaId = 11,
+                            KorisnikId = 1,
+                            Ocjena = 3,
+                            Opis = "Dobar ukus.",
+                            SuplementId = 8
+                        },
+                        new
+                        {
+                            RecenzijaId = 12,
+                            KorisnikId = 2,
+                            Ocjena = 4,
+                            Opis = "Sve pohvale.",
+                            SuplementId = 8
+                        },
+                        new
+                        {
+                            RecenzijaId = 13,
+                            KorisnikId = 1,
+                            Ocjena = 5,
+                            Opis = "Vrhunski suplement.",
+                            SuplementId = 9
+                        },
+                        new
+                        {
+                            RecenzijaId = 14,
+                            KorisnikId = 1,
+                            Ocjena = 5,
+                            Opis = "Sve preporuke.",
+                            SuplementId = 10
+                        },
+                        new
+                        {
+                            RecenzijaId = 15,
+                            KorisnikId = 3,
+                            Ocjena = 4,
+                            Opis = "Izvrstan proizvod, okus mi se nije baš najviše dopao, idući put ću probati okus sa jagodom.",
+                            SuplementId = 1
+                        },
+                        new
+                        {
+                            RecenzijaId = 16,
+                            KorisnikId = 4,
+                            Ocjena = 5,
+                            Opis = "Jako mi se dopalo, osjetio sam promijene nakon sedmicu dana.",
+                            SuplementId = 1
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Seminar", b =>
@@ -520,6 +1459,50 @@ namespace IronVault.Services.Migrations
                     b.HasKey("SeminarId");
 
                     b.ToTable("Seminar", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            SeminarId = 1,
+                            Datum = new DateTime(2022, 12, 10, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Maja Gradinjan",
+                            Tema = "Metabolički Sindrom"
+                        },
+                        new
+                        {
+                            SeminarId = 2,
+                            Datum = new DateTime(2023, 4, 12, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Darija Topić",
+                            Tema = "Pravilna prehrana u službi zdravlja i sportskog razvoja"
+                        },
+                        new
+                        {
+                            SeminarId = 3,
+                            Datum = new DateTime(2020, 1, 10, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Tatjana Popović",
+                            Tema = "Snaga u vama"
+                        },
+                        new
+                        {
+                            SeminarId = 4,
+                            Datum = new DateTime(2019, 12, 10, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Ivan Račić",
+                            Tema = "CrossFit Level 3"
+                        },
+                        new
+                        {
+                            SeminarId = 5,
+                            Datum = new DateTime(2017, 6, 10, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Petar Klančir",
+                            Tema = "Pro Bodybuilding"
+                        },
+                        new
+                        {
+                            SeminarId = 6,
+                            Datum = new DateTime(2022, 1, 1, 12, 15, 0, 0, DateTimeKind.Unspecified),
+                            Predavac = "Almir Tunić",
+                            Tema = "Samoodbrana"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Spol", b =>
@@ -538,6 +1521,18 @@ namespace IronVault.Services.Migrations
                     b.HasKey("SpolId");
 
                     b.ToTable("Spol", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            SpolId = 1,
+                            Naziv = "Muški"
+                        },
+                        new
+                        {
+                            SpolId = 2,
+                            Naziv = "Ženski"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Suplement", b =>
@@ -587,6 +1582,282 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "KategorijaId" }, "IX_Suplement_KategorijaID");
 
                     b.ToTable("Suplement", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            SuplementId = 1,
+                            Cijena = 139f,
+                            DobavljacId = 1,
+                            Gramaza = 2500f,
+                            KategorijaId = 1,
+                            Naziv = "100% Whey Protein",
+                            Opis = "Muscle Freak 100% Isolate Whey Protein je visokokvalitetni izolat proteina sirutke, koji smo kreirali kako bi zadovoljili potrebe i najzahtjevnijih vježbača. Nakon godina uspješnog rada i distribucije najvećih brendova na tržištu, mi u Muscle Freaku smo odlučili da je vrijeme da i naša linija proizvoda ugleda svjetlo dana i da vam u skladu s našom tradicijom ponudimo najbolje i najkvalitetnije proizvode s predznakom bosanski brend.",
+                            ProsjecnaOcjena = 4.5,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 2,
+                            Cijena = 99f,
+                            DobavljacId = 3,
+                            Gramaza = 809f,
+                            KategorijaId = 1,
+                            Naziv = "Gold 100% Casein",
+                            Opis = "Korištenjem samo vrhunskog kazeina kao izvora proteina u svom 100% Gold Standard Casein-u, Optimum Nutrition je stvorio formulu koja postavlja standard za sve sporootpuštajuće proteine.",
+                            ProsjecnaOcjena = 3.5,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 3,
+                            Cijena = 89f,
+                            DobavljacId = 2,
+                            Gramaza = 900f,
+                            KategorijaId = 1,
+                            Naziv = "Nitro-Tech Ripped",
+                            Opis = "NITRO-TECH RIPPED™ je najnovija inovacija iz MuscleTech-a, branda koji oduševljava svojim proizvodima više od 20 godina. Ova napredna formula kombinuje proteinske peptide najviše kvalitete i izolat sa naučno testiranim sastojcima za gubitak težine. Ova 7 u 1 formula također sadrži CLA, trigliceride srednjeg lanca (MCT), L-carnitine L-tartrate, ekstrakt zelenog čaja, ekstrakt šipka i prah algi. MuscleTech® je napravio ovu jedinstvenu formula s ciljem objedinjavanja ultra-čistog proteina i gubitka težine - ovakvo nešto niste nikad prije vidjeli. Za razliku od konkurencije, svaka mjerica NITRO-TECH RIPPED™ sadrži naučno proučavanu dozu ključnih sastojaka za gubitak težine, C. canephora robusta, koja je potvrđena od strane dvije naučne studije i u čije rezultate ne morate sumnjati! Također, nevjerovatnog je okusa koji će Vas oduševiti!",
+                            ProsjecnaOcjena = 1.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 4,
+                            Cijena = 139f,
+                            DobavljacId = 2,
+                            Gramaza = 1800f,
+                            KategorijaId = 1,
+                            Naziv = "Nitro-Tech Whey Protein",
+                            Opis = "NITRO-TECH® je naučno istražena, pojačana proteinska formula kreirana za sve sportiste koji žele veću mišićnu masu, više snage i bolje performanse. NITRO-TECH® sadrži protein čiji primarni izvor su peptidi i izolat sirutke – dva najčistija i najkvalitetnija dostupna izvora proteina, za razliku od ostalih proteinskih suplemenata koji možda sadrže tek par gama ovih lako probavljivih i visoke biološke vrijednosti proteina. NITRO-TECH® je takođe poboljšan i sa 3g kreatin monohidrata, najistraženijim oblikom kreatina, namjenjenim za još veću mišićnu masu i snagu.",
+                            ProsjecnaOcjena = 4.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 5,
+                            Cijena = 89f,
+                            DobavljacId = 2,
+                            Gramaza = 908f,
+                            KategorijaId = 1,
+                            Naziv = "Nitro-Tech 100% Whey",
+                            Opis = "Preko 20 godina NITRO-TECH® je vodeći proteinski brend, izgrađen na temelju naučnih istraživanja i korištenja najmodernije tehnologija. Sada je isti istraživački i razvojni tim stvorio novu formulu whey proteina baziranu na superiornim izvorima proteina, kvaliteti i tehnici proizvodnje. Predstavljamo vam NITRO-TECH® 100% WHEY GOLD – čistu proteinsku formulu koja sadrži peptide i izolat sirutke.",
+                            ProsjecnaOcjena = 5.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 6,
+                            Cijena = 119f,
+                            DobavljacId = 2,
+                            Gramaza = 2000f,
+                            KategorijaId = 1,
+                            Naziv = "Platinum 8",
+                            Opis = "Vrhunska proteinska mješavina za sve namjene u bilo koje vrijeme posebno formulirana za sportiste koji žele biti na vrhuncu svoje igre. Dizajniran s visokokvalitetnom, višefaznom mješavinom proteina, može se uzimati kad god je potrebno - nakon treninga, između obroka ili prije spavanja.",
+                            ProsjecnaOcjena = 4.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 7,
+                            Cijena = 35f,
+                            DobavljacId = 4,
+                            Gramaza = 250f,
+                            KategorijaId = 2,
+                            Naziv = "BCAA 2:1:1",
+                            Opis = "Vrhunski ukusan spoj esencijalnih aminokiselina. Ovaj proizvod ne samo da pruža izvanredan ukus, već je i obogaćen esencijalnim hranjivim sastojcima poput vitamina C i vitamina B6. BCAA je kritičan faktor koji vam može pomoći da postignete najbolje iz svojih treninga.",
+                            ProsjecnaOcjena = 4.5,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 8,
+                            Cijena = 45f,
+                            DobavljacId = 4,
+                            Gramaza = 900f,
+                            KategorijaId = 2,
+                            Naziv = "HMB",
+                            Opis = "Self Omninutrition HMB (beta-hidroksi-beta-metilbutirat) je metabolit leucina koji sprečava razgradnju proteina i promoviše hipertrofiju mišića (povećanje ćelija koje grade tkivo); također smanjuje moguće povrede mišića nakon treninga visokog intenziteta, čime se smanjuje postotak masnoće u tijelu. Nedavna istraživanja su također pokazala da uzimanje HMB povećava mišićnu snagu, smanjuje simptome prekomjernog treninga te pozitivno utiče na VO2max (maksimalna potrošnja kiseonika). Neki stručnjaci smatraju da je VO2max ključni faktor u sportskim takmičenjima sportista. HMB je vrijedan dodatak ishrani za snagu, performanse i izdržljivost.",
+                            ProsjecnaOcjena = 3.5,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 9,
+                            Cijena = 75f,
+                            DobavljacId = 2,
+                            Gramaza = 400f,
+                            KategorijaId = 2,
+                            Naziv = "Amino Build",
+                            Opis = "Napunjene sa gradivnim elementima kako bi podržale brz oporavak. Imajući u vidu da su BCAA kao osnova u sastavu, ubrzat će period oporavka poslije treninga.",
+                            ProsjecnaOcjena = 5.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 10,
+                            Cijena = 85f,
+                            DobavljacId = 2,
+                            Gramaza = 594f,
+                            KategorijaId = 2,
+                            Naziv = "Cell Tech Elite",
+                            Opis = "Cell Tech Elite je visoko potentna formula koja pruža vrhunsku dozu od 5 g kreatinske matrice, koja uključuje kreatin monohidrat i kreatin hidroklorid. Osim toga, ova formula sadrži klinički dokazanu dozu od 400 mg Peak ATP-a, koji omogućava povećanje snage i veći broj ponavljanja u treningu. U kliničkoj studiji je dokazano da su ispitanici koji su koristili Peak ATP izgradili 90% više mišića u poređenju sa placebom, postižući impresivne rezultate u roku od 12 sedmica intenzivnog treninga.",
+                            ProsjecnaOcjena = 5.0,
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 11,
+                            Cijena = 85f,
+                            DobavljacId = 5,
+                            Gramaza = 480f,
+                            KategorijaId = 2,
+                            Naziv = "CW Intra Surgence",
+                            Opis = "CW Intra Surgence je naučno formuliran Intra-Workout dodatak koji pruža visoko doziranu mješavinu punog spektra esencijalnih aminokiselina (EAA) i razgranatih lanaca aminokiselina (BCAA), zajedno s najnovijim hidratacijskim sastojcima i patentiranim dodacima za povećanje energije.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 12,
+                            Cijena = 65f,
+                            DobavljacId = 6,
+                            Gramaza = 433f,
+                            KategorijaId = 2,
+                            Naziv = "Amino X",
+                            Opis = "Amino X je specijalna aminokiselinska formula dizajnirana da pomogne tijelu u povećanju izdržljivosti tokom treninga i mišićnom oporavku nakon treninga. Sadrži kvalitetnu anaboličku mješavinu, koja spriječava katabolizam (propadanje mišićnih vlakna) te se brine za obnovu i rast mišića.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 13,
+                            Cijena = 65f,
+                            DobavljacId = 1,
+                            Gramaza = 300f,
+                            KategorijaId = 3,
+                            Naziv = "Power Reactor",
+                            Opis = "Muscle Freak Power Reactor je visokokvalitetni pre-workout, koji smo kreirali kako bi zadovoljili potrebe i najzahtjevnijih vježbača. Nakon godina uspješnog rada i distribucije najvećih brendova na tržištu, mi u Muscle Freaku smo odlučili da je vrijeme da i naša linija proizvoda ugleda svjetlo dana i da vam u skladu s našom tradicijom ponudimo najbolje i najkvalitetnije proizvode s predznakom bosanski brend.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 14,
+                            Cijena = 85f,
+                            DobavljacId = 2,
+                            Gramaza = 420f,
+                            KategorijaId = 3,
+                            Naziv = "N.O.-Xplode Vaso",
+                            Opis = "Izgradnja mišića zahtijeva pravilnu ishranu i treninge. Mnogi suplementi prije treninga mogu pružiti energiju i fokus, ali rijetko isporučuju onu pravu \"pumpu\" koju tražite. Ali sada je vaša potraga gotova zahvaljujući N.O.-XPLODE VASO!",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 15,
+                            Cijena = 85f,
+                            DobavljacId = 7,
+                            Gramaza = 410f,
+                            KategorijaId = 3,
+                            Naziv = "C4 Ultimate",
+                            Opis = "Cellucor C4 Ultimate je dugi niz godina usavršavao pre-workoute, mnogo prije nego neki drugi brendovi u industriji sportskih suplemenata. Gotovo desetljeće brend C4® bio je prvi u kategoriji pre-workouta sa učinkom i eksplozivnom energijom, najboljim okusima, klinički proučenim sastojcima i vrhunskim formulama.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 16,
+                            Cijena = 65f,
+                            DobavljacId = 7,
+                            Gramaza = 180f,
+                            KategorijaId = 3,
+                            Naziv = "C4 Ripped",
+                            Opis = "C4 Ripped sadrži sličnu energetsku mješavinu kao i klasični C4, s ključnim sastojcima za energiju koji će vam pomoći da prođete kroz najteže vježbe.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 17,
+                            Cijena = 69f,
+                            DobavljacId = 6,
+                            Gramaza = 390f,
+                            KategorijaId = 3,
+                            Naziv = "N.O.-Xplode",
+                            Opis = "N.O.-XPLODE pomaže u održavanju mentalne budnosti i mišićne snage, donosi energiju i izdržljivost te pomaže sportistima poboljšati kapacitet na svim razinama.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 18,
+                            Cijena = 69f,
+                            DobavljacId = 2,
+                            Gramaza = 363f,
+                            KategorijaId = 3,
+                            Naziv = "Shatter",
+                            Opis = "MuscleTech Shatter™ je iznimno snažan i naučno osmišljen pre-workout suplement koji će Vam doslovno razderati majicu i poboljšati vaše performanse snage i izdržljivosti. Ova vrhunska formula pruža i snažnu energiju i kompleks koji će Vas potaknuti kroz svaki trening.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 19,
+                            Cijena = 79f,
+                            DobavljacId = 1,
+                            Gramaza = 1200f,
+                            KategorijaId = 4,
+                            Naziv = "Mega Mass",
+                            Opis = "Muscle Freak Mega Mass je visokokvalitetni gainer, koji smo kreirali kako bi zadovoljili potrebe i najzahtjevnijih vježbača. Nakon godina uspješnog rada i distribucije najvećih brendova na tržištu, mi u Muscle Freaku smo odlučili da je vrijeme da i naša linija proizvoda ugleda svjetlo dana i da vam u skladu s našom tradicijom ponudimo najbolje i najkvalitetnije proizvode s predznakom bosanski brend.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 20,
+                            Cijena = 119f,
+                            DobavljacId = 2,
+                            Gramaza = 3200f,
+                            KategorijaId = 4,
+                            Naziv = "Mass Tech ELITE",
+                            Opis = "Mass-Tech Elite je napredni mass gainer za one koji imaju problemasa povećanjem veličine ili žele da probiju svoje platoe snage...",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 21,
+                            Cijena = 89f,
+                            DobavljacId = 2,
+                            Gramaza = 2300f,
+                            KategorijaId = 4,
+                            Naziv = "100% Mass Gainer",
+                            Opis = "Iz najbolje američke kompanije za prodaju suplemenata, MuscleTech predstavlja Vam 100% Mass Gainer - visokoproteinski suplement za povećanje mišične mase. Ovaj dodatak, obogaćen prirodnim i umjetnim aromama, pruža Vam sve što je potrebno da unaprijedite mišiće, snagu i performanse, uz brži oporavak mišića.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 22,
+                            Cijena = 75f,
+                            DobavljacId = 10,
+                            Gramaza = 2270f,
+                            KategorijaId = 4,
+                            Naziv = "Mass Super Charger",
+                            Opis = "Tesla Mass Super Charger može pomoći vašim mišićima da rastu, zahvaljujući  ugljikohidratima iz više izvora, visokom sadržaju proteina i dodatku aminokiselina u optimalnom omjeru 2:1:1 za pomoć u iskorištavanju proteina. Kreatin je također dodat kako bi pomogao da se mišići napune vodom i potakne daljnji rast, zajedno s pažljivo odabranim vitaminskim kompleksom koji podržava sposobnost vašeg tijela da koristi proteine ​​i ugljikohidrate za energiju i čistu mišićnu masu.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 23,
+                            Cijena = 119f,
+                            DobavljacId = 8,
+                            Gramaza = 1000f,
+                            KategorijaId = 4,
+                            Naziv = "IsoGainz",
+                            Opis = "Evolite IsoGainz je ugljikohidratno-proteinski suplement visoke kvalitete namijenjen prvenstveno aktivnim osobama koji se sastoji od: odabrani ugljikohidrati (maltodextrin sa jako malim sadržajem šećera) proteina (izolat I koncentrat koji ne sadrže laktozu) .Proizvod se može koristiti kao dodatak svakodnevnoj prehrani. Idealno prikladan za korištenje nakon treninga kako bi se nadoknadile zalihe energije u mišićima. Protein doprinosi rastu mišične mase I pomaže u njenom održavanju.",
+                            StateMachine = "active"
+                        },
+                        new
+                        {
+                            SuplementId = 24,
+                            Cijena = 159f,
+                            DobavljacId = 9,
+                            Gramaza = 8000f,
+                            KategorijaId = 4,
+                            Naziv = "Hyper Mass",
+                            Opis = "Hyper Mass Professional je izuzetno moćan suplement s bogatim vitaminskim kompleksom, namijenjen da vam pomogne postići vaše ciljeve u izgradnji mišića! Ovaj preparat Hyper Mass, sa svojom vrhunskom kombinacijom sastojaka, idealan je izbor za sve koji žele dodati mišićnu masu, povećati snagu i izdržljivost tokom treninga.",
+                            StateMachine = "active"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Trener", b =>
@@ -620,6 +1891,24 @@ namespace IronVault.Services.Migrations
                     b.HasKey("TrenerId");
 
                     b.ToTable("Trener", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TrenerId = 1,
+                            BrojTelefona = "0644076290",
+                            Email = "vedad.keskin98@gmail.com",
+                            Ime = "Kadir",
+                            Prezime = "Keskin"
+                        },
+                        new
+                        {
+                            TrenerId = 2,
+                            BrojTelefona = "0644076290",
+                            Email = "vedad.keskin98@gmail.com",
+                            Ime = "Azur",
+                            Prezime = "Kahriman"
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.TrenerSeminar", b =>
@@ -646,6 +1935,32 @@ namespace IronVault.Services.Migrations
                     b.HasIndex(new[] { "TrenerId" }, "IX_Trener_Seminar_TrenerID");
 
                     b.ToTable("Trener_Seminar", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            TrenerSeminarId = 1,
+                            SeminarId = 5,
+                            TrenerId = 1
+                        },
+                        new
+                        {
+                            TrenerSeminarId = 2,
+                            SeminarId = 6,
+                            TrenerId = 1
+                        },
+                        new
+                        {
+                            TrenerSeminarId = 3,
+                            SeminarId = 4,
+                            TrenerId = 2
+                        },
+                        new
+                        {
+                            TrenerSeminarId = 4,
+                            SeminarId = 6,
+                            TrenerId = 2
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Uloga", b =>
@@ -667,6 +1982,20 @@ namespace IronVault.Services.Migrations
                     b.HasKey("UlogaId");
 
                     b.ToTable("Uloga", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UlogaId = 1,
+                            Naziv = "Administrator",
+                            Opis = "Administrator ima sve permisije na aplikaciji."
+                        },
+                        new
+                        {
+                            UlogaId = 2,
+                            Naziv = "User",
+                            Opis = "User ima samo korisničke permisije."
+                        });
                 });
 
             modelBuilder.Entity("IronVault.Services.Database.Korisnik", b =>
