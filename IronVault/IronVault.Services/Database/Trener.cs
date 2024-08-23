@@ -15,7 +15,7 @@ public partial class Trener
 
     public string BrojTelefona { get; set; } = null!;
 
-    public string? Slika { get; set; }
+    public byte[]? Slika { get; set; }
 
     public virtual ICollection<KorisnikTrener> KorisnikTreners { get; set; } = new List<KorisnikTrener>();
 

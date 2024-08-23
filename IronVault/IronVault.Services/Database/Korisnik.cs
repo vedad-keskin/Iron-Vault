@@ -19,7 +19,7 @@ public partial class Korisnik
 
     public string LozinkaSalt { get; set; } = null!;
 
-    public string? Slika { get; set; }
+    public byte[]? Slika { get; set; }
 
     public string BrojTelefona { get; set; } = null!;
 

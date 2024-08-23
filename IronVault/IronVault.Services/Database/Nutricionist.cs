@@ -15,7 +15,7 @@ public partial class Nutricionist
 
     public string BrojTelefona { get; set; } = null!;
 
-    public string? Slika { get; set; }
+    public byte[]? Slika { get; set; }
 
     public virtual ICollection<KorisnikNutricionst> KorisnikNutricionsts { get; set; } = new List<KorisnikNutricionst>();
 

@@ -305,7 +305,7 @@ namespace IronVault.Services.Database
                     VrijemeUteretani = "0 dana, 21 sati i 0 minuta",
                     SpolId = 1,
                     GradId = 18,
-                    Slika = ConvertImageToBase64String("wwwroot", "1kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "1kor.jpg")
                 },
                 new Korisnik
                 {
@@ -323,7 +323,7 @@ namespace IronVault.Services.Database
                     VrijemeUteretani = "0 dana, 12 sati i 0 minuta",
                     SpolId = 1,
                     GradId = 33,
-                    Slika = ConvertImageToBase64String("wwwroot", "2kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "2kor.jpg")
                 },
                 new Korisnik
                 {
@@ -340,7 +340,7 @@ namespace IronVault.Services.Database
                     Razina = 1,
                     SpolId = 1,
                     GradId = 18,
-                    Slika = ConvertImageToBase64String("wwwroot", "3kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "3kor.jpg")
                 },
                 new Korisnik
                 {
@@ -357,7 +357,7 @@ namespace IronVault.Services.Database
                     Razina = 1,
                     SpolId = 1,
                     GradId = 34,
-                    Slika = ConvertImageToBase64String("wwwroot", "4kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "4kor.jpg")
                 }
 
 
@@ -375,7 +375,7 @@ namespace IronVault.Services.Database
                      Prezime = "Keskin",
                      Email = "vedad.keskin98@gmail.com",
                      BrojTelefona = "0644076290",
-                     Slika = ConvertImageToBase64String("wwwroot", "1tre.jpg")
+                     Slika = ConvertImageToByteArray("wwwroot", "1tre.jpg")
                  },
                  new Trener
                  {
@@ -384,7 +384,7 @@ namespace IronVault.Services.Database
                      Prezime = "Kahriman",
                      Email = "vedad.keskin98@gmail.com",
                      BrojTelefona = "0644076290",
-                     Slika = ConvertImageToBase64String("wwwroot", "2tre.jpg")
+                     Slika = ConvertImageToByteArray("wwwroot", "2tre.jpg")
                  });
 
             // Nutricionisti 
@@ -398,7 +398,7 @@ namespace IronVault.Services.Database
                   Prezime = "Zubac",
                   Email = "vedad.keskin98@gmail.com",
                   BrojTelefona = "062709689",
-                  Slika = ConvertImageToBase64String("wwwroot", "1nut.jpg")
+                  Slika = ConvertImageToByteArray("wwwroot", "1nut.jpg")
               },
               new Nutricionist
               {
@@ -407,7 +407,7 @@ namespace IronVault.Services.Database
                   Prezime = "Ivković",
                   Email = "vedad.keskin98@gmail.com",
                   BrojTelefona = "062709689",
-                  Slika = ConvertImageToBase64String("wwwroot", "2nut.jpg")
+                  Slika = ConvertImageToByteArray("wwwroot", "2nut.jpg")
               });
 
 
@@ -426,7 +426,7 @@ new Suplement
     DobavljacId = 1,
     StateMachine = "active",
     ProsjecnaOcjena = 4.5,
-    Slika = ConvertImageToBase64String("wwwroot", "1sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "1sup.webp")
 },
 new Suplement
 {
@@ -439,7 +439,7 @@ new Suplement
     DobavljacId = 3,
     StateMachine = "active",
     ProsjecnaOcjena = 3.5,
-    Slika = ConvertImageToBase64String("wwwroot", "2sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "2sup.webp")
 },
 new Suplement
 {
@@ -452,7 +452,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 1,
-    Slika = ConvertImageToBase64String("wwwroot", "3sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "3sup.webp")
 },
 new Suplement
 {
@@ -465,7 +465,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 4,
-    Slika = ConvertImageToBase64String("wwwroot", "4sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "4sup.webp")
 },
 new Suplement
 {
@@ -479,7 +479,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 5,
-    Slika = ConvertImageToBase64String("wwwroot", "5sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "5sup.webp")
 },
 new Suplement
 {
@@ -492,7 +492,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 4,
-    Slika = ConvertImageToBase64String("wwwroot", "6sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "6sup.webp")
 },
 new Suplement
 {
@@ -505,7 +505,7 @@ new Suplement
     DobavljacId = 4,
     StateMachine = "active",
     ProsjecnaOcjena = 4.5,
-    Slika = ConvertImageToBase64String("wwwroot", "7sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "7sup.webp")
 },
 new Suplement
 {
@@ -518,7 +518,7 @@ new Suplement
     DobavljacId = 4,
     StateMachine = "active",
     ProsjecnaOcjena = 3.5,
-    Slika = ConvertImageToBase64String("wwwroot", "8sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "8sup.webp")
 },
 new Suplement
 {
@@ -531,7 +531,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 5,
-    Slika = ConvertImageToBase64String("wwwroot", "9sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "9sup.webp")
 },
 new Suplement
 {
@@ -544,7 +544,7 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 5,
-    Slika = ConvertImageToBase64String("wwwroot", "10sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "10sup.webp")
 }
 ,
 new Suplement
@@ -557,7 +557,7 @@ new Suplement
     KategorijaId = 2,
     DobavljacId = 5,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "11sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "11sup.webp")
 }
 ,
 new Suplement
@@ -570,7 +570,7 @@ new Suplement
     KategorijaId = 2,
     DobavljacId = 6,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "12sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "12sup.webp")
 }
 ,
 new Suplement
@@ -583,7 +583,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 1,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "13sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "13sup.webp")
 }
 ,
 new Suplement
@@ -596,7 +596,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 2,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "14sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "14sup.webp")
 }
 ,
 new Suplement
@@ -609,7 +609,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 7,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "15sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "15sup.webp")
 }
 ,
 new Suplement
@@ -622,7 +622,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 7,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "16sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "16sup.webp")
 }
 ,
 new Suplement
@@ -635,7 +635,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 6,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "17sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "17sup.webp")
 }
 ,
 new Suplement
@@ -648,7 +648,7 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 2,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "18sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "18sup.webp")
 }
 ,
 new Suplement
@@ -661,7 +661,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 1,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "19sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "19sup.webp")
 }
 ,
 new Suplement
@@ -674,7 +674,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 2,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "20sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "20sup.webp")
 }
 ,
 new Suplement
@@ -687,7 +687,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 2,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "21sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "21sup.webp")
 }
 ,
 new Suplement
@@ -700,7 +700,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 10,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "22sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "22sup.webp")
 }
 ,
 new Suplement
@@ -713,7 +713,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 8,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "23sup.png")
+    Slika = ConvertImageToByteArray("wwwroot", "23sup.png")
 }
 ,
 new Suplement
@@ -726,7 +726,7 @@ new Suplement
     KategorijaId = 4,
     DobavljacId = 9,
     StateMachine = "active",
-    Slika = ConvertImageToBase64String("wwwroot", "24sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "24sup.webp")
 }
 );
 
@@ -954,7 +954,7 @@ new Suplement
             NarudzbaId = 6,
             KorisnikId = 3,
             Sifra = "SIF-000-006",
-            DatumVrijemeNarudzbe = new DateTime(2023, 11, 08, 9, 15, 0),
+            DatumVrijemeNarudzbe = new DateTime(2024, 08, 08, 9, 15, 0),
             Otkazano = false,
             Status = false
         }

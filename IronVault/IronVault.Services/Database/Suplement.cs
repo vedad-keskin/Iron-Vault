@@ -15,7 +15,7 @@ public partial class Suplement
 
     public string Opis { get; set; } = null!;
 
-    public string? Slika { get; set; }
+    public byte[]? Slika { get; set; }
 
     public string? StateMachine { get; set; }
 

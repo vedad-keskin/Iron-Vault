@@ -16,6 +16,6 @@ namespace IronVault.Model.Models
 
         public string BrojTelefona { get; set; } = null!;
 
-        public string? Slika { get; set; }
+        public byte[]? Slika { get; set; }
     }
 }
