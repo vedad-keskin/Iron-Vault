@@ -23,7 +23,7 @@ services:
       - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=DBIronVault;User=sa;Password=QWElkj132!;ConnectRetryCount=0; TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
-      - 5039:5039
+      - 5039:44340
     networks:
       - ironvault2024
     links:
