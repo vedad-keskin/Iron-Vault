@@ -1,4 +1,5 @@
-# Iron Vault - Aplikacija za teretane
+# Iron Vault
+# Aplikacija za teretane
 
 ## Desktop Aplikacija
 
