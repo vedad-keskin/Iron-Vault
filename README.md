@@ -1,5 +1,4 @@
-# Iron Vault
-# Aplikacija za teretane
+# Iron Vault - Flutter aplikacija za upravljanje teretane
 
 ## Desktop Aplikacija
 
