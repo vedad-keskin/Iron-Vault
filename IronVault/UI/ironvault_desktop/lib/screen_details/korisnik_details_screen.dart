@@ -302,8 +302,7 @@ errorText: 'Vrijednost mora biti numerička.',
                                 FormBuilderValidators.required(
                                   errorText: 'Ovo polje je obavezno.',
                                 ),
-                                FormBuilderValidators.match(
-                                    r'^\+?[0-9]\d{1,14}$',
+                                FormBuilderValidators.match(r'^\+?[0-9]\d{1,14}$',
                                     errorText:
                                         'Telefon nije u ispravnom formatu'),
                               ]),
