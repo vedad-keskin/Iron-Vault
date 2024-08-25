@@ -6,8 +6,8 @@ services:
     restart: unless-stopped
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=QWElkj132!
-      - MSSQL_PID=Developer
+      - SA_PASSWORD=${SQL__PASSWORD}
+      - MSSQL_PID=${SQL__PID}
     ports:
       - 1401:1433
     expose:
@@ -20,7 +20,7 @@ services:
     build:
       context: .
     environment:
-      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=DBIronVault;User=sa;Password=QWElkj132!;ConnectRetryCount=0; TrustServerCertificate=True
+      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=${SQL__DATABASE};User=${SQL__USER};Password=${SQL__PASSWORD};ConnectRetryCount=0; TrustServerCertificate=True
       - ASPNETCORE_ENVIRONMENT=Development
     ports:
       - 5039:44340
