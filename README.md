@@ -3,12 +3,12 @@
 ## Desktop Aplikacija
 
 ### Admin
-- **Korisničko ime:** admin
+- **Korisničko ime:** desktop
 - **Lozinka:** test
 
 ## Mobilna Aplikacija
 
 ### Korisnik
-- **Korisničko ime:** korisnik
+- **Korisničko ime:** mobile
 - **Lozinka:** test
 
