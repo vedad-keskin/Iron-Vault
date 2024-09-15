@@ -27,15 +27,25 @@ class _MasterScreenState extends State<MasterScreen> {
         title: Text(widget.title),
       ),
       drawer: Drawer(
-        child: ListView(
+           child: ListView(
           children: [
-            ListTile(
-              title: Text("Nazad"),
-              onTap: () {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              },
-            ),
+           SizedBox(
+            height: 64,
+             child: DrawerHeader(
+                margin: const EdgeInsets.fromLTRB(1, 1, 1, 1),
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: Container(
+                  height: 100,
+                  width: double.infinity,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/banner.png'),
+                      fit: BoxFit.fitHeight,
+                    ),
+                  ),
+                ),
+              ),
+           ),
             ListTile(
               title: Text("U korpi ${_cartProvider?.cart.items.length}"),
               onTap: () {

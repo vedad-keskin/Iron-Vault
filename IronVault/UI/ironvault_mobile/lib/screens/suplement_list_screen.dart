@@ -47,13 +47,13 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
             children: [
               _buildSuplementSearch(),
               Container(
-                height: 500,
+                height: 580,
                 child: GridView(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 4 / 3,
                     crossAxisSpacing: 10,
-                    mainAxisSpacing: 30,
+                    mainAxisSpacing: 20,
                   ),
                   scrollDirection: Axis.horizontal,
                   children: _buildSuplementCardList(),
@@ -99,9 +99,9 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
           child: IconButton(
-            icon: Icon(Icons.arrow_forward_ios_outlined),
+            icon: const Icon(Icons.arrow_forward_ios_outlined),
             onPressed: () async {
               var tmpData = await _suplementProvider
                   ?.get(filter: {'fts': _searchController.text});
@@ -115,28 +115,75 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
     );
   }
 
-  List<Widget> _buildSuplementCardList() {
-    if (data?.result == null || data!.result.isEmpty) {
-      return [Text("Loading...")];
-    }
 
-    List<Widget> list = data!.result.map((x) => Container(
-      child: Column(
-        children: [
-          Container(
-            height: 100,
-            width: 100,
-            child: x.slika == null ? const Placeholder() : imageFromString(x.slika!),
-          ),
-          Text(x.naziv ?? ""),
-          Text(formatNumber(x.cijena)),
-          IconButton(onPressed: () {
-            _cartProvider?.addToCart(x);
-          }, icon: const Icon(Icons.shopping_cart))
-        ],
-      ),
-    )).cast<Widget>().toList();
 
-    return list;
+List<Widget> _buildSuplementCardList() {
+  if (data?.result == null || data!.result.isEmpty) {
+    return [const Text("Loading...")];
   }
+
+  List<Widget> list = data!.result
+      .map((x) => Container(
+            padding: const EdgeInsets.all(8.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 2,
+                  blurRadius: 5,
+                  offset: const Offset(0, 3),
+                ),
+              ],
+            ),
+            // Set the height explicitly
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  height: 130, // Adjust image height
+                  width: 130,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Colors.grey[200],
+                  ),
+                  child: x.slika == null
+                      ? const Icon(Icons.image, size: 50, color: Colors.grey)
+                      : imageFromString(x.slika!),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  x.naziv ?? "",
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyLarge
+                      ?.copyWith(fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 5),
+                Text(
+                  "${x.cijena} KM",
+                  style: Theme.of(context).textTheme.bodyMedium,
+                ),
+                const SizedBox(height: 10),
+                IconButton(
+                  onPressed: () {
+                    _cartProvider?.addToCart(x);
+                  },
+                  icon: const Icon(Icons.shopping_cart, color: Colors.green),
+                ),
+              ],
+            ),
+          ))
+      .cast<Widget>()
+      .toList();
+
+  return list;
+}
+
+
+
 }

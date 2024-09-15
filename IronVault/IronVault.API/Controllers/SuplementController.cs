@@ -31,7 +31,7 @@ namespace IronVault.API.Controllers
             return base.Update(id, request);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator,User")]
         public override PagedResult<Suplement> GetList([FromQuery] SuplementSearchObject searchObject)
         {
             return base.GetList(searchObject);

@@ -143,6 +143,7 @@ class LoginPage extends StatelessWidget {
                         AuthProvider.username = _usernameController.text;
                         AuthProvider.password = _passwordController.text;
                         try {
+                          var data = await provider.get();
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SuplementListScreen()));
                         } on Exception catch (e) {
