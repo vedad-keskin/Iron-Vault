@@ -105,7 +105,7 @@ using (var scope = app.Services.CreateScope())
     if (pendingMigrations)
     {
 
-        //dataContext.Database.Migrate();
+        dataContext.Database.Migrate();
 
 
     }
