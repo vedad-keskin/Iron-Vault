@@ -77,14 +77,19 @@ class _SuplementDetailsScreenState extends State<SuplementDetailsScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MasterScreen(
-        "Podaci o suplementu",
-        Column(
-          children: [isLoading ? Container() : _buildForm(), _saveRow()],
-        ));
-  }
+@override
+Widget build(BuildContext context) {
+  return MasterScreen(
+    "Podaci o suplementu",
+    index: 1, // Set the desired index here
+    child: Column(
+      children: [
+        isLoading ? Container() : _buildForm(),
+        _saveRow(),
+      ],
+    ),
+  );
+}
 
   Widget _buildForm() {
     final commonDecoration = InputDecoration(

@@ -33,18 +33,19 @@ class _CartScreenState extends State<CartScreen> {
     _orderProvider = context.read<OrderProvider>();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MasterScreen(
-      "Cart",
-      Column(
-        children: [
-          Expanded(child: _buildSuplementCardList()),
-          _buildBuyButton()
-        ],
-      ),
-    );
-  }
+@override
+Widget build(BuildContext context) {
+  return MasterScreen(
+    "Cart",
+    index: 2, // Set the desired index here
+    child: Column(
+      children: [
+        Expanded(child: _buildSuplementCardList()),
+        _buildBuyButton()
+      ],
+    ),
+  );
+}
 
   Widget _buildSuplementCardList() {
     return Container(

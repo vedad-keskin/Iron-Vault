@@ -37,34 +37,35 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return MasterScreen(
-      "Suplementi",
-      SingleChildScrollView(
-        child: Container(
-          child: Column(
-            children: [
-              _buildSuplementSearch(),
-              Container(
-                height: 580,
-                child: GridView(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    childAspectRatio: 4 / 3,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 20,
-                  ),
-                  scrollDirection: Axis.horizontal,
-                  children: _buildSuplementCardList(),
+@override
+Widget build(BuildContext context) {
+  return MasterScreen(
+    "Suplementi",
+    index: 1, // Set the desired index here
+    child: SingleChildScrollView(
+      child: Container(
+        child: Column(
+          children: [
+            _buildSuplementSearch(),
+            Container(
+              height: 580,
+              child: GridView(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 4 / 3,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 20,
                 ),
-              )
-            ],
-          ),
+                scrollDirection: Axis.horizontal,
+                children: _buildSuplementCardList(),
+              ),
+            )
+          ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 
   _buildSuplementSearch() {
     return Row(

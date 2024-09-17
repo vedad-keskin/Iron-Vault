@@ -9,6 +9,7 @@ import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
+import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -145,7 +146,7 @@ class LoginPage extends StatelessWidget {
                         try {
                           var data = await provider.get();
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SuplementListScreen()));
+                              builder: (context) => KorisnikListScreen()));
                         } on Exception catch (e) {
                           showDialog(
                             context: context,
