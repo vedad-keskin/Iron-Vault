@@ -341,25 +341,7 @@ namespace IronVault.Services.Database
                     SpolId = 1,
                     GradId = 18,
                     Slika = ConvertImageToByteArray("wwwroot", "3kor.jpg")
-                },
-                new Korisnik
-                {
-                    KorisnikId = 4,
-                    Ime = "Elmir",
-                    Prezime = "Babović",
-                    KorisnickoIme = "elmirb",
-                    Email = "vedad.keskin98@gmail.com",
-                    LozinkaHash = "1wrfyYURG83rXcpYOK7LxbASzxY=",
-                    LozinkaSalt = "gu5g9kJouJlB19/DNtCtaw==",
-                    BrojTelefona = "062000000",
-                    Visina = 189,
-                    Tezina = 86,
-                    Razina = 1,
-                    SpolId = 1,
-                    GradId = 34,
-                    Slika = ConvertImageToByteArray("wwwroot", "4kor.jpg")
                 }
-
 
 
                 );
@@ -426,7 +408,7 @@ new Suplement
     DobavljacId = 1,
     StateMachine = "active",
     ProsjecnaOcjena = 4.5,
-    Slika = ConvertImageToByteArray("wwwroot", "1sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "1sup.jpg")
 },
 new Suplement
 {
@@ -439,7 +421,7 @@ new Suplement
     DobavljacId = 3,
     StateMachine = "active",
     ProsjecnaOcjena = 3.5,
-    Slika = ConvertImageToByteArray("wwwroot", "2sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "2sup.jpg")
 },
 new Suplement
 {
@@ -452,77 +434,11 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 1,
-    Slika = ConvertImageToByteArray("wwwroot", "3sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "3sup.jpg")
 },
 new Suplement
 {
     SuplementId = 4,
-    Naziv = "Nitro-Tech Whey Protein",
-    Gramaza = 1800,
-    Cijena = 139,
-    Opis = "NITRO-TECH® je naučno istražena, pojačana proteinska formula kreirana za sve sportiste koji žele veću mišićnu masu, više snage i bolje performanse. NITRO-TECH® sadrži protein čiji primarni izvor su peptidi i izolat sirutke – dva najčistija i najkvalitetnija dostupna izvora proteina, za razliku od ostalih proteinskih suplemenata koji možda sadrže tek par gama ovih lako probavljivih i visoke biološke vrijednosti proteina. NITRO-TECH® je takođe poboljšan i sa 3g kreatin monohidrata, najistraženijim oblikom kreatina, namjenjenim za još veću mišićnu masu i snagu.",
-    KategorijaId = 1,
-    DobavljacId = 2,
-    StateMachine = "active",
-    ProsjecnaOcjena = 4,
-    Slika = ConvertImageToByteArray("wwwroot", "4sup.webp")
-},
-new Suplement
-{
-
-    SuplementId = 5,
-    Naziv = "Nitro-Tech 100% Whey",
-    Gramaza = 908,
-    Cijena = 89,
-    Opis = "Preko 20 godina NITRO-TECH® je vodeći proteinski brend, izgrađen na temelju naučnih istraživanja i korištenja najmodernije tehnologija. Sada je isti istraživački i razvojni tim stvorio novu formulu whey proteina baziranu na superiornim izvorima proteina, kvaliteti i tehnici proizvodnje. Predstavljamo vam NITRO-TECH® 100% WHEY GOLD – čistu proteinsku formulu koja sadrži peptide i izolat sirutke.",
-    KategorijaId = 1,
-    DobavljacId = 2,
-    StateMachine = "active",
-    ProsjecnaOcjena = 5,
-    Slika = ConvertImageToByteArray("wwwroot", "5sup.webp")
-},
-new Suplement
-{
-    SuplementId = 6,
-    Naziv = "Platinum 8",
-    Gramaza = 2000,
-    Cijena = 119,
-    Opis = "Vrhunska proteinska mješavina za sve namjene u bilo koje vrijeme posebno formulirana za sportiste koji žele biti na vrhuncu svoje igre. Dizajniran s visokokvalitetnom, višefaznom mješavinom proteina, može se uzimati kad god je potrebno - nakon treninga, između obroka ili prije spavanja.",
-    KategorijaId = 1,
-    DobavljacId = 2,
-    StateMachine = "active",
-    ProsjecnaOcjena = 4,
-    Slika = ConvertImageToByteArray("wwwroot", "6sup.webp")
-},
-new Suplement
-{
-    SuplementId = 7,
-    Naziv = "BCAA 2:1:1",
-    Gramaza = 250,
-    Cijena = 35,
-    Opis = "Vrhunski ukusan spoj esencijalnih aminokiselina. Ovaj proizvod ne samo da pruža izvanredan ukus, već je i obogaćen esencijalnim hranjivim sastojcima poput vitamina C i vitamina B6. BCAA je kritičan faktor koji vam može pomoći da postignete najbolje iz svojih treninga.",
-    KategorijaId = 2,
-    DobavljacId = 4,
-    StateMachine = "active",
-    ProsjecnaOcjena = 4.5,
-    Slika = ConvertImageToByteArray("wwwroot", "7sup.webp")
-},
-new Suplement
-{
-    SuplementId = 8,
-    Naziv = "HMB",
-    Gramaza = 900,
-    Cijena = 45,
-    Opis = "Self Omninutrition HMB (beta-hidroksi-beta-metilbutirat) je metabolit leucina koji sprečava razgradnju proteina i promoviše hipertrofiju mišića (povećanje ćelija koje grade tkivo); također smanjuje moguće povrede mišića nakon treninga visokog intenziteta, čime se smanjuje postotak masnoće u tijelu. Nedavna istraživanja su također pokazala da uzimanje HMB povećava mišićnu snagu, smanjuje simptome prekomjernog treninga te pozitivno utiče na VO2max (maksimalna potrošnja kiseonika). Neki stručnjaci smatraju da je VO2max ključni faktor u sportskim takmičenjima sportista. HMB je vrijedan dodatak ishrani za snagu, performanse i izdržljivost.",
-    KategorijaId = 2,
-    DobavljacId = 4,
-    StateMachine = "active",
-    ProsjecnaOcjena = 3.5,
-    Slika = ConvertImageToByteArray("wwwroot", "8sup.webp")
-},
-new Suplement
-{
-    SuplementId = 9,
     Naziv = "Amino Build",
     Gramaza = 400,
     Cijena = 75,
@@ -530,12 +446,13 @@ new Suplement
     KategorijaId = 2,
     DobavljacId = 2,
     StateMachine = "active",
-    ProsjecnaOcjena = 5,
-    Slika = ConvertImageToByteArray("wwwroot", "9sup.webp")
+    ProsjecnaOcjena = 4,
+    Slika = ConvertImageToByteArray("wwwroot", "4sup.jpg")
 },
 new Suplement
 {
-    SuplementId = 10,
+
+    SuplementId = 5,
     Naziv = "Cell Tech Elite",
     Gramaza = 594,
     Cijena = 85,
@@ -544,64 +461,24 @@ new Suplement
     DobavljacId = 2,
     StateMachine = "active",
     ProsjecnaOcjena = 5,
-    Slika = ConvertImageToByteArray("wwwroot", "10sup.webp")
-}
-,
+    Slika = ConvertImageToByteArray("wwwroot", "5sup.jpg")
+},
 new Suplement
 {
-    SuplementId = 11,
-    Naziv = "CW Intra Surgence",
-    Gramaza = 480,
-    Cijena = 85,
-    Opis = "CW Intra Surgence je naučno formuliran Intra-Workout dodatak koji pruža visoko doziranu mješavinu punog spektra esencijalnih aminokiselina (EAA) i razgranatih lanaca aminokiselina (BCAA), zajedno s najnovijim hidratacijskim sastojcima i patentiranim dodacima za povećanje energije.",
-    KategorijaId = 2,
-    DobavljacId = 5,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "11sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 12,
-    Naziv = "Amino X",
-    Gramaza = 433,
-    Cijena = 65,
-    Opis = "Amino X je specijalna aminokiselinska formula dizajnirana da pomogne tijelu u povećanju izdržljivosti tokom treninga i mišićnom oporavku nakon treninga. Sadrži kvalitetnu anaboličku mješavinu, koja spriječava katabolizam (propadanje mišićnih vlakna) te se brine za obnovu i rast mišića.",
-    KategorijaId = 2,
-    DobavljacId = 6,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "12sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 13,
-    Naziv = "Power Reactor",
-    Gramaza = 300,
-    Cijena = 65,
-    Opis = "Muscle Freak Power Reactor je visokokvalitetni pre-workout, koji smo kreirali kako bi zadovoljili potrebe i najzahtjevnijih vježbača. Nakon godina uspješnog rada i distribucije najvećih brendova na tržištu, mi u Muscle Freaku smo odlučili da je vrijeme da i naša linija proizvoda ugleda svjetlo dana i da vam u skladu s našom tradicijom ponudimo najbolje i najkvalitetnije proizvode s predznakom bosanski brend.",
-    KategorijaId = 3,
-    DobavljacId = 1,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "13sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 14,
+    SuplementId = 6,
     Naziv = "N.O.-Xplode Vaso",
     Gramaza = 420,
     Cijena = 85,
     Opis = "Izgradnja mišića zahtijeva pravilnu ishranu i treninge. Mnogi suplementi prije treninga mogu pružiti energiju i fokus, ali rijetko isporučuju onu pravu \"pumpu\" koju tražite. Ali sada je vaša potraga gotova zahvaljujući N.O.-XPLODE VASO!",
     KategorijaId = 3,
     DobavljacId = 2,
+    ProsjecnaOcjena = 4,
     StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "14sup.webp")
-}
-,
+    Slika = ConvertImageToByteArray("wwwroot", "6sup.jpg")
+},
 new Suplement
 {
-    SuplementId = 15,
+    SuplementId = 7,
     Naziv = "C4 Ultimate",
     Gramaza = 410,
     Cijena = 85,
@@ -609,12 +486,11 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 7,
     StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "15sup.webp")
-}
-,
+    Slika = ConvertImageToByteArray("wwwroot", "7sup.jpg")
+},
 new Suplement
 {
-    SuplementId = 16,
+    SuplementId = 8,
     Naziv = "C4 Ripped",
     Gramaza = 180,
     Cijena = 65,
@@ -622,111 +498,8 @@ new Suplement
     KategorijaId = 3,
     DobavljacId = 7,
     StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "16sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 17,
-    Naziv = "N.O.-Xplode",
-    Gramaza = 390,
-    Cijena = 69,
-    Opis = "N.O.-XPLODE pomaže u održavanju mentalne budnosti i mišićne snage, donosi energiju i izdržljivost te pomaže sportistima poboljšati kapacitet na svim razinama.",
-    KategorijaId = 3,
-    DobavljacId = 6,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "17sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 18,
-    Naziv = "Shatter",
-    Gramaza = 363,
-    Cijena = 69,
-    Opis = "MuscleTech Shatter™ je iznimno snažan i naučno osmišljen pre-workout suplement koji će Vam doslovno razderati majicu i poboljšati vaše performanse snage i izdržljivosti. Ova vrhunska formula pruža i snažnu energiju i kompleks koji će Vas potaknuti kroz svaki trening.",
-    KategorijaId = 3,
-    DobavljacId = 2,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "18sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 19,
-    Naziv = "Mega Mass",
-    Gramaza = 1200,
-    Cijena = 79,
-    Opis = "Muscle Freak Mega Mass je visokokvalitetni gainer, koji smo kreirali kako bi zadovoljili potrebe i najzahtjevnijih vježbača. Nakon godina uspješnog rada i distribucije najvećih brendova na tržištu, mi u Muscle Freaku smo odlučili da je vrijeme da i naša linija proizvoda ugleda svjetlo dana i da vam u skladu s našom tradicijom ponudimo najbolje i najkvalitetnije proizvode s predznakom bosanski brend.",
-    KategorijaId = 4,
-    DobavljacId = 1,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "19sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 20,
-    Naziv = "Mass Tech ELITE",
-    Gramaza = 3200,
-    Cijena = 119,
-    Opis = "Mass-Tech Elite je napredni mass gainer za one koji imaju problemasa povećanjem veličine ili žele da probiju svoje platoe snage...",
-    KategorijaId = 4,
-    DobavljacId = 2,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "20sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 21,
-    Naziv = "100% Mass Gainer",
-    Gramaza = 2300,
-    Cijena = 89,
-    Opis = "Iz najbolje američke kompanije za prodaju suplemenata, MuscleTech predstavlja Vam 100% Mass Gainer - visokoproteinski suplement za povećanje mišične mase. Ovaj dodatak, obogaćen prirodnim i umjetnim aromama, pruža Vam sve što je potrebno da unaprijedite mišiće, snagu i performanse, uz brži oporavak mišića.",
-    KategorijaId = 4,
-    DobavljacId = 2,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "21sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 22,
-    Naziv = "Mass Super Charger",
-    Gramaza = 2270,
-    Cijena = 75,
-    Opis = "Tesla Mass Super Charger može pomoći vašim mišićima da rastu, zahvaljujući  ugljikohidratima iz više izvora, visokom sadržaju proteina i dodatku aminokiselina u optimalnom omjeru 2:1:1 za pomoć u iskorištavanju proteina. Kreatin je također dodat kako bi pomogao da se mišići napune vodom i potakne daljnji rast, zajedno s pažljivo odabranim vitaminskim kompleksom koji podržava sposobnost vašeg tijela da koristi proteine ​​i ugljikohidrate za energiju i čistu mišićnu masu.",
-    KategorijaId = 4,
-    DobavljacId = 10,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "22sup.webp")
-}
-,
-new Suplement
-{
-    SuplementId = 23,
-    Naziv = "IsoGainz",
-    Gramaza = 1000,
-    Cijena = 119,
-    Opis = "Evolite IsoGainz je ugljikohidratno-proteinski suplement visoke kvalitete namijenjen prvenstveno aktivnim osobama koji se sastoji od: odabrani ugljikohidrati (maltodextrin sa jako malim sadržajem šećera) proteina (izolat I koncentrat koji ne sadrže laktozu) .Proizvod se može koristiti kao dodatak svakodnevnoj prehrani. Idealno prikladan za korištenje nakon treninga kako bi se nadoknadile zalihe energije u mišićima. Protein doprinosi rastu mišične mase I pomaže u njenom održavanju.",
-    KategorijaId = 4,
-    DobavljacId = 8,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "23sup.png")
-}
-,
-new Suplement
-{
-    SuplementId = 24,
-    Naziv = "Hyper Mass",
-    Gramaza = 8000,
-    Cijena = 159,
-    Opis = "Hyper Mass Professional je izuzetno moćan suplement s bogatim vitaminskim kompleksom, namijenjen da vam pomogne postići vaše ciljeve u izgradnji mišića! Ovaj preparat Hyper Mass, sa svojom vrhunskom kombinacijom sastojaka, idealan je izbor za sve koji žele dodati mišićnu masu, povećati snagu i izdržljivost tokom treninga.",
-    KategorijaId = 4,
-    DobavljacId = 9,
-    StateMachine = "active",
-    Slika = ConvertImageToByteArray("wwwroot", "24sup.webp")
+    Slika = ConvertImageToByteArray("wwwroot", "8sup.jpg")
+
 }
 );
 
@@ -887,13 +660,6 @@ new Suplement
                 KorisnikId = 3,
                 UlogaId = 2,
                 DatumIzmjene = new DateTime(2023, 10, 01, 7, 15, 0),
-            },
-            new KorisnikUloga
-            {
-                KorisnikUlogaId = 6,
-                KorisnikId = 4,
-                UlogaId = 2,
-                DatumIzmjene = new DateTime(2023, 10, 01, 7, 15, 0),
             }
         );
 
@@ -989,42 +755,42 @@ new Suplement
            {
                NarudzbaStavkaId = 4,
                NarudzbaId = 2,
-               SuplementId = 9,
+               SuplementId = 4,
                Kolicina = 3
            },
            new NarudzbaStavka
            {
                NarudzbaStavkaId = 5,
                NarudzbaId = 3,
-               SuplementId = 11,
+               SuplementId = 8,
                Kolicina = 2
            },
            new NarudzbaStavka
            {
                NarudzbaStavkaId = 6,
                NarudzbaId = 4,
-               SuplementId = 16,
+               SuplementId = 3,
                Kolicina = 1
            },
            new NarudzbaStavka
            {
                NarudzbaStavkaId = 7,
                NarudzbaId = 4,
-               SuplementId = 7,
+               SuplementId = 8,
                Kolicina = 1
            },
            new NarudzbaStavka
            {
                NarudzbaStavkaId = 8,
                NarudzbaId = 5,
-               SuplementId = 2,
+               SuplementId = 8,
                Kolicina = 2
            },
            new NarudzbaStavka
            {
                NarudzbaStavkaId = 9,
                NarudzbaId = 5,
-               SuplementId = 8,
+               SuplementId = 7,
                Kolicina = 1
            }
            ,
@@ -1032,7 +798,7 @@ new Suplement
            {
                NarudzbaStavkaId = 10,
                NarudzbaId = 6,
-               SuplementId = 20,
+               SuplementId = 8,
                Kolicina = 6
            }
            ,
@@ -1040,7 +806,7 @@ new Suplement
            {
                NarudzbaStavkaId = 11,
                NarudzbaId = 6,
-               SuplementId = 21,
+               SuplementId = 2,
                Kolicina = 1
            }
        );
@@ -1287,71 +1053,8 @@ new Suplement
                SuplementId = 6,
                Ocjena = 4,
                Opis = "Jako dobar."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 9,
-               KorisnikId = 2,
-               SuplementId = 7,
-               Ocjena = 5,
-               Opis = "Perfektan proizvod."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 10,
-               KorisnikId = 3,
-               SuplementId = 7,
-               Ocjena = 4,
-               Opis = "Jako dobar proizvod."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 11,
-               KorisnikId = 1,
-               SuplementId = 8,
-               Ocjena = 3,
-               Opis = "Dobar ukus."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 12,
-               KorisnikId = 2,
-               SuplementId = 8,
-               Ocjena = 4,
-               Opis = "Sve pohvale."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 13,
-               KorisnikId = 1,
-               SuplementId = 9,
-               Ocjena = 5,
-               Opis = "Vrhunski suplement."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 14,
-               KorisnikId = 1,
-               SuplementId = 10,
-               Ocjena = 5,
-               Opis = "Sve preporuke."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 15,
-               KorisnikId = 3,
-               SuplementId = 1,
-               Ocjena = 4,
-               Opis = "Izvrstan proizvod, okus mi se nije baš najviše dopao, idući put ću probati okus sa jagodom."
-           },
-           new Recenzija
-           {
-               RecenzijaId = 16,
-               KorisnikId = 4,
-               SuplementId = 1,
-               Ocjena = 5,
-               Opis = "Jako mi se dopalo, osjetio sam promijene nakon sedmicu dana."
            }
+         
        );
 
 
@@ -1389,7 +1092,7 @@ new Suplement
             string currentDirectory = Directory.GetCurrentDirectory();
             string imagePath = Path.Combine(currentDirectory, folder, imageName);
 
-                    Console.WriteLine($"---------------> {imagePath}");
+
 
 
             try
