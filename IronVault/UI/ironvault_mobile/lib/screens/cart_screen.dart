@@ -36,7 +36,7 @@ class _CartScreenState extends State<CartScreen> {
 @override
 Widget build(BuildContext context) {
   return MasterScreen(
-    "Cart",
+    "Korpa",
     index: 2, // Set the desired index here
     child: Column(
       children: [
