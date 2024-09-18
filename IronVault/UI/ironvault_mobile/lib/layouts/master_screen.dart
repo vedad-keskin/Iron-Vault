@@ -31,19 +31,22 @@ class _MasterScreenState extends State<MasterScreen> {
     _selectedIndex = widget.index;
   }
 
+
+
+
   Widget build(BuildContext context) {
     _cartProvider = context.watch<CartProvider>();
 
 return Scaffold(
   appBar: AppBar(
     title: Text(widget.title),
-    automaticallyImplyLeading: false, // Prevents the back button from appearing
+    automaticallyImplyLeading: false, // Izbacivanje back buttona
   ),
       body: widget.child,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-        backgroundColor: Color.fromARGB(255, 30, 13, 213), // Set the background color to blue
+        backgroundColor: Color.fromARGB(255, 35, 98, 207), // Set the background color to blue
         selectedItemColor: Colors.white, // Color for the selected item
         unselectedItemColor: Colors.white70, // Color for unselected items
         type: BottomNavigationBarType.fixed, // Ensure the background color applies
