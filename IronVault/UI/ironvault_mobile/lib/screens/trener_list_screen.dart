@@ -3,8 +3,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
+import 'package:ironvault_mobile/models/seminar.dart';
 import 'package:ironvault_mobile/models/trener.dart';
+import 'package:ironvault_mobile/models/trener_seminar.dart';
+import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
+import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'loading_screen.dart';
@@ -204,10 +208,10 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                     left: 5,
                     child: IconButton(
                       icon: const Icon(Icons.info,
-                          size: 40, color: Color.fromARGB(249, 209, 209, 149)),
+                          size: 40, color: Color.fromARGB(255, 230, 210, 34)),
                       onPressed: () {
                         // Show more information
-                        showMoreInfo(x);
+                        showMoreInfo(context, x);
                       },
                     ),
                   ),
@@ -220,81 +224,147 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
     return list;
   }
 
-void showMoreInfo(Trener x) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Row(
-          children: [
-            // Trainer's picture in a circle
-            x.slika == null
-                ? const CircleAvatar(
-                    radius: 30,
-                    backgroundColor: Colors.grey,
-                    child: Icon(Icons.image, size: 30, color: Colors.white),
-                  )
-                : CircleAvatar(
-                    radius: 30,
-                    backgroundImage: MemoryImage(base64Decode(x.slika!)),
-                  ),
-            const SizedBox(width: 15),
-            // Trainer's name
-            Expanded(
-              child: Text(
-                "${x.ime} ${x.prezime}",
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-            ),
-          ],
-        ),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Email
-            Row(
-              children: [
-                const Icon(Icons.email, color: Colors.blue),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    "${x.email}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            // Phone number
-            Row(
-              children: [
-                const Icon(Icons.phone, color: Colors.green),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    "${x.brojTelefona}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text("Zatvori"),
-          ),
-        ],
-      );
-    },
-  );
-}
+  void showMoreInfo(BuildContext context, Trener x) {
+    // Učitavanje seminara trenera kada se info box otvori
+    final trenerSeminarProvider = context.read<TrenerSeminarProvider>();
 
+    // Variables to handle loading state and fetched data
+    SearchResult<TrenerSeminar>? result;
+    bool isLoading = true;
+
+    // Fetch the seminars associated with the selected trainer
+    Future<void> initForm() async {
+      var filter = {
+        'trenerId': x.trenerId,
+      };
+      result = await trenerSeminarProvider.get(filter: filter);
+
+      // Update the state to stop loading once data is fetched
+      isLoading = false;
+    }
+
+    // Initialize the fetching of data
+    initForm().then((_) {
+      // After data is fetched, show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: Row(
+                  children: [
+                    // Trainer's picture in a circle
+                    x.slika == null
+                        ? const CircleAvatar(
+                            radius: 30,
+                            backgroundColor: Colors.grey,
+                            child: Icon(Icons.image,
+                                size: 30, color: Colors.white),
+                          )
+                        : CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                MemoryImage(base64Decode(x.slika!)),
+                          ),
+                    const SizedBox(width: 15),
+                    // Trainer's name
+                    Expanded(
+                      child: Text(
+                        "${x.ime} ${x.prezime}",
+                        style:
+                            Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
+                content: isLoading
+                    ? const Center(
+                        child:
+                            CircularProgressIndicator()) // Show loading indicator while data is being fetched
+                    : Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // Email
+                          Row(
+                            children: [
+                              const Icon(Icons.email, color: Colors.blue),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  "${x.email}",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 10),
+                          // Phone number
+                          Row(
+                            children: [
+                              const Icon(Icons.phone, color: Colors.green),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  "${x.brojTelefona}",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          // List of seminars
+                          Text(
+                            "Seminari:",
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: 10),
+                          // Displaying seminars or no seminars available
+                          result?.result.isNotEmpty ?? false
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: result!.result
+                                      .map((seminar) => Padding(
+                                            padding: const EdgeInsets.only(
+                                                bottom: 8.0),
+                                            child: Text(
+                                              "- ${seminar.seminar!.tema}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyLarge,
+                                            ),
+                                          ))
+                                      .toList(),
+                                )
+                              : Text(
+                                  "Nema dostupnih seminara.",
+                                  style: Theme.of(context).textTheme.bodyLarge,
+                                ),
+                        ],
+                      ),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    child: const Text("Zatvori"),
+                  ),
+                ],
+              );
+            },
+          );
+        },
+      );
+    });
+  }
 
   Widget addToCartButton(VoidCallback onPressed) {
     return ElevatedButton(

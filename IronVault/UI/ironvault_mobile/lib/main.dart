@@ -9,8 +9,10 @@ import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
+import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
+import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -29,6 +31,8 @@ void main() {
       ChangeNotifierProvider<OrderProvider>(create: (_) => OrderProvider()),
       ChangeNotifierProvider<TrenerProvider>(create: (_) => TrenerProvider()),
       ChangeNotifierProvider<NutricionistProvider>(create: (_) => NutricionistProvider()),
+      ChangeNotifierProvider<TrenerSeminarProvider>(create: (_) => TrenerSeminarProvider()),
+      ChangeNotifierProvider<SeminarProvider>(create: (_) => SeminarProvider()),
     ],
     child: const MyApp(),
   ));

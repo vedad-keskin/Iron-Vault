@@ -193,6 +193,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                   addToCartButton(() {
                   _cartProvider?.addToCart(x);
                 }),
+                
                 ],
               ),
             ))
