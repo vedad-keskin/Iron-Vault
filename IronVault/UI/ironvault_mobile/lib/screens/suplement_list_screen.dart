@@ -153,7 +153,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.5),
-                    spreadRadius: 2,
+                    spreadRadius: 6,
                     blurRadius: 5,
                     offset: const Offset(0, 3),
                   ),

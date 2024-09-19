@@ -6,6 +6,7 @@ import 'package:ironvault_mobile/screens/cart_screen.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/screens/trener_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -101,7 +102,7 @@ return Scaffold(
         break;
       case 3:
         // Navigate to Treneri screen (replace with actual screen)
-        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Placeholder())); // Replace with actual screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrenerListScreen())); // Replace with actual screen
         break;
       case 4:
         // Navigate to Nutricionisti screen (replace with actual screen)
