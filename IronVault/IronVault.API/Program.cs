@@ -35,6 +35,8 @@ builder.Services.AddTransient<INarudzbaStavkaService, NarudzbaStavkaService>();
 builder.Services.AddTransient<IPrisustvoService, PrisustvoService>();
 builder.Services.AddTransient<IKorisnikClanarinaService, KorisnikClanarinaService>();
 builder.Services.AddTransient<IBiznisReportService, BiznisReportService>();
+builder.Services.AddTransient<IKorisnikTrenerService, KorisnikTrenerService>();
+builder.Services.AddTransient<IKorisnikNutricionistService, KorisnikNutricionistService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
