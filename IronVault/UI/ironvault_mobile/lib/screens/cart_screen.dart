@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 
 class CartScreen extends StatefulWidget {
   static const String routeName = "/cart";
+  final int id; // Add this
 
-  const CartScreen({Key? key}) : super(key: key);
+  const CartScreen(this.id,{Key? key}) : super(key: key);
 
   @override
   State<CartScreen> createState() => _CartScreenState();
@@ -44,6 +45,7 @@ Widget build(BuildContext context) {
         _buildBuyButton()
       ],
     ),
+    id: widget.id,
   );
 }
 

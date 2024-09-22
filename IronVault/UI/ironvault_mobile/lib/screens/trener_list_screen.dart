@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:intl/intl.dart';
 import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
-import 'package:ironvault_mobile/models/seminar.dart';
 import 'package:ironvault_mobile/models/trener.dart';
 import 'package:ironvault_mobile/models/trener_seminar.dart';
-import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/utils/utils.dart';
@@ -16,8 +17,9 @@ import 'no_data_found.dart';
 
 class TrenerListScreen extends StatefulWidget {
   static const String routeName = "/trener";
+    final int id; // Add this
 
-  const TrenerListScreen({Key? key}) : super(key: key);
+  const TrenerListScreen(this.id,{Key? key}) : super(key: key);
 
   @override
   State<TrenerListScreen> createState() => _TrenerListScreenState();
@@ -81,6 +83,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                 ],
               ),
             ),
+            id: widget.id,
     );
   }
 
@@ -198,7 +201,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                         ),
                         const SizedBox(height: 10),
                         addToCartButton(() {
-                          // TO DO
+                          showAddToCartDialog(context, x);
                         }),
                       ],
                     ),
@@ -207,8 +210,43 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                     top: 5,
                     left: 5,
                     child: IconButton(
-                      icon: const Icon(Icons.info,
-                          size: 40, color: Color.fromARGB(255, 230, 210, 34)),
+                      icon: Container(
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color:
+                                  Colors.black.withOpacity(0.5), // Shadow color
+                              spreadRadius: 3, // Spread of the shadow
+                              blurRadius: 5, // Softness of the shadow
+                              offset: const Offset(
+                                  2, 2), // Offset in the x and y direction
+                            ),
+                          ],
+                        ),
+                        child: Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            const Icon(Icons.circle, // Blue background
+                                size: 40,
+                                color: Colors.blue),
+                            Icon(
+                              Icons.question_mark, // White question mark
+                              size: 30,
+                              color: Colors.white,
+                              shadows: [
+                                Shadow(
+                                  offset: const Offset(
+                                      2, 2), // Offset in the x and y direction
+                                  blurRadius: 2, // Blur radius for the shadow
+                                  color: Colors.black.withOpacity(
+                                      0.3), // Shadow color with opacity
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                       onPressed: () {
                         // Show more information
                         showMoreInfo(context, x);
@@ -377,7 +415,8 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
         ),
         padding:
             const EdgeInsets.symmetric(vertical: 16, horizontal: 50), // Padding
-        elevation: 5, // Shadow effect
+        elevation: 10, // Shadow effect
+        shadowColor: Colors.black.withOpacity(0.5),
       ),
       child: const Row(
         mainAxisSize: MainAxisSize.min,
@@ -396,6 +435,115 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  void showAddToCartDialog(BuildContext context, Trener x) {
+    final _formKey = GlobalKey<FormBuilderState>();
+    int quantity = 1;
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: const Text('Informacije o terminu'),
+              content: FormBuilder(
+                key: _formKey,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Date and time picker without common decoration
+                    FormBuilderDateTimePicker(
+                      name: 'datumTermina',
+                      decoration: const InputDecoration(
+                        labelText: "Datum i vrijeme",
+                        border: OutlineInputBorder(),
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                      inputType: InputType.both,
+                      format: DateFormat('dd/MM/yyyy HH:mm'),
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: FormBuilderValidators.compose([
+                        FormBuilderValidators.required(
+                          errorText: 'Obavezan datum i vrijeme',
+                        ),
+                      ]),
+                      // Set firstDate to now to prevent past date selection
+                      firstDate: DateTime.now(),
+                    ),
+                    const SizedBox(height: 20),
+
+                    // Label and Quantity incrementer (Broj sati)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Broj sati:',
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        const SizedBox(width: 10),
+                        IconButton(
+                          onPressed: () {
+                            if (quantity > 1) {
+                              setState(() {
+                                quantity--;
+                              });
+                            }
+                          },
+                          icon: const Icon(Icons.remove),
+                        ),
+                        Text(
+                          '$quantity',
+                          style: const TextStyle(fontSize: 18),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            setState(() {
+                              quantity++;
+                            });
+                          },
+                          icon: const Icon(Icons.add),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                    style:
+                        ElevatedButton.styleFrom(foregroundColor: Colors.red),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Odustani")),
+                ElevatedButton(
+                  onPressed: () {
+                    // Validate the form first
+                    if (_formKey.currentState?.saveAndValidate() ?? false) {
+                      // Get the selected date and quantity
+                      var request = Map.from(_formKey.currentState!.value);
+                      request['brojSati'] = quantity;
+                      request['trenerId'] = x.trenerId;
+                      //request['korisnikId'] = TODO
+
+
+                      // Perform the action with selected date, time, and quantity
+                      print('Request: $request');
+
+                      Navigator.of(context).pop(); // Close the dialog
+                    }
+                  },
+                  child: const Text('Potvrdi'),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

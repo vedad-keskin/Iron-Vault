@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+
 
 import 'dart:io';
 
@@ -7,6 +7,7 @@ import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
+import 'package:ironvault_mobile/providers/korisnik_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
 import 'package:ironvault_mobile/providers/seminar_provider.dart';
@@ -14,7 +15,7 @@ import 'package:ironvault_mobile/providers/suplement_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
-import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
+import 'package:ironvault_mobile/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -30,9 +31,13 @@ void main() {
       ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
       ChangeNotifierProvider<OrderProvider>(create: (_) => OrderProvider()),
       ChangeNotifierProvider<TrenerProvider>(create: (_) => TrenerProvider()),
-      ChangeNotifierProvider<NutricionistProvider>(create: (_) => NutricionistProvider()),
-      ChangeNotifierProvider<TrenerSeminarProvider>(create: (_) => TrenerSeminarProvider()),
+      ChangeNotifierProvider<NutricionistProvider>(
+          create: (_) => NutricionistProvider()),
+      ChangeNotifierProvider<TrenerSeminarProvider>(
+          create: (_) => TrenerSeminarProvider()),
       ChangeNotifierProvider<SeminarProvider>(create: (_) => SeminarProvider()),
+      ChangeNotifierProvider<KorisnikProvider>(
+          create: (_) => KorisnikProvider()),
     ],
     child: const MyApp(),
   ));
@@ -146,16 +151,33 @@ class LoginPage extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () async {
                         SuplementProvider provider = new SuplementProvider();
+                        KorisnikProvider _korisnikprovider =
+                            new KorisnikProvider();
 
                         print(
                             "credentials: ${_usernameController.text} : ${_passwordController.text}");
                         AuthProvider.username = _usernameController.text;
                         AuthProvider.password = _passwordController.text;
+
+                        showDialog(
+                          context: context,
+                          barrierDismissible:
+                              false, // Prevent dismissing the loading screen
+                          builder: (BuildContext context) {
+                            return LoadingScreen(); // Call your existing loading screen
+                          },
+                        );
+
                         try {
                           var data = await provider.get();
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => KorisnikListScreen()));
+                          var id = await _korisnikprovider.GetUserId(
+                              _usernameController.text);
+
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => KorisnikListScreen(id)));
                         } on Exception catch (e) {
+                          Navigator.pop(context); // Close the loading screen
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(

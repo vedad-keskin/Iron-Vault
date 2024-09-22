@@ -11,11 +11,12 @@ import 'package:provider/provider.dart';
 
 class MasterScreen extends StatefulWidget {
   // Set the default value of `index` to 0 (or any other value you prefer)
-  MasterScreen(this.title, {this.index = 0, required this.child, super.key});
+  const MasterScreen(this.title, {super.key, required this.index, required this.child, required this.id}); // Add id as a required argument
 
   final String title;
   final int index; // Changed to int and made optional
   final Widget child;
+  final int id; // Add this
 
   @override
   State<MasterScreen> createState() => _MasterScreenState();
@@ -90,19 +91,19 @@ return Scaffold(
     switch (index) {
       case 0:
         // Navigate to Profil screen (replace with actual screen)
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => KorisnikListScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => KorisnikListScreen(widget.id)));
         break;
       case 1:
         // Navigate to Suplementi screen
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen(widget.id)));
         break;
       case 2:
         // Navigate to Korpa screen
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CartScreen()));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CartScreen(widget.id)));
         break;
       case 3:
         // Navigate to Treneri screen (replace with actual screen)
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrenerListScreen())); // Replace with actual screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrenerListScreen(widget.id))); // Replace with actual screen
         break;
       case 4:
         // Navigate to Nutricionisti screen (replace with actual screen)

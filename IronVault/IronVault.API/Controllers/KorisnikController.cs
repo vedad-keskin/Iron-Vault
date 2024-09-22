@@ -24,6 +24,17 @@ namespace IronVault.API.Controllers
             return (_service as IKorisnikService).Login(username, password);
         }
 
+
+        [HttpGet("{username}/getUserId")]
+        [AllowAnonymous]
+        public int GetUserId(string username)
+        {
+            return (_service as IKorisnikService).GetUserId(username);
+        }
+
+
+
+
         [Authorize(Roles = "Administrator")]
         public override Model.Models.Korisnik Insert(KorisnikInsertRequest request)
         {
@@ -47,6 +58,8 @@ namespace IronVault.API.Controllers
         {
             return base.GetById(id);
         }
+
+
 
     }
 }

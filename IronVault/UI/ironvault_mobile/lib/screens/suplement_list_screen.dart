@@ -11,8 +11,9 @@ import 'no_data_found.dart';
 
 class SuplementListScreen extends StatefulWidget {
   static const String routeName = "/suplement";
+    final int id; // Add this
 
-  const SuplementListScreen({Key? key}) : super(key: key);
+  const SuplementListScreen(this.id,{Key? key}) : super(key: key);
 
   @override
   State<SuplementListScreen> createState() => _SuplementListScreenState();
@@ -77,6 +78,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
                 ],
               ),
             ),
+            id: widget.id,
     );
   }
 
@@ -217,7 +219,8 @@ Widget addToCartButton(VoidCallback onPressed) {
         borderRadius: BorderRadius.circular(12), // Rounded corners
       ),
       padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16), // Padding
-      elevation: 5, // Shadow effect
+       elevation: 10, // Shadow effect
+        shadowColor: Colors.black.withOpacity(0.5),
     ),
     child: const Row(
       mainAxisSize: MainAxisSize.min,
