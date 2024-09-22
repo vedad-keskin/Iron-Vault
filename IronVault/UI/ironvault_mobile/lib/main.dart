@@ -7,15 +7,16 @@ import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
+import 'package:ironvault_mobile/providers/korisnik_nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_trener_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
+import 'package:ironvault_mobile/providers/nutricionist_seminar_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
 import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
-import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/loading_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,10 @@ void main() {
           create: (_) => KorisnikProvider()),
           ChangeNotifierProvider<KorisnikTrenerProvider>(
           create: (_) => KorisnikTrenerProvider()),
+          ChangeNotifierProvider<KorisnikNutricionistProvider>(
+          create: (_) => KorisnikNutricionistProvider()),
+          ChangeNotifierProvider<NutricionistSeminarProvider>(
+          create: (_) => NutricionistSeminarProvider()),
     ],
     child: const MyApp(),
   ));

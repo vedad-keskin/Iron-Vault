@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/main.dart';
 import 'package:ironvault_mobile/screens/cart_screen.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
+import 'package:ironvault_mobile/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/screens/trener_list_screen.dart';
@@ -102,12 +103,12 @@ return Scaffold(
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CartScreen(widget.id)));
         break;
       case 3:
-        // Navigate to Treneri screen (replace with actual screen)
+        // Navigate to Treneri screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrenerListScreen(widget.id))); // Replace with actual screen
         break;
       case 4:
-        // Navigate to Nutricionisti screen (replace with actual screen)
-        //Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => Placeholder())); // Replace with actual screen
+        // Navigate to Nutricionisti screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
         break;
       case 5:
         // Logout action
