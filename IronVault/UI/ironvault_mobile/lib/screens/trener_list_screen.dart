@@ -8,6 +8,7 @@ import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
 import 'package:ironvault_mobile/models/trener.dart';
 import 'package:ironvault_mobile/models/trener_seminar.dart';
+import 'package:ironvault_mobile/providers/korisnik_trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/utils/utils.dart';
@@ -17,9 +18,9 @@ import 'no_data_found.dart';
 
 class TrenerListScreen extends StatefulWidget {
   static const String routeName = "/trener";
-    final int id; // Add this
+  final int id; // Add this
 
-  const TrenerListScreen(this.id,{Key? key}) : super(key: key);
+  const TrenerListScreen(this.id, {Key? key}) : super(key: key);
 
   @override
   State<TrenerListScreen> createState() => _TrenerListScreenState();
@@ -27,6 +28,7 @@ class TrenerListScreen extends StatefulWidget {
 
 class _TrenerListScreenState extends State<TrenerListScreen> {
   TrenerProvider? _trenerProvider;
+  late KorisnikTrenerProvider _korisnikTrenerProvider;
 
   SearchResult<Trener>? data;
   TextEditingController _searchController = TextEditingController();
@@ -36,6 +38,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
   void initState() {
     super.initState();
     _trenerProvider = context.read<TrenerProvider>();
+    _korisnikTrenerProvider = context.read<KorisnikTrenerProvider>();
     loadData();
   }
 
@@ -51,7 +54,8 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "Treneri",
-      index: 3, // Set the desired index here
+      index: 3,
+      id: widget.id, // Set the desired index here
       child: _isLoading
           ? LoadingScreen() // Show the loading screen while data is being loaded
           : SingleChildScrollView(
@@ -83,7 +87,6 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                 ],
               ),
             ),
-            id: widget.id,
     );
   }
 
@@ -455,7 +458,6 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Date and time picker without common decoration
                     FormBuilderDateTimePicker(
                       name: 'datumTermina',
                       decoration: const InputDecoration(
@@ -471,12 +473,9 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                           errorText: 'Obavezan datum i vrijeme',
                         ),
                       ]),
-                      // Set firstDate to now to prevent past date selection
                       firstDate: DateTime.now(),
                     ),
                     const SizedBox(height: 20),
-
-                    // Label and Quantity incrementer (Broj sati)
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
@@ -514,27 +513,107 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
               ),
               actions: [
                 ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(foregroundColor: Colors.red),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text("Odustani")),
-                ElevatedButton(
+                  style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
                   onPressed: () {
-                    // Validate the form first
+                    Navigator.pop(context);
+                  },
+                  child: const Text("Odustani"),
+                ),
+                ElevatedButton(
+                  onPressed: () async {
                     if (_formKey.currentState?.saveAndValidate() ?? false) {
-                      // Get the selected date and quantity
                       var request = Map.from(_formKey.currentState!.value);
-                      request['brojSati'] = quantity;
+                      request['zakazanoSati'] = quantity;
                       request['trenerId'] = x.trenerId;
-                      //request['korisnikId'] = TODO
+                      request['korisnikId'] = widget.id;
 
+                      if (request['datumTermina'] is DateTime) {
+                        request['datumTermina'] =
+                            (request['datumTermina'] as DateTime)
+                                .toIso8601String();
+                      }
 
-                      // Perform the action with selected date, time, and quantity
-                      print('Request: $request');
+                      try {
+                        await _korisnikTrenerProvider.insert(request);
 
-                      Navigator.of(context).pop(); // Close the dialog
+                        // Show success dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Row(
+                                mainAxisSize: MainAxisSize
+                                    .min, // To center the Row content properly
+                                mainAxisAlignment: MainAxisAlignment
+                                    .start, // Center the icon and title
+                                children: [
+                                  Icon(Icons.info,
+                                      color: Colors.blue,
+                                      size: 30), // Larger icon
+                                  SizedBox(width: 10),
+                                  Text(
+                                    'Uspjeh',
+                                    style: TextStyle(
+                                      fontSize:
+                                          24, // Larger text size for the title
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              content: const Text(
+                                '\nTrener je mailom obavješten o zakazivanju termina.\n\n'
+                                'Bit ćete kontaktirani u što kraćem roku.',
+                                textAlign:
+                                    TextAlign.center, // Center the content text
+                                style: TextStyle(
+                                  fontSize:
+                                      18, // Larger text size for the content
+                                  color: Colors.black87,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pop(); // Close info dialog
+                                    Navigator.of(context)
+                                        .pop(); // Close the main dialog
+                                  },
+                                  child: const Text(
+                                    'OK',
+                                    style: TextStyle(
+                                      color: Colors.blue,
+                                      fontSize:
+                                          18, // Larger text size for the button
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      } catch (error) {
+                        // Show error dialog
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text('Greška'),
+                              content: const Text(
+                                  'Došlo je do greške prilikom zakazivanja termina'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(); // Close dialog
+                                  },
+                                  child: const Text('OK'),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     }
                   },
                   child: const Text('Potvrdi'),

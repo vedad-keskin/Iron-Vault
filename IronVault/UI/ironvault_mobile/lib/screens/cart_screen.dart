@@ -89,7 +89,7 @@ return ListTile(
 
         //_orderProvider.insert(order)
 
-    }, child: Text("Buy"));
+    }, child: const Text("Kupi"));
   }
 
 

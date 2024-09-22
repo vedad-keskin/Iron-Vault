@@ -8,6 +8,7 @@ import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
+import 'package:ironvault_mobile/providers/korisnik_trener_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
 import 'package:ironvault_mobile/providers/seminar_provider.dart';
@@ -16,6 +17,7 @@ import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/loading_screen.dart';
+import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -38,6 +40,8 @@ void main() {
       ChangeNotifierProvider<SeminarProvider>(create: (_) => SeminarProvider()),
       ChangeNotifierProvider<KorisnikProvider>(
           create: (_) => KorisnikProvider()),
+          ChangeNotifierProvider<KorisnikTrenerProvider>(
+          create: (_) => KorisnikTrenerProvider()),
     ],
     child: const MyApp(),
   ));
@@ -171,17 +175,17 @@ class LoginPage extends StatelessWidget {
                         try {
                           var data = await provider.get();
                           var id = await _korisnikprovider.GetUserId(
-                              _usernameController.text);
+                              _usernameController.text); // slanje id-a prijavljenog korisnika u ostatak apk
 
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => KorisnikListScreen(id)));
+                                  builder: (context) => SuplementListScreen(id)));
                         } on Exception catch (e) {
                           Navigator.pop(context); // Close the loading screen
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: Text(
+                              title: const Text(
                                 "Greška",
                                 style: TextStyle(
                                   color: Colors.red,
@@ -190,14 +194,14 @@ class LoginPage extends StatelessWidget {
                               ),
                               content: Text(
                                 e.toString().replaceFirst('Exception: ', ''),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                 ),
                               ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context),
-                                  child: Text(
+                                  child: const Text(
                                     "OK",
                                     style: TextStyle(
                                       color: Colors.blue,
@@ -210,16 +214,16 @@ class LoginPage extends StatelessWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 15.0), // Button padding
                         shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.circular(10.0), // Rounded corners
                         ),
-                        minimumSize: Size(double.infinity, 30),
+                        minimumSize: const Size(double.infinity, 30),
                         backgroundColor: Color(0xFF08b7f0),
                       ),
-                      child: Text("Potvrdi",
+                      child: const Text("Potvrdi",
                           style: TextStyle(color: Colors.white, fontSize: 16)),
                     ),
                   ],
