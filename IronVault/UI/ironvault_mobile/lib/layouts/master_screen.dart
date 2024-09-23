@@ -75,6 +75,10 @@ return Scaffold(
             label: 'Nutricionisti',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.help ),
+            label: 'FAQ',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.logout),
             label: 'Odjava',
           ),
@@ -110,7 +114,11 @@ return Scaffold(
         // Navigate to Nutricionisti screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
         break;
-      case 5:
+        case 5:
+        // Navigate to Nutricionisti screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
+        break;
+      case 6:
         // Logout action
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
         break;

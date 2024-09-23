@@ -64,32 +64,32 @@ namespace IronVault.Services.Database
     new Faq
     {
         Faqid = 1,
-        Pitanje = "Koja je cijena članarina u vašoj teretani?",
-        Odgovor = "Cijene mjesečnih članarina variraju ovisno o paketu koji odaberete. Imamo različite opcije prilagođene različitim potrebama i budžetima. Detaljne informacije o cijenama možete pronaći na recepciji naše teretane."
+        Pitanje = "Kako mogu zakazati termin kod trenera ili nutricioniste?",
+        Odgovor = "Zakazivanje termina vršite klikom 'Zakaži termin' u sekciji trenera ili nutricionista. Nakon zakazivanja termina trenera/nutricioniste isti će biti obavješten mail-om nakon čega će vam se on/ona javiti na prijavljeni e-mail ili broj telefona."
     },
     new Faq
     {
         Faqid = 2,
-        Pitanje = "Da li u sklopu teretane imate personalne trenere?",
-        Odgovor = "Da, imamo stručne trenere koji vam mogu pomoći u postizanju vaših fitness ciljeva. Oni će raditi s vama kako bi razvili personalizirani plan vježbanja. Pored njih, imamo i naš tim nutricionista."
+        Pitanje = "Kako mogu naručiti suplement sa vaše aplikacije?",
+        Odgovor = "Naručivanje suplemenata vrište klikom 'Dodaj u korpu' u sekciji suplementi gdje se odabrani proizvodi prebacuju u sekciju korpa, nakon dodavanja odabranih suplemenata klikom na 'Kupi' u sekciji korpa ćete biti prebačeni u stripe servis gdje možete izvršiti kupovinu."
     },
     new Faq
     {
         Faqid = 3,
-        Pitanje = "Kako da postanem član vaše teretane?",
-        Odgovor = "Vrlo jednostavno! Posjetite našu recepciju, odaberite željeni paket i dobit ćete svoju člansku karticu!"
+        Pitanje = "Kako mogu ocjeniti suplement?",
+        Odgovor = "Recenzije suplemenata možete izvršiti samo nakon kupovine istog suplementa. Nakon kupovine suplementa, isti možete naći u sekciji 'Profil', gdje vam se nudi mogućnost ocjenjivanja suplementa ocjenom od 1 do 5, zajedno sa mogućnošću ostavljanja komentara na svoju ocjenu."
     },
     new Faq
     {
         Faqid = 4,
-        Pitanje = "Kako da povećam svoju razinu?",
-        Odgovor = "Razinu povećavate na sljedeću razinu svakih 10 sati provedenih u teretani."
+        Pitanje = "Kako mogu povećati razinu svog profila?",
+        Odgovor = "Razinu povećavate svakih 10 sati provednih u teretani. Veća razina ne samo da govori o većem ličnom progresu nego povećavate svoje šanse za ostvarivanjem bonus nagrada poput besplatnih suplemenata, personalnih termina kod naših trenera i sl."
     },
     new Faq
     {
         Faqid = 5,
-        Pitanje = "Kako izvršiti kupovinu suplemenata?",
-        Odgovor = "Kupovinu suplemenata izvršavate klikom naruči preko Stripe servisa, nakon kojeg dobijete potvrdu kupovine na mail."
+        Pitanje = "Gdje mogu viditi podatke o personalnom napretku?",
+        Odgovor = "Sve informacije o svom profilu, zajedno sa razinom, vremenom provedenom u teretani, listi uplaćenih članarina, kupovina možete naći u sekciji 'Profil'."
     }
 );
             // Clanarine
@@ -969,19 +969,19 @@ new Suplement
            {
                PrisustvoId = 14,
                KorisnikId = 1,
-               DatumVrijemeUlaska = new DateTime(2024, 08, 19, 20, 52, 0),
+               DatumVrijemeUlaska = new DateTime(2024, 09, 22, 20, 52, 0),
            },
            new Prisustvo
            {
                PrisustvoId = 15,
                KorisnikId = 2,
-               DatumVrijemeUlaska = new DateTime(2024, 08, 19, 21, 22, 0),
+               DatumVrijemeUlaska = new DateTime(2024, 09, 22, 21, 22, 0),
            },
            new Prisustvo
            {
                PrisustvoId = 16,
                KorisnikId = 3,
-               DatumVrijemeUlaska = new DateTime(2024, 08, 19, 17, 12, 0),
+               DatumVrijemeUlaska = new DateTime(2024, 09, 22, 17, 12, 0),
            }
        );
 
