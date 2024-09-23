@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
+import 'package:ironvault_mobile/providers/faq_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
@@ -47,6 +48,8 @@ void main() {
           create: (_) => KorisnikNutricionistProvider()),
           ChangeNotifierProvider<NutricionistSeminarProvider>(
           create: (_) => NutricionistSeminarProvider()),
+          ChangeNotifierProvider<FaqProvider>(
+          create: (_) => FaqProvider()),
     ],
     child: const MyApp(),
   ));

@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/main.dart';
 import 'package:ironvault_mobile/screens/cart_screen.dart';
+import 'package:ironvault_mobile/screens/faq_list_screen.dart';
 import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
@@ -114,9 +115,9 @@ return Scaffold(
         // Navigate to Nutricionisti screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
         break;
-        case 5:
-        // Navigate to Nutricionisti screen
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
+      case 5:
+        //Navigate to Faq screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FaqListScreen(widget.id))); // Replace with actual screen
         break;
       case 6:
         // Logout action
