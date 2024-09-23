@@ -295,7 +295,7 @@ namespace IronVault.Services.Database
                     Ime = "Vedad",
                     Prezime = "Keskin",
                     KorisnickoIme = "desktop",
-                    Email = "vedad.keskin98@gmail.com",
+                    Email = "ironvault.test@gmail.com",
                     LozinkaHash = "/sQWOxvpzqUJK7grzQGsN5yX0LI=",
                     LozinkaSalt = "BmclnyHeY8muqOn8CgWyCQ==",
                     BrojTelefona = "0644076290",
@@ -313,7 +313,7 @@ namespace IronVault.Services.Database
                     Ime = "Amel",
                     Prezime = "Musić",
                     KorisnickoIme = "mobile",
-                    Email = "vedad.keskin98@gmail.com",
+                    Email = "ironvault.test@gmail.com",
                     LozinkaHash = "BsBZhuf6khxcsMiKOfkf8i6YCFY=",
                     LozinkaSalt = "MsAOOfOrEjMn6UE18MK0DQ==",
                     BrojTelefona = "062709689",
@@ -331,7 +331,7 @@ namespace IronVault.Services.Database
                     Ime = "Denis",
                     Prezime = "Mušić",
                     KorisnickoIme = "denism",
-                    Email = "vedad.keskin98@gmail.com",
+                    Email = "ironvault.test@gmail.com",
                     LozinkaHash = "2Kfy1C0XBFtOApv4hlUaEQH4aqs=",
                     LozinkaSalt = "QLSAf12F9XkD+4ZLEFZz+w==",
                     BrojTelefona = "061000000",
@@ -355,7 +355,7 @@ namespace IronVault.Services.Database
                      TrenerId = 1,
                      Ime = "Kadir",
                      Prezime = "Keskin",
-                     Email = "vedad.keskin98@gmail.com",
+                     Email = "ironvault.test@gmail.com",
                      BrojTelefona = "0644076290",
                      Slika = ConvertImageToByteArray("wwwroot", "1tre.jpg")
                  },
@@ -364,7 +364,7 @@ namespace IronVault.Services.Database
                      TrenerId = 2,
                      Ime = "Azur",
                      Prezime = "Kahriman",
-                     Email = "vedad.keskin98@gmail.com",
+                     Email = "ironvault.test@gmail.com",
                      BrojTelefona = "0644076290",
                      Slika = ConvertImageToByteArray("wwwroot", "2tre.jpg")
                  });
@@ -378,7 +378,7 @@ namespace IronVault.Services.Database
                   NutricionistId = 1,
                   Ime = "Marijana",
                   Prezime = "Zubac",
-                  Email = "vedad.keskin98@gmail.com",
+                  Email = "ironvault.test@gmail.com",
                   BrojTelefona = "062709689",
                   Slika = ConvertImageToByteArray("wwwroot", "1nut.jpg")
               },
@@ -387,7 +387,7 @@ namespace IronVault.Services.Database
                   NutricionistId = 2,
                   Ime = "Amela",
                   Prezime = "Ivković",
-                  Email = "vedad.keskin98@gmail.com",
+                  Email = "ironvault.test@gmail.com",
                   BrojTelefona = "062709689",
                   Slika = ConvertImageToByteArray("wwwroot", "2nut.jpg")
               });
