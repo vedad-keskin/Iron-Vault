@@ -43,7 +43,8 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
   void initState() {
     super.initState();
     _nutricionistProvider = context.read<NutricionistProvider>();
-    _korisnikNutricionistProvider = context.read<KorisnikNutricionistProvider>();
+    _korisnikNutricionistProvider =
+        context.read<KorisnikNutricionistProvider>();
     loadData();
   }
 
@@ -272,7 +273,8 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
 
   void showMoreInfo(BuildContext context, Nutricionist x) {
     // Učitavanje seminara trenera kada se info box otvori
-    final nutricionistSeminarProvider = context.read<NutricionistSeminarProvider>();
+    final nutricionistSeminarProvider =
+        context.read<NutricionistSeminarProvider>();
 
     // Variables to handle loading state and fetched data
     SearchResult<NutricionistSeminar>? result;
@@ -309,7 +311,7 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                                 size: 30, color: Colors.white),
                           )
                         : CircleAvatar(
-                            radius: 30,
+                            radius: 45,
                             backgroundImage:
                                 MemoryImage(base64Decode(x.slika!)),
                           ),

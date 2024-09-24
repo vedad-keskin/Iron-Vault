@@ -304,7 +304,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                                 size: 30, color: Colors.white),
                           )
                         : CircleAvatar(
-                            radius: 30,
+                            radius: 45,
                             backgroundImage:
                                 MemoryImage(base64Decode(x.slika!)),
                           ),
