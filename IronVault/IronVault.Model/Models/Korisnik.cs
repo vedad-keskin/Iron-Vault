@@ -21,6 +21,7 @@ namespace IronVault.Model.Models
         public Grad Grad { get; set; }
         public int SpolId { get; set; }
         public Spol Spol { get; set; }
+        public int? SatiUteretani { get; set; }
 
         public virtual ICollection<KorisnikUloga> KorisnikUlogas { get; set; } = new List<KorisnikUloga>();
     }

@@ -67,6 +67,7 @@ namespace IronVault.Services.Methods
 
             entity.DatumVrijemeIzlaska = DateTime.Now;
 
+
             var razlikaIzmedjuDatuma = entity.DatumVrijemeIzlaska - entity.DatumVrijemeUlaska;
 
             VrijemeProvedenoUTeretani += razlikaIzmedjuDatuma;
@@ -76,10 +77,13 @@ namespace IronVault.Services.Methods
 
             var TekstZaBazu = $"{VrijemeProvedenoUTeretani?.Days} dana, {VrijemeProvedenoUTeretani?.Hours} sati i  {VrijemeProvedenoUTeretani?.Minutes} minuta";
 
+            
 
             var korisnik = Context.Korisniks.Find(entity.KorisnikId);
 
             korisnik!.VrijemeUteretani = TekstZaBazu;
+
+            korisnik!.SatiUteretani = (int?)(VrijemeProvedenoUTeretani?.TotalHours);
 
             korisnik!.Razina = level;
 

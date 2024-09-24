@@ -110,6 +110,7 @@ public partial class GmsDbContext : DbContext
 
             entity.Property(e => e.KorisnikId).HasColumnName("KorisnikID");
             entity.Property(e => e.GradId).HasColumnName("GradID");
+            entity.Property(e => e.SatiUteretani).HasColumnName("SatiUTeretani");
             entity.Property(e => e.SpolId).HasColumnName("SpolID");
             entity.Property(e => e.VrijemeUteretani).HasColumnName("VrijemeUTeretani");
 

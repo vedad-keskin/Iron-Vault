@@ -6,6 +6,6 @@ namespace IronVault.Model.Requests
 {
     public partial class PrisustvoUpdateRequest
     {
-    
+
     }
 }

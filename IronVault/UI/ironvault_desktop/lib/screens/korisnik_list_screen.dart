@@ -174,7 +174,7 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                   DataColumn(label: Text("Ime i prezime")),
                   DataColumn(label: Text("Korisničko ime")),
                   DataColumn(label: Text("Email")),
-                  DataColumn(label: Text("Broj telefona")),
+                  DataColumn(label: Text("Telefon")),
                   DataColumn(label: Text("Visina")),
                   DataColumn(label: Text("Težina")),
                   DataColumn(label: Text("Grad")),

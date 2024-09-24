@@ -31,6 +31,8 @@ public partial class Korisnik
 
     public string? VrijemeUteretani { get; set; }
 
+    public int? SatiUteretani { get; set; }
+
     public int GradId { get; set; }
 
     public int SpolId { get; set; }

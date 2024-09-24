@@ -80,6 +80,10 @@ namespace IronVault.Services.Methods
 
             entity.Razina = 1;
 
+            entity.SatiUteretani = 0;
+
+            entity.VrijemeUteretani = "Nije provedeno vrijeme u teretani";
+
             base.BeforeInsert(request, entity);
 
         }

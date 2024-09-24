@@ -305,7 +305,8 @@ namespace IronVault.Services.Database
                     VrijemeUteretani = "0 dana, 21 sati i 0 minuta",
                     SpolId = 1,
                     GradId = 18,
-                    Slika = ConvertImageToByteArray("wwwroot", "1kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "1kor.jpg"),
+                    SatiUteretani = 21
                 },
                 new Korisnik
                 {
@@ -323,7 +324,8 @@ namespace IronVault.Services.Database
                     VrijemeUteretani = "0 dana, 12 sati i 0 minuta",
                     SpolId = 1,
                     GradId = 33,
-                    Slika = ConvertImageToByteArray("wwwroot", "2kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "2kor.jpg"),
+                    SatiUteretani = 12
                 },
                 new Korisnik
                 {
@@ -340,7 +342,8 @@ namespace IronVault.Services.Database
                     Razina = 1,
                     SpolId = 1,
                     GradId = 18,
-                    Slika = ConvertImageToByteArray("wwwroot", "3kor.jpg")
+                    Slika = ConvertImageToByteArray("wwwroot", "3kor.jpg"),
+                    SatiUteretani = 0
                 }
 
 

@@ -55,8 +55,8 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
           children: [
             // Profile Image with border and shadow
             Container(
-              width: 100,
-              height: 100,
+              width: 120,
+              height: 120,
               decoration: BoxDecoration(
                 color: Colors.grey[200],
                 shape: BoxShape.circle,
@@ -92,7 +92,7 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 20),
+
                   Text(
                     '${korisnik?.ime} ${korisnik?.prezime}',
                     style: Theme.of(context)
@@ -107,7 +107,8 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
                   ),
                   const SizedBox(height: 8),
                   // Progress Indicator for Level
-                  _buildUserLevelProgress(1, korisnik?.razina),
+                  _buildUserLevelProgress(
+                      korisnik?.razina,korisnik?.satiUteretani ),
                   const SizedBox(height: 16),
                 ],
               ),
@@ -119,17 +120,22 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
   }
 
 // Method to create a progress indicator for the user level
-  Widget _buildUserLevelProgress(int? current, int? required) {
-    if (current == null || required == null || required == 0) {
+  // Method to create a progress indicator for the user level
+  Widget _buildUserLevelProgress(int? razina, int? satiUTeretani) {
+    if (razina == null || satiUTeretani == null) {
       return const Text('No Level Info', style: TextStyle(color: Colors.grey));
     }
 
-    double progress = current / required;
+    // Calculate required progress based on level
+    int required = razina * 10; // 10 hours per level
+    double progress = (satiUTeretani % 10) / 10;
+
+    
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('Level: ${current ~/ required}', // Integer division for level
+        Text('Level: ${korisnik?.razina!}',
             style: const TextStyle(fontWeight: FontWeight.bold)),
         const SizedBox(height: 4),
         LinearProgressIndicator(
@@ -138,12 +144,9 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
           color: Colors.blue,
         ),
         const SizedBox(height: 4),
-        Text('${current} / ${required} XP',
+        Text('${satiUTeretani} / ${required} h',
             style: const TextStyle(fontSize: 12, color: Colors.grey)),
       ],
     );
   }
-
-
-
 }

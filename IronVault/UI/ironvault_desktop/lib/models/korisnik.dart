@@ -23,6 +23,7 @@ class Korisnik {
   Spol? spol;
   String? lozinka;
   String? lozinkaPotvrda;
+  int? satiUTeretani;
 
   Korisnik({this.korisnikId});
 

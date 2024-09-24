@@ -23,11 +23,12 @@ class Korisnik {
   Spol? spol;
   String? lozinka;
   String? lozinkaPotvrda;
+  int? satiUteretani;
 
   Korisnik({this.korisnikId});
 
-  /// Connect the generated [_$PersonFromJson] function to the `fromJson`
-  /// factory.
+  // / Connect the generated [_$PersonFromJson] function to the `fromJson`
+  // / factory.
   factory Korisnik.fromJson(Map<String, dynamic> json) =>
       _$KorisnikFromJson(json);
 
