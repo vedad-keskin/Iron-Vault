@@ -54,6 +54,8 @@ namespace IronVault.Services.Methods
             return query;
         }
 
+
+
         public TModel GetById(int id)
         {
             var entity = Context.Set<TDbEntity>().Find(id);

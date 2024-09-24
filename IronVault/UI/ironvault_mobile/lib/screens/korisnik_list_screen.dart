@@ -50,67 +50,142 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Row(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Profile Image with border and shadow
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: Colors.blue,
-                  width: 2,
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.2),
-                    blurRadius: 6,
-                    spreadRadius: 2,
-                    offset: const Offset(0, 3),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Profile Image with border and shadow
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    color: Colors.grey[200],
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 2,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 6,
+                        spreadRadius: 2,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-              child: ClipOval(
-                child: CircleAvatar(
-                  radius: 50,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: korisnik?.slika != null
-                      ? MemoryImage(base64Decode(korisnik!.slika!))
-                      : null,
-                  child: korisnik?.slika == null
-                      ? const Icon(Icons.person, size: 50, color: Colors.grey)
-                      : null,
+                  child: ClipOval(
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.transparent,
+                      backgroundImage: korisnik?.slika != null
+                          ? MemoryImage(base64Decode(korisnik!.slika!))
+                          : null,
+                      child: korisnik?.slika == null
+                          ? const Icon(Icons.person,
+                              size: 50, color: Colors.grey)
+                          : null,
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: 16),
+                // User Details
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${korisnik?.ime} ${korisnik?.prezime}',
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleLarge
+                            ?.copyWith(fontWeight: FontWeight.bold),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '@${korisnik?.korisnickoIme}',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const SizedBox(height: 8),
+                      // Progress Indicator for Level
+                      _buildUserLevelProgress(
+                          korisnik?.razina, korisnik?.satiUteretani),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            const SizedBox(width: 16),
-            // User Details
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  Text(
-                    '${korisnik?.ime} ${korisnik?.prezime}',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge
-                        ?.copyWith(fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    '@${korisnik?.korisnickoIme}',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const SizedBox(height: 8),
-                  // Progress Indicator for Level
-                  _buildUserLevelProgress(
-                      korisnik?.razina,korisnik?.satiUteretani ),
-                  const SizedBox(height: 16),
-                ],
+            const SizedBox(height: 16), // Add spacing between sections
+            // Card for Additional User Information
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        const Icon(Icons.timelapse_sharp, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Trenirano: ${korisnik?.vrijemeUteretani != null ? "${korisnik!.vrijemeUteretani}" : "Vrijeme nije evidentirano"}',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.email, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Email: ${korisnik?.email ?? "N/A"}',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.phone, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Broj telefona: ${korisnik?.brojTelefona ?? "N/A"}',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.height, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Visina: ${korisnik?.visina != null ? "${korisnik!.visina} cm" : "N/A"}',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        const Icon(Icons.fitness_center, color: Colors.blue),
+                        const SizedBox(width: 8),
+                        Text(
+                          'Težina: ${korisnik?.tezina != null ? "${korisnik!.tezina} kg" : "N/A"}',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -129,8 +204,6 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
     // Calculate required progress based on level
     int required = razina * 10; // 10 hours per level
     double progress = (satiUTeretani % 10) / 10;
-
-    
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

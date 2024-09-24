@@ -163,14 +163,15 @@ namespace IronVault.Services.Methods
             return this.Mapper.Map<Model.Models.Korisnik>(entity);
         }
 
+        // za dobivanje Id korisnika preko username-a
         public int GetUserId(string username)
         {
             var entity = Context.Korisniks.FirstOrDefault(x => x.KorisnickoIme == username);
 
-       
-
             return entity.KorisnikId;
         }
+
+
 
     }
 }
