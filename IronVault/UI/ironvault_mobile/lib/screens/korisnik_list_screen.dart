@@ -46,79 +46,104 @@ class _KorisnikListScreenState extends State<KorisnikListScreen> {
     );
   }
 
-Widget _buildProfilePage() {
-  return SingleChildScrollView(
-    child: Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Profile Image with border and shadow
-          Container(
-            width: 100, // Adjust width and height as needed
-            height: 100,
-            decoration: BoxDecoration(
-              color: Colors.grey[200], // Background color
-              shape: BoxShape.circle, // Circle shape
-              border: Border.all(
-                color: Colors.blue, // Border color
-                width: 2, // Border width
+  Widget _buildProfilePage() {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Image with border and shadow
+            Container(
+              width: 100,
+              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.grey[200],
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: Colors.blue,
+                  width: 2,
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    blurRadius: 6,
+                    spreadRadius: 2,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
               ),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2), // Shadow color
-                  blurRadius: 6, // Shadow blur radius
-                  spreadRadius: 2, // Shadow spread radius
-                  offset: const Offset(0, 3), // Shadow offset
+              child: ClipOval(
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: korisnik?.slika != null
+                      ? MemoryImage(base64Decode(korisnik!.slika!))
+                      : null,
+                  child: korisnik?.slika == null
+                      ? const Icon(Icons.person, size: 50, color: Colors.grey)
+                      : null,
                 ),
-              ],
-            ),
-            child: ClipOval(
-              child: CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.transparent, // Keep the background transparent for the CircleAvatar
-                backgroundImage: korisnik?.slika != null
-                    ? MemoryImage(base64Decode(korisnik!.slika!)) // Display the image if available
-                    : null,
-                child: korisnik?.slika == null
-                    ? const Icon(Icons.person, size: 50, color: Colors.grey)
-                    : null,
               ),
             ),
-          ),
-          const SizedBox(width: 16), // Space between image and text
-          // User Details
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Name
-                const SizedBox(height: 16),
-                Text(
-                  '${korisnik?.ime} ${korisnik?.prezime}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge
-                      ?.copyWith(fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 4),
-                // Username
-                Text(
-                  '@${korisnik?.korisnickoIme}',
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                const SizedBox(height: 16),
-              ],
+            const SizedBox(width: 16),
+            // User Details
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 20),
+                  Text(
+                    '${korisnik?.ime} ${korisnik?.prezime}',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    '@${korisnik?.korisnickoIme}',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  const SizedBox(height: 8),
+                  // Progress Indicator for Level
+                  _buildUserLevelProgress(1, korisnik?.razina),
+                  const SizedBox(height: 16),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
+    );
   }
+
+// Method to create a progress indicator for the user level
+  Widget _buildUserLevelProgress(int? current, int? required) {
+    if (current == null || required == null || required == 0) {
+      return const Text('No Level Info', style: TextStyle(color: Colors.grey));
+    }
+
+    double progress = current / required;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('Level: ${current ~/ required}', // Integer division for level
+            style: const TextStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 4),
+        LinearProgressIndicator(
+          value: progress.clamp(0.0, 1.0),
+          backgroundColor: Colors.grey[300],
+          color: Colors.blue,
+        ),
+        const SizedBox(height: 4),
+        Text('${current} / ${required} XP',
+            style: const TextStyle(fontSize: 12, color: Colors.grey)),
+      ],
+    );
+  }
+
+
+
 }
-
-
-
-  
-
