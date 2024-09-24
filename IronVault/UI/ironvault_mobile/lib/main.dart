@@ -18,6 +18,7 @@ import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
+import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
 import 'package:ironvault_mobile/screens/loading_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -112,7 +113,7 @@ class LoginPage extends StatelessWidget {
           children: [
             Container(
               height: 400,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/images/login_top.png"),
                       fit: BoxFit.fill)),
@@ -187,7 +188,7 @@ class LoginPage extends StatelessWidget {
 
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
-                                  builder: (context) => SuplementListScreen(id)));
+                                  builder: (context) => KorisnikListScreen(id)));
                         } on Exception catch (e) {
                           Navigator.pop(context); // Close the loading screen
                           showDialog(
