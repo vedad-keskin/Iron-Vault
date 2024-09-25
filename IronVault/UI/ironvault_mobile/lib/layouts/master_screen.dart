@@ -121,7 +121,7 @@ return Scaffold(
         break;
       case 6:
         // Logout action
-        _cartProvider?.clearCart();
+        _cartProvider?.clearCart(); // Čiščenje korpe nakon logouta
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
         break;
     }
