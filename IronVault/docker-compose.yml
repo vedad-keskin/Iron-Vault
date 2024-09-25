@@ -36,9 +36,9 @@ services:
       context: .
       dockerfile: Dockerfile.notifications
     environment:
-      - RABBITMQ_HOST=rabbitmq
-      - RABBITMQ_USERNAME=user
-      - RABBITMQ_PASSWORD=mypass
+      - RABBITMQ_HOST=${RABBITMQ__HOST}
+      - RABBITMQ_USERNAME=${RABBITMQ__USERNAME}
+      - RABBITMQ_PASSWORD=${RABBITMQ__PASSWORD}
       - RABBITMQ_VIRTUALHOST=/
     depends_on:
       - rabbitmq
