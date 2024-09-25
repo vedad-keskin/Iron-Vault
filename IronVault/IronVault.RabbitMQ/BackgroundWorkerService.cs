@@ -56,7 +56,7 @@ public class ConsumeRabbitMQHostedService : BackgroundService
                 using (var bus = RabbitHutch.CreateBus($"host={_host};virtualHost={_virtualhost};username={_username};password={_password}"))
                 {
                     bus.PubSub.Subscribe<Notifikacija>("New_Reservations", HandleMessage);
-                    Console.WriteLine("Listening for reservations.");
+                    Console.WriteLine("Čekanje na mailove");
                     await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
                 }
 
@@ -75,10 +75,10 @@ public class ConsumeRabbitMQHostedService : BackgroundService
         }
     }
 
-    private async Task HandleMessage(Notifikacija reservation)
+    private async Task HandleMessage(Notifikacija mail)
     {
         
-        await _emailSender.SendEmailAsync(reservation.Email, "Dobili ste zakazani termin", $"Zakazao je termin {reservation.Korisnik} na datum {reservation.DatumTermina}, zakazano je {reservation.ZakazanoSati} sati.");
+        await _emailSender.SendEmailAsync(mail.Email, "Dobili ste zakazani termin", $"Termin je zakazao korisnik {mail.Korisnik} na datum {mail.DatumTermina.ToShortDateString()} u {mail.DatumTermina.ToString("HH:mm")}, korisnik je zakazao {mail.ZakazanoSati} sati.");
 
     }
 

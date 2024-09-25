@@ -15,10 +15,16 @@ namespace IronVault.Services.Methods
     public class KorisnikNutricionistService : BaseCRUDService<Model.Models.KorisnikNutricionist, KorisnikNutricionistSearchObject, Database.KorisnikNutricionst, KorisnikNutricionistUpsertRequest, KorisnikNutricionistUpsertRequest>, IKorisnikNutricionistService
     {
 
+        private readonly IEmailService _emailService;
+        private readonly IKorisnikService _korisnikService;
+        private readonly INutricionistService _nutricionistService;
 
-        public KorisnikNutricionistService(GmsDbContext context, IMapper mapper) : base(context, mapper)
+
+        public KorisnikNutricionistService(GmsDbContext context, IMapper mapper, IEmailService emailService, IKorisnikService korisnikService, INutricionistService nutricionistService) : base(context, mapper)
         {
-
+            _emailService = emailService;
+            _korisnikService = korisnikService;
+            _nutricionistService = nutricionistService;
         }
 
         public override IQueryable<KorisnikNutricionst> AddFilter(KorisnikNutricionistSearchObject search, IQueryable<KorisnikNutricionst> query)
@@ -40,7 +46,22 @@ namespace IronVault.Services.Methods
             return filteredQuery;
         }
 
+        public override async void AfterInsert(KorisnikNutricionistUpsertRequest request, KorisnikNutricionst entity)
+        {
+            var korisnik = _korisnikService.GetById(request.KorisnikId);
+            var nutricionista = _nutricionistService.GetById(request.NutricionistId);
+            Model.Models.Notifikacija notifikacija = new Model.Models.Notifikacija
+            {
+                Korisnik = $"{korisnik.Ime} {korisnik.Prezime}",
+                Email = nutricionista.Email,
+                ZakazanoSati = request.ZakazanoSati,
+                DatumTermina = request.DatumTermina,
 
+            };
+            _emailService.SendingObject(notifikacija);
+
+            base.AfterInsert(request, entity);
+        }
 
 
     }
