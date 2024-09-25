@@ -44,7 +44,7 @@ class _CartScreenState extends State<CartScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "Korpa",
-      index: 2,
+      index: 3,
       id: widget.id, // Set the desired index here
       child: Column(
         children: [

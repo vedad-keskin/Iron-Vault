@@ -48,7 +48,7 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "Suplementi",
-      index: 1,
+      index: 2,
             id: widget.id, // Set the desired index here
       child: _isLoading
           ? LoadingScreen() // Show the loading screen while data is being loaded

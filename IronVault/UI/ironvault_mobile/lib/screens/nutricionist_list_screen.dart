@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -8,14 +7,9 @@ import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/nutricionist.dart';
 import 'package:ironvault_mobile/models/nutricionist_seminar.dart';
 import 'package:ironvault_mobile/models/search_result.dart';
-import 'package:ironvault_mobile/models/trener.dart';
-import 'package:ironvault_mobile/models/trener_seminar.dart';
 import 'package:ironvault_mobile/providers/korisnik_nutricionist_provider.dart';
-import 'package:ironvault_mobile/providers/korisnik_trener_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_seminar_provider.dart';
-import 'package:ironvault_mobile/providers/trener_provider.dart';
-import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'loading_screen.dart';
@@ -60,7 +54,7 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "Nutricionisti",
-      index: 4,
+      index: 5,
       id: widget.id, // Set the desired index here
       child: _isLoading
           ? LoadingScreen() // Show the loading screen while data is being loaded

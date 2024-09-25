@@ -5,12 +5,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/providers/clanarina_provider.dart';
 import 'package:ironvault_mobile/providers/dobavljac_provider.dart';
 import 'package:ironvault_mobile/providers/faq_provider.dart';
 import 'package:ironvault_mobile/providers/kategorija_provider.dart';
+import 'package:ironvault_mobile/providers/korisnik_clanarina_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
 import 'package:ironvault_mobile/providers/korisnik_trener_provider.dart';
+import 'package:ironvault_mobile/providers/narudzba_provider.dart';
+import 'package:ironvault_mobile/providers/narudzba_stavka_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_provider.dart';
 import 'package:ironvault_mobile/providers/nutricionist_seminar_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
@@ -20,7 +24,6 @@ import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:ironvault_mobile/screens/loading_screen.dart';
-import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -51,6 +54,14 @@ void main() {
           create: (_) => NutricionistSeminarProvider()),
           ChangeNotifierProvider<FaqProvider>(
           create: (_) => FaqProvider()),
+          ChangeNotifierProvider<ClanarinaProvider>(
+          create: (_) => ClanarinaProvider()),
+          ChangeNotifierProvider<KorisnikClanarinaProvider>(
+          create: (_) => KorisnikClanarinaProvider()),
+          ChangeNotifierProvider<NarudzbaProvider>(
+          create: (_) => NarudzbaProvider()),
+          ChangeNotifierProvider<NarudzbaStavkaProvider>(
+          create: (_) => NarudzbaStavkaProvider()),
     ],
     child: const MyApp(),
   ));

@@ -9,6 +9,7 @@ import 'package:ironvault_mobile/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/screens/trener_list_screen.dart';
+import 'package:ironvault_mobile/screens/uplate_list_screen.dart';
 import 'package:provider/provider.dart';
 
 class MasterScreen extends StatefulWidget {
@@ -60,6 +61,10 @@ return Scaffold(
             label: 'Profil',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.payments_outlined),
+            label: 'Uplate',
+          ),
+                 BottomNavigationBarItem(
             icon: Icon(Icons.store_rounded),
             label: 'Suplementi',
           ),
@@ -101,25 +106,29 @@ return Scaffold(
         break;
       case 1:
         // Navigate to Suplementi screen
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen(widget.id)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => UplateListScreen(widget.id)));
         break;
       case 2:
+        // Navigate to Suplementi screen
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => SuplementListScreen(widget.id)));
+        break;
+      case 3:
         // Navigate to Korpa screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => CartScreen(widget.id)));
         break;
-      case 3:
+      case 4:
         // Navigate to Treneri screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrenerListScreen(widget.id))); // Replace with actual screen
         break;
-      case 4:
+      case 5:
         // Navigate to Nutricionisti screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => NutricionistListScreen(widget.id))); // Replace with actual screen
         break;
-      case 5:
+      case 6:
         //Navigate to Faq screen
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => FaqListScreen(widget.id))); // Replace with actual screen
         break;
-      case 6:
+      case 7:
         // Logout action
         _cartProvider?.clearCart(); // Čiščenje korpe nakon logouta
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));

@@ -54,7 +54,7 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "Treneri",
-      index: 3,
+      index: 4,
       id: widget.id, // Set the desired index here
       child: _isLoading
           ? LoadingScreen() // Show the loading screen while data is being loaded
