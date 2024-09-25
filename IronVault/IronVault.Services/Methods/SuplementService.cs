@@ -91,7 +91,7 @@ namespace IronVault.Services.Methods
         {
             _logger.LogInformation($"allowed actions for id: {id}");
 
-            if(id <= 0)
+            if (id <= 0)
             {
                 var state = BaseSuplementState.CreateState("initial");
                 return state.AllowedActions(null);
@@ -107,100 +107,135 @@ namespace IronVault.Services.Methods
         static MLContext mlContext = null;
         static object isLocked = new object();
         static ITransformer model = null;
+
         public List<Model.Models.Suplement> Recommend(int id)
         {
             if (mlContext == null)
             {
-
-                //train
                 lock (isLocked)
                 {
                     mlContext = new MLContext();
 
-                    var tmpData = Context.Narudzbas.Include("NarudzbaStavkas").ToList();
+                    var tmpData = Context.Narudzbas.Include(x=> x.NarudzbaStavkas)
+                                                   .ThenInclude(x => x.Suplement.Kategorija)
+                                                   .Include(x => x.NarudzbaStavkas)
+                                                   .ThenInclude(x => x.Suplement.Dobavljac)
+                                                   .ToList();
 
-                    var data = new List<ProductEntry>();
+                    var data = new List<SuplementFeatures>();
 
                     foreach (var item in tmpData)
                     {
-                        if (item.NarudzbaStavkas.Count > 1)
+                        foreach (var stavka in item.NarudzbaStavkas)
                         {
-                            var distinctItemId = item.NarudzbaStavkas.Select(y => y.SuplementId).Distinct().ToList();
-
-                            distinctItemId.ForEach(y =>
+                            data.Add(new SuplementFeatures()
                             {
-                                var relatedItems = item.NarudzbaStavkas.Where(z => z.SuplementId != y);
-
-                                foreach (var z in relatedItems)
-                                {
-                                    data.Add(new ProductEntry()
-                                    {
-                                        ProductID = (uint)y,
-                                        CoPurchaseProductID = (uint)z.SuplementId
-                                    });
-                                }
+                                SuplementID = (uint)stavka.SuplementId,
+                                Category = stavka.Suplement.Kategorija.Naziv,
+                                Manufacturer = stavka.Suplement.Dobavljac.Naziv
                             });
                         }
                     }
 
+                    // Load data into ML.NET data view
                     var traindata = mlContext.Data.LoadFromEnumerable(data);
 
-                    MatrixFactorizationTrainer.Options options = new MatrixFactorizationTrainer.Options();
-                    options.MatrixColumnIndexColumnName = nameof(ProductEntry.ProductID);
-                    options.MatrixRowIndexColumnName = nameof(ProductEntry.CoPurchaseProductID);
-                    options.LabelColumnName = "Label";
-                    options.LossFunction = MatrixFactorizationTrainer.LossFunctionType.SquareLossOneClass;
-                    options.Alpha = 0.01;
-                    options.Lambda = 0.025;
-                    // For better results use the following parameters
-                    options.NumberOfIterations = 100;
-                    options.C = 0.00001;
+                    // Define the transformation pipeline
+                    var pipeline = mlContext.Transforms.Conversion.MapValueToKey(nameof(SuplementFeatures.SuplementID))
+                        .Append(mlContext.Transforms.Text.FeaturizeText(nameof(SuplementFeatures.Category)))
+                        .Append(mlContext.Transforms.Text.FeaturizeText(nameof(SuplementFeatures.Manufacturer)))
+                        .Append(mlContext.Transforms.Concatenate("Features", nameof(SuplementFeatures.Category), nameof(SuplementFeatures.Manufacturer)))
+                        .Append(mlContext.Transforms.NormalizeMinMax("Features"));
 
-                    var est = mlContext.Recommendation().Trainers.MatrixFactorization(options);
-
-                    model = est.Fit(traindata);
+                    // Fit the data transformations
+                    model = pipeline.Fit(traindata);
                 }
             }
 
-            var suplements = Context.Suplements.Where(x => x.SuplementId != id);
+            // Get the target supplement
+            var targetSuplement = Context.Suplements.Include(x => x.Kategorija).Include(x => x.Dobavljac).FirstOrDefault(x => x.SuplementId == id);
 
+            if (targetSuplement == null)
+            {
+                return new List<Model.Models.Suplement>();
+            }
+
+            // Create prediction engine
+            var predictionEngine = mlContext.Model.CreatePredictionEngine<SuplementFeatures, TransformedSuplementFeatures>(model);
+
+            // Create feature vector for target supplement
+            var targetFeatures = new SuplementFeatures
+            {
+                SuplementID = (uint)targetSuplement.SuplementId,
+                Category = targetSuplement.Kategorija.Naziv,
+                Manufacturer = targetSuplement.Dobavljac.Naziv
+            };
+
+            var targetVector = predictionEngine.Predict(targetFeatures);
+
+            // Get all other supplements
+            var suplements = Context.Suplements.Where(x => x.SuplementId != id).ToList();
             var predictionResult = new List<(Database.Suplement, float)>();
 
             foreach (var suplement in suplements)
             {
-                var predictionengine = mlContext.Model.CreatePredictionEngine<ProductEntry, Copurchase_prediction>(model);
-                var prediction = predictionengine.Predict(
-                                         new ProductEntry()
-                                         {
-                                             ProductID = (uint)id,
-                                             CoPurchaseProductID = (uint)suplement.SuplementId
-                                         });
+                var supplementFeatures = new SuplementFeatures
+                {
+                    SuplementID = (uint)suplement.SuplementId,
+                    Category = suplement.Kategorija.Naziv,
+                    Manufacturer = suplement.Dobavljac.Naziv
+                };
 
-                predictionResult.Add(new(suplement, prediction.Score));
+                var supplementVector = predictionEngine.Predict(supplementFeatures);
+
+                // Compute similarity based on content features
+                var similarityScore = CosineSimilarity(targetVector.Features, supplementVector.Features);
+                predictionResult.Add((suplement, similarityScore));
             }
 
+            // Return top 4 similar supplements
             var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(4).ToList();
 
             return Mapper.Map<List<Model.Models.Suplement>>(finalResult);
         }
+
+        private float CosineSimilarity(float[] vectorA, float[] vectorB)
+        {
+            if (vectorA.Length != vectorB.Length)
+                throw new ArgumentException("Vectors must be of same length");
+
+            float dotProduct = 0;
+            float magnitudeA = 0;
+            float magnitudeB = 0;
+
+            for (int i = 0; i < vectorA.Length; i++)
+            {
+                dotProduct += vectorA[i] * vectorB[i];
+                magnitudeA += vectorA[i] * vectorA[i];
+                magnitudeB += vectorB[i] * vectorB[i];
+            }
+
+            return dotProduct / (float)(Math.Sqrt(magnitudeA) * Math.Sqrt(magnitudeB));
+        }
+
+        public class SuplementFeatures
+        {
+            [KeyType(count: 10000)]
+            public uint SuplementID { get; set; }
+
+            public string Category { get; set; }
+
+            public string Manufacturer { get; set; }
+        }
+
+        // The transformed class to hold the Features vector after transformation
+        public class TransformedSuplementFeatures
+        {
+            public float[] Features { get; set; }
+        }
+
+
+
+
     }
-
-    public class Copurchase_prediction
-    {
-        public float Score { get; set; }
-    }
-
-    public class ProductEntry
-    {
-        [KeyType(count: 10000)]
-        public uint ProductID { get; set; }
-
-        [KeyType(count: 10000)]
-        public uint CoPurchaseProductID { get; set; }
-
-        public float Label { get; set; }
-    }
-
-
-
 }

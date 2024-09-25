@@ -12,7 +12,7 @@
 - **Korisničko ime:** mobile
 - **Lozinka:** test
 
-## RabbitMQ test 
+## RabbitMQ Test E-mail Adresa
 
 ### Mail se šalje nakon zakazivanja termina kod trenera ili nutricioniste od strane korisnika
 - **Email:** ironvault.test@gmail.com
