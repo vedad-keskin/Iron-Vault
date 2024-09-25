@@ -18,7 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Dockerfile = Dockerfile
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.RabbitMQ", "IronVault.RabbitMQ\IronVault.RabbitMQ.csproj", "{CA739DEC-770F-4298-A319-03F8BC001F8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.RabbitMQ", "IronVault.RabbitMQ\IronVault.RabbitMQ.csproj", "{628D5DB0-6FA9-48A2-90BB-B330B1515B44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,10 +38,10 @@ Global
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CA739DEC-770F-4298-A319-03F8BC001F8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA739DEC-770F-4298-A319-03F8BC001F8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CA739DEC-770F-4298-A319-03F8BC001F8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA739DEC-770F-4298-A319-03F8BC001F8F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

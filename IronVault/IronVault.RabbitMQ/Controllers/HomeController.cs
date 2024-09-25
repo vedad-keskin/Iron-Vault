@@ -1,8 +1,8 @@
-﻿using IronVault.RabbitMQ.Models;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Models;
 using System.Diagnostics;
 
-namespace IronVault.RabbitMQ.Controllers
+namespace RabbitMQ.Controllers
 {
     public class HomeController : Controller
     {

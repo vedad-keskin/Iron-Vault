@@ -1,4 +1,4 @@
-namespace IronVault.RabbitMQ.Models
+namespace RabbitMQ.Models
 {
     public class ErrorViewModel
     {

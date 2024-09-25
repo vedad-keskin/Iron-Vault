@@ -4,6 +4,7 @@ using MailingService;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
+
 public class ConsumeRabbitMQHostedService : BackgroundService
 {
     private readonly ILogger _logger;

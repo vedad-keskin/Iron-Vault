@@ -20,8 +20,8 @@ services:
     container_name: rabbitmq
     restart: unless-stopped
     environment:
-      - RABBITMQ_DEFAULT_USER=user
-      - RABBITMQ_DEFAULT_PASS=mypass
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ__USERNAME}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ__PASSWORD}
     ports:
       - 5672:5672
       - 15672:15672
