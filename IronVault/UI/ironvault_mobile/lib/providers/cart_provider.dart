@@ -25,4 +25,12 @@ class CartProvider with ChangeNotifier {
     CartItem? item = cart.items.firstWhereOrNull((item) => item.suplement.suplementId == suplement.suplementId);
     return item;
   }
+
+  void clearCart() {
+    // Clear the cart items
+    cart.items.clear(); 
+    notifyListeners(); 
+  }
+
+
 }

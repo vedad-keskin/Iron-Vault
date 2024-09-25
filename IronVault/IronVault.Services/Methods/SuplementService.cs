@@ -179,11 +179,15 @@ namespace IronVault.Services.Methods
 
             foreach (var suplement in suplements)
             {
+                // Perform null checks to avoid NullReferenceException
+                var category = suplement.Kategorija != null ? suplement.Kategorija.Naziv : "Unknown Category";
+                var manufacturer = suplement.Dobavljac != null ? suplement.Dobavljac.Naziv : "Unknown Manufacturer";
+
                 var supplementFeatures = new SuplementFeatures
                 {
                     SuplementID = (uint)suplement.SuplementId,
-                    Category = suplement.Kategorija.Naziv,
-                    Manufacturer = suplement.Dobavljac.Naziv
+                    Category = category,
+                    Manufacturer = manufacturer
                 };
 
                 var supplementVector = predictionEngine.Predict(supplementFeatures);
@@ -193,8 +197,8 @@ namespace IronVault.Services.Methods
                 predictionResult.Add((suplement, similarityScore));
             }
 
-            // Return top 4 similar supplements
-            var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(4).ToList();
+            // Return top 3 similar supplements
+            var finalResult = predictionResult.OrderByDescending(x => x.Item2).Select(x => x.Item1).Take(3).ToList();
 
             return Mapper.Map<List<Model.Models.Suplement>>(finalResult);
         }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ironvault_mobile/main.dart';
 import 'package:ironvault_mobile/screens/cart_screen.dart';
 import 'package:ironvault_mobile/screens/faq_list_screen.dart';
-import 'package:ironvault_mobile/screens/korisnik_list_screen.dart';
+import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:ironvault_mobile/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
@@ -97,7 +97,7 @@ return Scaffold(
     switch (index) {
       case 0:
         // Navigate to Profil screen (replace with actual screen)
-        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => KorisnikListScreen(widget.id)));
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProfileScreen(widget.id)));
         break;
       case 1:
         // Navigate to Suplementi screen
@@ -121,6 +121,7 @@ return Scaffold(
         break;
       case 6:
         // Logout action
+        _cartProvider?.clearCart();
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
         break;
     }
