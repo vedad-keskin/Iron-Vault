@@ -37,6 +37,7 @@ builder.Services.AddTransient<IKorisnikClanarinaService, KorisnikClanarinaServic
 builder.Services.AddTransient<IBiznisReportService, BiznisReportService>();
 builder.Services.AddTransient<IKorisnikTrenerService, KorisnikTrenerService>();
 builder.Services.AddTransient<IKorisnikNutricionistService, KorisnikNutricionistService>();
+builder.Services.AddTransient<IEmailService, EmailService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
