@@ -25,7 +25,7 @@ class _StripeScreenState extends State<StripeScreen> {
   Future<void> initPaymentSheet(Map<String, dynamic> formData) async {
     try {
       final data = await createPaymentIntent(
-        amount: (int.parse(formData['amount']) * 100).toString(),
+        amount: (widget.totalPrice.toInt() * 100).toString(),
         currency: selectedCurrency,
         name: formData['name'],
         address: formData['address'],
@@ -52,8 +52,7 @@ class _StripeScreenState extends State<StripeScreen> {
       rethrow;
     }
   }
-
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -118,6 +117,7 @@ class _StripeScreenState extends State<StripeScreen> {
                 setState(() {
                   hasDonated = false;
                   formKey.currentState?.reset();
+                  //amountController.text = widget.totalPrice.toString(); // Reset amount to totalPrice
                 });
               },
             ),
@@ -149,38 +149,41 @@ class _StripeScreenState extends State<StripeScreen> {
     );
   }
 
-  Widget buildAmountAndCurrencyFields() {
-    return Row(
-      children: [
-        Expanded(
-          flex: 5,
-          child: buildTextField('amount', 'Full amount',
-              keyboardType: TextInputType.number, isNumeric: true),
+ Widget buildAmountAndCurrencyFields() {
+  return Row(
+    children: [
+      Expanded(
+        flex: 5,
+        child: buildTextField('amount', 'Full amount',
+            keyboardType: TextInputType.number, isNumeric: true,
+            initialValue: widget.totalPrice.toString(), // Set initial value from totalPrice
+            readOnly: true // Make it read-only
         ),
-        const SizedBox(width: 10),
-        Expanded(
-          flex: 3,
-          child: DropdownButtonFormField<String>(
-            value: selectedCurrency,
-            items: currencyList
-                .map((String value) => DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    ))
-                .toList(),
-            onChanged: (String? value) {
-              setState(() {
-                selectedCurrency = value!;
-              });
-            },
-            decoration: const InputDecoration(
-              labelText: 'Currency',
-            ),
+      ),
+      const SizedBox(width: 10),
+      Expanded(
+        flex: 3,
+        child: DropdownButtonFormField<String>(
+          value: selectedCurrency,
+          items: currencyList
+              .map((String value) => DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  ))
+              .toList(),
+          onChanged: (String? value) {
+            setState(() {
+              selectedCurrency = value!;
+            });
+          },
+          decoration: const InputDecoration(
+            labelText: 'Currency',
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   Widget buildCityAndStateFields() {
     return Row(
@@ -215,20 +218,22 @@ class _StripeScreenState extends State<StripeScreen> {
     );
   }
 
-  Widget buildTextField(String name, String labelText,
-      {TextInputType keyboardType = TextInputType.text, bool isNumeric = false}) {
-    return FormBuilderTextField(
-      name: name,
-      decoration: InputDecoration(labelText: labelText),
-      validator: isNumeric
-          ? FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
-              FormBuilderValidators.numeric(),
-            ])
-          : FormBuilderValidators.required(),
-      keyboardType: keyboardType,
-    );
-  }
+Widget buildTextField(String name, String labelText,
+    {TextInputType keyboardType = TextInputType.text, bool isNumeric = false, String? initialValue, bool readOnly = false}) {
+  return FormBuilderTextField(
+    name: name,
+    decoration: InputDecoration(labelText: labelText),
+    validator: isNumeric
+        ? FormBuilderValidators.compose([
+            FormBuilderValidators.required(),
+            FormBuilderValidators.numeric(),
+          ])
+        : FormBuilderValidators.required(),
+    keyboardType: keyboardType,
+    initialValue: initialValue, // Set the initial value
+    readOnly: readOnly, // Set the field as read-only
+  );
+}
 
   Widget buildSubmitButton(BuildContext context) {
     return SizedBox(
@@ -246,8 +251,6 @@ class _StripeScreenState extends State<StripeScreen> {
           if (formKey.currentState?.saveAndValidate() ?? false) {
             final formData = formKey.currentState?.value;
             await initPaymentSheet(formData!);
-
-            print(formData);
 
             try {
               await Stripe.instance.presentPaymentSheet();
