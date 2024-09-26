@@ -1,8 +1,8 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:ironvault_mobile/providers/auth_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/clanarina_provider.dart';
@@ -27,7 +27,15 @@ import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:ironvault_mobile/screens/loading_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
+  Stripe.publishableKey=dotenv.env["STRIPE__PUBKEY"]!;
+  Stripe.merchantIdentifier = 'merchant.flutter.stripe.test';
+  Stripe.urlScheme = 'flutterstripe';
+  await Stripe.instance.applySettings();
+
+
   HttpOverrides.global = MyHttpOverrides();
   runApp(MultiProvider(
     providers: [
@@ -47,23 +55,22 @@ void main() {
       ChangeNotifierProvider<SeminarProvider>(create: (_) => SeminarProvider()),
       ChangeNotifierProvider<KorisnikProvider>(
           create: (_) => KorisnikProvider()),
-          ChangeNotifierProvider<KorisnikTrenerProvider>(
+      ChangeNotifierProvider<KorisnikTrenerProvider>(
           create: (_) => KorisnikTrenerProvider()),
-          ChangeNotifierProvider<KorisnikNutricionistProvider>(
+      ChangeNotifierProvider<KorisnikNutricionistProvider>(
           create: (_) => KorisnikNutricionistProvider()),
-          ChangeNotifierProvider<NutricionistSeminarProvider>(
+      ChangeNotifierProvider<NutricionistSeminarProvider>(
           create: (_) => NutricionistSeminarProvider()),
-          ChangeNotifierProvider<FaqProvider>(
-          create: (_) => FaqProvider()),
-          ChangeNotifierProvider<ClanarinaProvider>(
+      ChangeNotifierProvider<FaqProvider>(create: (_) => FaqProvider()),
+      ChangeNotifierProvider<ClanarinaProvider>(
           create: (_) => ClanarinaProvider()),
-          ChangeNotifierProvider<KorisnikClanarinaProvider>(
+      ChangeNotifierProvider<KorisnikClanarinaProvider>(
           create: (_) => KorisnikClanarinaProvider()),
-          ChangeNotifierProvider<NarudzbaProvider>(
+      ChangeNotifierProvider<NarudzbaProvider>(
           create: (_) => NarudzbaProvider()),
-          ChangeNotifierProvider<NarudzbaStavkaProvider>(
+      ChangeNotifierProvider<NarudzbaStavkaProvider>(
           create: (_) => NarudzbaStavkaProvider()),
-           ChangeNotifierProvider<RecenzijaProvider>(
+      ChangeNotifierProvider<RecenzijaProvider>(
           create: (_) => RecenzijaProvider()),
     ],
     child: const MyApp(),
@@ -198,7 +205,8 @@ class LoginPage extends StatelessWidget {
                         try {
                           var data = await provider.get();
                           var id = await _korisnikprovider.GetUserId(
-                              _usernameController.text); // slanje id-a prijavljenog korisnika u ostatak apk
+                              _usernameController
+                                  .text); // slanje id-a prijavljenog korisnika u ostatak apk
 
                           Navigator.of(context).pushReplacement(
                               MaterialPageRoute(

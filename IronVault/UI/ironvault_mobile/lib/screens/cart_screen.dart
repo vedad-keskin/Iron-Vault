@@ -147,11 +147,17 @@ Widget _buildTotalPriceLabel() {
           });
         });
 
-        // Navigate to StripeScreen and pass the order items
+        // Calculate total price
+        double totalPrice = _calculateTotalPrice();
+
+        // Navigate to StripeScreen and pass the order items and total price
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => StripeScreen(items: items),
+            builder: (context) => StripeScreen(
+              items: items,
+              totalPrice: totalPrice, // Pass the total price
+            ),
           ),
         );
       },
