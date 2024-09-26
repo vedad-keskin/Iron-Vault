@@ -222,10 +222,10 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('amount', 'Full amount',
+          child: buildTextField('amount', 'Full amount in USD',
               keyboardType: TextInputType.number,
               isNumeric: true,
-              initialValue: amountInUsd.toString(), 
+              initialValue: amountInUsd.toInt().toString(), 
               readOnly: true // Make it read-only
               ),
         ),
@@ -245,7 +245,7 @@ class _StripeScreenState extends State<StripeScreen> {
                 selectedCurrency = value!;
               });
             },
-            decoration: commonDecoration.copyWith(labelText: 'Converted to USD'),
+            decoration: commonDecoration.copyWith(labelText: 'Currency'),
           ),
         ),
       ],
