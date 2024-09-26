@@ -365,7 +365,7 @@ Widget addToCartButton(VoidCallback onPressed) {
 void _showAddToCartSnackBar(String suplement) {
   final snackBar = SnackBar(
     content: Text('$suplement je dodan u korpu!'),
-    duration: const Duration(seconds: 2), // Duration before the SnackBar disappears
+    duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
     behavior: SnackBarBehavior.floating,
     backgroundColor: Colors.green,
     shape: RoundedRectangleBorder(

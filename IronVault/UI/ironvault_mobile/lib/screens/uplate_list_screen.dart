@@ -343,7 +343,6 @@ class _UplateListScreenState extends State<UplateListScreen> {
           actions: [
             TextButton(
               style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-
               onPressed: () =>
                   Navigator.of(context).pop(), // Cancel button first
               child: Text('Odustani'),
@@ -354,29 +353,37 @@ class _UplateListScreenState extends State<UplateListScreen> {
                   var request = Map.from(_formKey.currentState!.value);
 
                   request['ocjena'] = _rating;
-
                   request['korisnikId'] = widget.id;
-
                   request['suplementId'] = suplement.suplementId;
 
-                          try {
-                  // Attempt to insert the review
-                  await _recenzijaProvider?.insert(request);
-                  loadData(); // Refresh the data after successful insertion
-                  
-                  // Close the dialog
-                  Navigator.of(context).pop();
-                } catch (e) {
-                  // Handle the error (e.g., show a message to the user)
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Došlo je do greške: $e'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                }
+                  try {
+                    // Attempt to insert the review
+                    await _recenzijaProvider?.insert(request);
+                    loadData(); // Refresh the data after successful insertion
 
-  
+                    // Show a SnackBar after closing the dialog
+                    Navigator.of(context).pop(); // Close the dialog
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                          content: Text('Recenzija uspješno evidentirana'),
+                          duration: const Duration(
+                              seconds:
+                                  1), // Duration before the SnackBar disappears
+                          behavior: SnackBarBehavior.floating,
+                          backgroundColor: Colors.green,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          )),
+                    );
+                  } catch (e) {
+                    // Handle the error (e.g., show a message to the user)
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Došlo je do greške: $e'),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                  }
                 }
               },
               child: Text('Spremi'),
@@ -393,7 +400,7 @@ class _UplateListScreenState extends State<UplateListScreen> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Greška"),
+          title: const Text("Recenzija"),
           content: const Text("Već ste napravili recenziju za ovaj suplement."),
           actions: <Widget>[
             TextButton(
