@@ -8,6 +8,7 @@ import 'package:ironvault_mobile/providers/korisnik_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:ironvault_mobile/utils/app_constants.dart';
 
 class StripeScreen extends StatefulWidget {
   final List<Map> items; // To receive items from CartScreen
@@ -33,6 +34,8 @@ class _StripeScreenState extends State<StripeScreen> {
   Korisnik? _korisnik;
   bool _isLoading = true; // Declare loading state
 
+    double amountInUsd = 0.0; // Add this variable to hold the amount in USD
+
   final commonDecoration = InputDecoration(
     filled: true,
     fillColor: Colors.grey[200],
@@ -52,6 +55,9 @@ class _StripeScreenState extends State<StripeScreen> {
     _korisnikProvider = context.read<KorisnikProvider>();
     _cartProvider = context.read<CartProvider>();
     loadData();
+
+    amountInUsd = widget.totalPrice * AppConstants.bamToUsdConversionRate; // Calculate the converted amount
+
   }
 
   Future<void> loadData() async {
@@ -80,8 +86,10 @@ class _StripeScreenState extends State<StripeScreen> {
 
   Future<void> initPaymentSheet(Map<String, dynamic> formData) async {
     try {
+
+
       final data = await createPaymentIntent(
-        amount: (widget.totalPrice.toInt() * 100).toString(),
+        amount: (amountInUsd.toInt() * 100).toString(),
         currency: selectedCurrency.toString(),
         name: '${_korisnik?.ime} ${_korisnik?.prezime}',
         address: formData['address'],
@@ -217,7 +225,7 @@ class _StripeScreenState extends State<StripeScreen> {
           child: buildTextField('amount', 'Full amount',
               keyboardType: TextInputType.number,
               isNumeric: true,
-              initialValue: widget.totalPrice.toString(),
+              initialValue: amountInUsd.toString(), 
               readOnly: true // Make it read-only
               ),
         ),
@@ -237,7 +245,7 @@ class _StripeScreenState extends State<StripeScreen> {
                 selectedCurrency = value!;
               });
             },
-            decoration: commonDecoration.copyWith(labelText: 'Currency'),
+            decoration: commonDecoration.copyWith(labelText: 'Converted to USD'),
           ),
         ),
       ],
