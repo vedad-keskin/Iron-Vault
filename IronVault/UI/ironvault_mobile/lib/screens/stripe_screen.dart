@@ -29,6 +29,19 @@ class _StripeScreenState extends State<StripeScreen> {
   Korisnik? _korisnik;
   bool _isLoading = true; // Declare loading state
 
+  final commonDecoration = InputDecoration(
+    filled: true,
+    fillColor: Colors.grey[200],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: BorderSide.none,
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(10.0),
+      borderSide: const BorderSide(color: Colors.blue),
+    ),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -38,20 +51,15 @@ class _StripeScreenState extends State<StripeScreen> {
 
   Future<void> loadData() async {
     try {
-      // Set loading state to true before fetching data
       setState(() {
         _isLoading = true;
       });
-
-      // Fetch user data
       _korisnik = await _korisnikProvider?.getbyid(widget.id);
     } catch (e) {
-      // Handle any errors if necessary
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Error loading data: $e')),
       );
     } finally {
-      // Set loading state to false after fetching data
       setState(() {
         _isLoading = false;
       });
@@ -123,9 +131,9 @@ class _StripeScreenState extends State<StripeScreen> {
                   children: [
                     const Image(
                       image: AssetImage("assets/images/stripe.png"),
-                      height: 300,
+                      height: 150,
                       width: double.infinity,
-                      fit: BoxFit.cover,
+                      fit: BoxFit.contain,
                     ),
                     const SizedBox(height: 16),
                     hasDonated
@@ -186,17 +194,15 @@ class _StripeScreenState extends State<StripeScreen> {
         children: [
           buildAmountAndCurrencyFields(),
           const SizedBox(height: 10),
-          // Set initial value for name field using _korisnik
           buildTextField('name', 'Full name',
-              initialValue:
-                  '${_korisnik?.ime} ${_korisnik?.prezime}'), // Use string interpolation
+              initialValue: '${_korisnik?.ime} ${_korisnik?.prezime}'),
           const SizedBox(height: 10),
           buildTextField('address', 'Adresa'),
           const SizedBox(height: 10),
           buildCityAndStateFields(),
           const SizedBox(height: 10),
           buildCountryAndPincodeFields(),
-          const SizedBox(height: 12),
+          const SizedBox(height: 50),
           buildSubmitButton(context),
         ],
       ),
@@ -211,8 +217,7 @@ class _StripeScreenState extends State<StripeScreen> {
           child: buildTextField('amount', 'Full amount',
               keyboardType: TextInputType.number,
               isNumeric: true,
-              initialValue: widget.totalPrice
-                  .toString(), // Set initial value from totalPrice
+              initialValue: widget.totalPrice.toString(),
               readOnly: true // Make it read-only
               ),
         ),
@@ -232,9 +237,7 @@ class _StripeScreenState extends State<StripeScreen> {
                 selectedCurrency = value!;
               });
             },
-            decoration: const InputDecoration(
-              labelText: 'Currency',
-            ),
+            decoration: commonDecoration.copyWith(labelText: 'Currency'),
           ),
         ),
       ],
@@ -281,7 +284,7 @@ class _StripeScreenState extends State<StripeScreen> {
       bool readOnly = false}) {
     return FormBuilderTextField(
       name: name,
-      decoration: InputDecoration(labelText: labelText),
+      decoration: commonDecoration.copyWith(labelText: labelText),
       validator: isNumeric
           ? FormBuilderValidators.compose([
               FormBuilderValidators.required(),
@@ -289,8 +292,8 @@ class _StripeScreenState extends State<StripeScreen> {
             ])
           : FormBuilderValidators.required(),
       keyboardType: keyboardType,
-      initialValue: initialValue, // Set the initial value
-      readOnly: readOnly, // Set the field as read-only
+      initialValue: initialValue,
+      readOnly: readOnly,
     );
   }
 
