@@ -2,14 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:ironvault_mobile/models/korisnik.dart';
 import 'package:ironvault_mobile/models/payment.dart';
+import 'package:ironvault_mobile/providers/korisnik_provider.dart';
+import 'package:provider/provider.dart';
 
 class StripeScreen extends StatefulWidget {
   final List<Map> items; // To receive items from CartScreen
   final double totalPrice; // Add totalPrice here
+  final int id;
 
-  const StripeScreen({required this.items, required this.totalPrice, Key? key})
-      : super(key: key);
+  const StripeScreen({
+    required this.id,
+    required this.items,
+    required this.totalPrice,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<StripeScreen> createState() => _StripeScreenState();
@@ -17,7 +25,47 @@ class StripeScreen extends StatefulWidget {
 
 class _StripeScreenState extends State<StripeScreen> {
   final formKey = GlobalKey<FormBuilderState>();
-  List<String> currencyList = <String>['USD', 'INR', 'EUR', 'JPY', 'GBP', 'AED'];
+  KorisnikProvider? _korisnikProvider;
+  Korisnik? _korisnik;
+  bool _isLoading = true; // Declare loading state
+
+  @override
+  void initState() {
+    super.initState();
+    _korisnikProvider = context.read<KorisnikProvider>();
+    loadData();
+  }
+
+  Future<void> loadData() async {
+    try {
+      // Set loading state to true before fetching data
+      setState(() {
+        _isLoading = true;
+      });
+
+      // Fetch user data
+      _korisnik = await _korisnikProvider?.getbyid(widget.id);
+    } catch (e) {
+      // Handle any errors if necessary
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error loading data: $e')),
+      );
+    } finally {
+      // Set loading state to false after fetching data
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
+  List<String> currencyList = <String>[
+    'USD',
+    'INR',
+    'EUR',
+    'JPY',
+    'GBP',
+    'AED'
+  ];
   String selectedCurrency = 'USD';
 
   bool hasDonated = false;
@@ -27,7 +75,7 @@ class _StripeScreenState extends State<StripeScreen> {
       final data = await createPaymentIntent(
         amount: (widget.totalPrice.toInt() * 100).toString(),
         currency: selectedCurrency,
-        name: formData['name'],
+        name: '${_korisnik?.ime} ${_korisnik?.prezime}',
         address: formData['address'],
         pin: formData['pincode'],
         city: formData['city'],
@@ -52,7 +100,8 @@ class _StripeScreenState extends State<StripeScreen> {
       rethrow;
     }
   }
- @override
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -67,20 +116,23 @@ class _StripeScreenState extends State<StripeScreen> {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Column(
-            children: [
-              Image(
-                image: const AssetImage("assets/images/stripe.png"),
-                height: 300,
-                width: double.infinity,
-                fit: BoxFit.cover,
-              ),
-              const SizedBox(height: 16),
-              hasDonated
-                  ? buildThanksMessage()
-                  : buildPaymentForm(context),
-            ],
-          ),
+          child: _isLoading
+              ? Center(
+                  child: CircularProgressIndicator()) // Show loading indicator
+              : Column(
+                  children: [
+                    const Image(
+                      image: AssetImage("assets/images/stripe.png"),
+                      height: 300,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                    const SizedBox(height: 16),
+                    hasDonated
+                        ? buildThanksMessage()
+                        : buildPaymentForm(context),
+                  ],
+                ),
         ),
       ),
     );
@@ -117,7 +169,6 @@ class _StripeScreenState extends State<StripeScreen> {
                 setState(() {
                   hasDonated = false;
                   formKey.currentState?.reset();
-                  //amountController.text = widget.totalPrice.toString(); // Reset amount to totalPrice
                 });
               },
             ),
@@ -135,7 +186,10 @@ class _StripeScreenState extends State<StripeScreen> {
         children: [
           buildAmountAndCurrencyFields(),
           const SizedBox(height: 10),
-          buildTextField('name', 'Full name'),
+          // Set initial value for name field using _korisnik
+          buildTextField('name', 'Full name',
+              initialValue:
+                  '${_korisnik?.ime} ${_korisnik?.prezime}'), // Use string interpolation
           const SizedBox(height: 10),
           buildTextField('address', 'Adresa'),
           const SizedBox(height: 10),
@@ -149,41 +203,43 @@ class _StripeScreenState extends State<StripeScreen> {
     );
   }
 
- Widget buildAmountAndCurrencyFields() {
-  return Row(
-    children: [
-      Expanded(
-        flex: 5,
-        child: buildTextField('amount', 'Full amount',
-            keyboardType: TextInputType.number, isNumeric: true,
-            initialValue: widget.totalPrice.toString(), // Set initial value from totalPrice
-            readOnly: true // Make it read-only
+  Widget buildAmountAndCurrencyFields() {
+    return Row(
+      children: [
+        Expanded(
+          flex: 5,
+          child: buildTextField('amount', 'Full amount',
+              keyboardType: TextInputType.number,
+              isNumeric: true,
+              initialValue: widget.totalPrice
+                  .toString(), // Set initial value from totalPrice
+              readOnly: true // Make it read-only
+              ),
         ),
-      ),
-      const SizedBox(width: 10),
-      Expanded(
-        flex: 3,
-        child: DropdownButtonFormField<String>(
-          value: selectedCurrency,
-          items: currencyList
-              .map((String value) => DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  ))
-              .toList(),
-          onChanged: (String? value) {
-            setState(() {
-              selectedCurrency = value!;
-            });
-          },
-          decoration: const InputDecoration(
-            labelText: 'Currency',
+        const SizedBox(width: 10),
+        Expanded(
+          flex: 3,
+          child: DropdownButtonFormField<String>(
+            value: selectedCurrency,
+            items: currencyList
+                .map((String value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ))
+                .toList(),
+            onChanged: (String? value) {
+              setState(() {
+                selectedCurrency = value!;
+              });
+            },
+            decoration: const InputDecoration(
+              labelText: 'Currency',
+            ),
           ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   Widget buildCityAndStateFields() {
     return Row(
@@ -218,22 +274,25 @@ class _StripeScreenState extends State<StripeScreen> {
     );
   }
 
-Widget buildTextField(String name, String labelText,
-    {TextInputType keyboardType = TextInputType.text, bool isNumeric = false, String? initialValue, bool readOnly = false}) {
-  return FormBuilderTextField(
-    name: name,
-    decoration: InputDecoration(labelText: labelText),
-    validator: isNumeric
-        ? FormBuilderValidators.compose([
-            FormBuilderValidators.required(),
-            FormBuilderValidators.numeric(),
-          ])
-        : FormBuilderValidators.required(),
-    keyboardType: keyboardType,
-    initialValue: initialValue, // Set the initial value
-    readOnly: readOnly, // Set the field as read-only
-  );
-}
+  Widget buildTextField(String name, String labelText,
+      {TextInputType keyboardType = TextInputType.text,
+      bool isNumeric = false,
+      String? initialValue,
+      bool readOnly = false}) {
+    return FormBuilderTextField(
+      name: name,
+      decoration: InputDecoration(labelText: labelText),
+      validator: isNumeric
+          ? FormBuilderValidators.compose([
+              FormBuilderValidators.required(),
+              FormBuilderValidators.numeric(),
+            ])
+          : FormBuilderValidators.required(),
+      keyboardType: keyboardType,
+      initialValue: initialValue, // Set the initial value
+      readOnly: readOnly, // Set the field as read-only
+    );
+  }
 
   Widget buildSubmitButton(BuildContext context) {
     return SizedBox(
@@ -252,31 +311,19 @@ Widget buildTextField(String name, String labelText,
             final formData = formKey.currentState?.value;
             await initPaymentSheet(formData!);
 
+            print(formData);
+
             try {
               await Stripe.instance.presentPaymentSheet();
-
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    "Payment Done",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  backgroundColor: Colors.green,
-                ),
-              );
-
               setState(() {
                 hasDonated = true;
               });
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Payment successful!')),
+              );
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                    "Payment Failed",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  backgroundColor: Colors.redAccent,
-                ),
+                SnackBar(content: Text('Payment failed: $e')),
               );
             }
           }

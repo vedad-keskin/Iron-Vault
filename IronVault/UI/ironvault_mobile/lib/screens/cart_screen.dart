@@ -175,6 +175,7 @@ Widget _buildBuyButton() {
           context,
           MaterialPageRoute(
             builder: (context) => StripeScreen(
+              id: widget.id,
               items: items,
               totalPrice: totalPrice, // Pass the total price
             ),
