@@ -82,7 +82,7 @@ class _StripeScreenState extends State<StripeScreen> {
     try {
       final data = await createPaymentIntent(
         amount: (widget.totalPrice.toInt() * 100).toString(),
-        currency: selectedCurrency,
+        currency: selectedCurrency.toString(),
         name: '${_korisnik?.ime} ${_korisnik?.prezime}',
         address: formData['address'],
         pin: formData['pincode'],
@@ -326,7 +326,7 @@ class _StripeScreenState extends State<StripeScreen> {
               );
             } catch (e) {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Payment failed: $e')),
+                SnackBar(content: Text('Payment not finalized')),
               );
             }
           }
