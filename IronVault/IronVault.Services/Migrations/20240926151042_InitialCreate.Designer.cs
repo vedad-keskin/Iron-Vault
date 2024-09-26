@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronVault.Services.Migrations
 {
     [DbContext(typeof(GmsDbContext))]
-    [Migration("20240924234004_InitialCreate")]
+    [Migration("20240926151042_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -180,7 +180,7 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             Faqid = 3,
-                            Odgovor = "Recenzije suplemenata možete izvršiti samo nakon kupovine istog suplementa. Nakon kupovine suplementa, isti možete naći u sekciji 'Profil', gdje vam se nudi mogućnost ocjenjivanja suplementa ocjenom od 1 do 5, zajedno sa mogućnošću ostavljanja komentara na svoju ocjenu.",
+                            Odgovor = "Recenzije suplemenata možete izvršiti samo nakon kupovine istog suplementa. Nakon kupovine suplementa, isti možete naći u sekciji 'Uplate' pod 'Kupljeni suplementi', gdje vam se nudi mogućnost ocjenjivanja suplementa ocjenom od 1 do 5, zajedno sa mogućnošću ostavljanja komentara na svoju ocjenu.",
                             Pitanje = "Kako mogu ocjeniti suplement?"
                         },
                         new

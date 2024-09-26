@@ -147,7 +147,7 @@ Widget _buildBuyButton() {
               "Korpa je prazna! Dodajte proizvode prije kupovine.",
               style: TextStyle(color: Colors.white),
             ),
-            duration: const Duration(seconds: 2), // Duration before the SnackBar disappears
+            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
             behavior: SnackBarBehavior.floating,
             backgroundColor: Colors.red, // Set background color to red
             shape: RoundedRectangleBorder(

@@ -5,6 +5,8 @@ import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_mobile/models/korisnik.dart';
 import 'package:ironvault_mobile/models/payment.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
+import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class StripeScreen extends StatefulWidget {
@@ -26,6 +28,8 @@ class StripeScreen extends StatefulWidget {
 class _StripeScreenState extends State<StripeScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   KorisnikProvider? _korisnikProvider;
+  CartProvider? _cartProvider;
+
   Korisnik? _korisnik;
   bool _isLoading = true; // Declare loading state
 
@@ -46,6 +50,7 @@ class _StripeScreenState extends State<StripeScreen> {
   void initState() {
     super.initState();
     _korisnikProvider = context.read<KorisnikProvider>();
+    _cartProvider = context.read<CartProvider>();
     loadData();
   }
 
@@ -68,11 +73,6 @@ class _StripeScreenState extends State<StripeScreen> {
 
   List<String> currencyList = <String>[
     'USD',
-    'INR',
-    'EUR',
-    'JPY',
-    'GBP',
-    'AED'
   ];
   String selectedCurrency = 'USD';
 
@@ -153,12 +153,12 @@ class _StripeScreenState extends State<StripeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text(
-            "Thanks for your donation",
+            "Narudžba uplaćena",
             style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 6),
           const Text(
-            "We appreciate your support",
+            "Zahvaljujemo vam se kupovini",
             style: TextStyle(fontSize: 18),
           ),
           const SizedBox(height: 16),
@@ -170,14 +170,14 @@ class _StripeScreenState extends State<StripeScreen> {
                 backgroundColor: Colors.blueAccent.shade400,
               ),
               child: const Text(
-                "Donate again",
+                "Vrati me na profil",
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               onPressed: () {
-                setState(() {
-                  hasDonated = false;
-                  formKey.currentState?.reset();
-                });
+                
+
+                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProfileScreen(widget.id)));
+
               },
             ),
           ),
@@ -321,13 +321,40 @@ class _StripeScreenState extends State<StripeScreen> {
               setState(() {
                 hasDonated = true;
               });
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Payment successful!')),
-              );
+              final snackBar = SnackBar(
+            content: const Text(
+              "Kupovina izvršena.",
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.green, // Set background color to red
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          _cartProvider?.clearCart();
             } catch (e) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Payment not finalized')),
-              );
+
+
+              final snackBar = SnackBar(
+            content: const Text(
+              "Kupovina nije izvršena.",
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red, // Set background color to red
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+
             }
           }
         },
