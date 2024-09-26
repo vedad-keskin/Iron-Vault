@@ -16,8 +16,8 @@ namespace IronVault.Services.Interfaces
         public Suplement Hide(int id);
         public List<string> AllowedActions(int id);
         List<Model.Models.Suplement> Recommend(int id);
+        List<Model.Models.Suplement> GetDistinctBought(int id);
 
-        
 
     }
 }

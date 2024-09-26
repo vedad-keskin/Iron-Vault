@@ -36,4 +36,28 @@ class SuplementProvider extends BaseProvider<Suplement> {
     throw Exception("Nepoznat problem");
   }
 }
+
+ Future<List<Suplement>> GetDistinctBought(int id) async {
+  var url = const String.fromEnvironment("baseUrl",
+      defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+
+  url += 'Suplement/$id/distinctBought';
+
+  print(url);
+
+  var uri = Uri.parse(url);
+  var headers = createHeaders();
+
+  var response = await http.get(uri, headers: headers);
+
+  if (isValidResponse(response)) {
+    var data = jsonDecode(response.body) as List; // Decode as List
+    // Map the JSON data to a List of Suplement objects
+    return data.map((item) => Suplement.fromJson(item)).toList();
+  } else {
+    throw Exception("Nepoznat problem");
+  }
+}
+
+
 }

@@ -79,5 +79,14 @@ namespace IronVault.API.Controllers
         {
             return (_service as ISuplementService).Recommend(id);
         }
+
+
+        [HttpGet("{id}/distinctBought")]
+        [AllowAnonymous]
+        public List<Suplement> GetDistinctBought(int id)
+        {
+            return (_service as ISuplementService).GetDistinctBought(id);
+        }
+
     }
 }

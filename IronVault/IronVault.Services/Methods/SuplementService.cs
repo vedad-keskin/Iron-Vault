@@ -104,6 +104,23 @@ namespace IronVault.Services.Methods
                 return state.AllowedActions(entity);
             }
         }
+
+        public List<Model.Models.Suplement> GetDistinctBought(int id)
+        {
+            var kupljeniSuplementi = Context.NarudzbaStavkas
+                .Include(x => x.Suplement)
+                .Include(x => x.Narudzba)
+                .Where(x => x.Narudzba.KorisnikId == id)
+                .Select(x => x.Suplement)  // Select the supplements
+                .Distinct()  // Ensure distinct supplements
+                .ToList();
+
+            var result = Mapper.Map<List<Model.Models.Suplement>>(kupljeniSuplementi);
+
+            return result;
+        }
+
+
         static MLContext mlContext = null;
         static object isLocked = new object();
         static ITransformer model = null;
