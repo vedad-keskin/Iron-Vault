@@ -134,16 +134,36 @@ Widget _buildTotalPriceLabel() {
   );
 }
 
- Widget _buildBuyButton() {
+Widget _buildBuyButton() {
   return SizedBox(
     width: double.infinity,
     child: TextButton(
       onPressed: () {
+        // Check if the cart is empty
+        if (_cartProvider.cart.items.isEmpty) {
+          // Show a styled red Snackbar if the cart is empty
+          final snackBar = SnackBar(
+            content: const Text(
+              "Korpa je prazna! Dodajte proizvode prije kupovine.",
+              style: TextStyle(color: Colors.white),
+            ),
+            duration: const Duration(seconds: 2), // Duration before the SnackBar disappears
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red, // Set background color to red
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          );
+
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          return; // Prevent navigation
+        }
+
         List<Map> items = [];
         _cartProvider.cart.items.forEach((item) {
           items.add({
             "suplementId": item.suplement.suplementId,
-            "kolicina": item.count
+            "kolicina": item.count,
           });
         });
 
@@ -179,4 +199,5 @@ Widget _buildTotalPriceLabel() {
     ),
   );
 }
+
 }
