@@ -19,13 +19,13 @@ namespace IronVault.API.Controllers
 
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "User")]
         public override Recenzija Insert(RecenzijaInsertRequest request)
         {
             return base.Insert(request);
         }
 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = "User")]
         public override Recenzija Update(int id, RecenzijaUpdateRequest request)
         {
             return base.Update(id, request);

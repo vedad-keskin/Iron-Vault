@@ -3,6 +3,7 @@ import 'package:ironvault_mobile/layouts/master_screen.dart';
 import 'package:ironvault_mobile/models/cart.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
 import 'package:ironvault_mobile/providers/order_provider.dart';
+import 'package:ironvault_mobile/screens/stripe_screen.dart';
 import 'package:ironvault_mobile/utils/utils.dart';
 import 'package:provider/provider.dart';
 
@@ -133,41 +134,43 @@ Widget _buildTotalPriceLabel() {
   );
 }
 
-  Widget _buildBuyButton() {
-    return SizedBox(
-      width: double.infinity, // Full width button
-      child: TextButton(
-        onPressed: () {
-          List<Map> items = [];
-          _cartProvider.cart.items.forEach((item) {
-            items.add({
-              "suplementId": item.suplement.suplementId,
-              "kolicina": item.count
-            });
+ Widget _buildBuyButton() {
+  return SizedBox(
+    width: double.infinity,
+    child: TextButton(
+      onPressed: () {
+        List<Map> items = [];
+        _cartProvider.cart.items.forEach((item) {
+          items.add({
+            "suplementId": item.suplement.suplementId,
+            "kolicina": item.count
           });
+        });
 
-          var order = {
-            "items": items
-          };
-
-          //_orderProvider.insert(order)
-        },
-        style: TextButton.styleFrom(
-          backgroundColor: Colors.green, // Button background color
-          foregroundColor: Colors.white, // Text color
-          padding: const EdgeInsets.symmetric(vertical: 14), // Padding for height
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.zero, // No rounded corners, squared
+        // Navigate to StripeScreen and pass the order items
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => StripeScreen(items: items),
           ),
-        ),
-        child: const Text(
-          "Kupi",
-          style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
+        );
+      },
+      style: TextButton.styleFrom(
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 14),
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.zero,
         ),
       ),
-    );
-  }
+      child: const Text(
+        "Kupi",
+        style: TextStyle(
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    ),
+  );
+}
 }
