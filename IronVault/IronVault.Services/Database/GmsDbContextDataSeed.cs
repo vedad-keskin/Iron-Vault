@@ -623,6 +623,42 @@ new Suplement
         DatumUplate = new DateTime(2024, 08, 01, 7, 15, 0),
         DatumIsteka = new DateTime(2024, 09, 01, 7, 15, 0)
     }
+      ,
+                new KorisnikClanarina
+                {
+                    KorisnikClanarinaId = 14,
+                    KorisnikId = 1,
+                    ClanarinaId = 2,
+                    DatumUplate = new DateTime(2024, 08, 01, 7, 15, 0),
+                    DatumIsteka = new DateTime(2024, 09, 01, 7, 15, 0)
+                }
+                  ,
+                new KorisnikClanarina
+                {
+                    KorisnikClanarinaId = 15,
+                    KorisnikId = 1,
+                    ClanarinaId = 2,
+                    DatumUplate = new DateTime(2024, 09, 01, 7, 15, 0),
+                    DatumIsteka = new DateTime(2024, 10, 01, 7, 15, 0)
+                }
+                  ,
+                new KorisnikClanarina
+                {
+                    KorisnikClanarinaId = 16,
+                    KorisnikId = 1,
+                    ClanarinaId = 2,
+                    DatumUplate = new DateTime(2024, 10, 01, 7, 15, 0),
+                    DatumIsteka = new DateTime(2024, 11, 01, 7, 15, 0)
+                }
+                ,
+                new KorisnikClanarina
+                {
+                    KorisnikClanarinaId = 17,
+                    KorisnikId = 2,
+                    ClanarinaId = 2,
+                    DatumUplate = new DateTime(2024, 09, 01, 7, 15, 0),
+                    DatumIsteka = new DateTime(2024, 10, 01, 7, 15, 0)
+                }
 );
 
             // Korisnik Uloga
@@ -713,7 +749,7 @@ new Suplement
             NarudzbaId = 5,
             KorisnikId = 1,
             Sifra = "SIF-000-005",
-            DatumVrijemeNarudzbe = new DateTime(2023, 11, 07, 9, 15, 0),
+            DatumVrijemeNarudzbe = new DateTime(2024, 10, 07, 9, 15, 0),
             Otkazano = false,
             Status = false
         }
@@ -723,7 +759,7 @@ new Suplement
             NarudzbaId = 6,
             KorisnikId = 3,
             Sifra = "SIF-000-006",
-            DatumVrijemeNarudzbe = new DateTime(2024, 08, 08, 9, 15, 0),
+            DatumVrijemeNarudzbe = new DateTime(2024, 10, 08, 9, 15, 0),
             Otkazano = false,
             Status = false
         }
@@ -1004,7 +1040,7 @@ new Suplement
            new Recenzija
            {
                RecenzijaId = 2,
-               KorisnikId = 2,
+               KorisnikId = 3,
                SuplementId = 1,
                Ocjena = 4,
                Opis = "Dobar proizvod, samo je dostava trajala duže od dogovorenog."
@@ -1020,7 +1056,7 @@ new Suplement
            new Recenzija
            {
                RecenzijaId = 4,
-               KorisnikId = 2,
+               KorisnikId = 3,
                SuplementId = 2,
                Ocjena = 2,
                Opis = "Loš ukus."

@@ -673,7 +673,11 @@ namespace IronVault.Services.Migrations
                     { 10, 2, new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 1 },
                     { 11, 2, new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 6, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 2 },
                     { 12, 2, new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 7, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 13, 2, new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 2 }
+                    { 13, 2, new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 2 },
+                    { 14, 2, new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 15, 2, new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 16, 2, new DateTime(2024, 11, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 17, 2, new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified), 2 }
                 });
 
             migrationBuilder.InsertData(
@@ -697,8 +701,8 @@ namespace IronVault.Services.Migrations
                     { 2, new DateTime(2023, 10, 1, 9, 15, 0, 0, DateTimeKind.Unspecified), 2, false, "SIF-000-002", false },
                     { 3, new DateTime(2023, 10, 4, 9, 15, 0, 0, DateTimeKind.Unspecified), 1, false, "SIF-000-003", false },
                     { 4, new DateTime(2023, 10, 9, 9, 15, 0, 0, DateTimeKind.Unspecified), 2, true, "SIF-000-004", false },
-                    { 5, new DateTime(2023, 11, 7, 9, 15, 0, 0, DateTimeKind.Unspecified), 1, false, "SIF-000-005", false },
-                    { 6, new DateTime(2024, 8, 8, 9, 15, 0, 0, DateTimeKind.Unspecified), 3, false, "SIF-000-006", false }
+                    { 5, new DateTime(2024, 10, 7, 9, 15, 0, 0, DateTimeKind.Unspecified), 1, false, "SIF-000-005", false },
+                    { 6, new DateTime(2024, 10, 8, 9, 15, 0, 0, DateTimeKind.Unspecified), 3, false, "SIF-000-006", false }
                 });
 
             migrationBuilder.InsertData(
@@ -730,9 +734,9 @@ namespace IronVault.Services.Migrations
                 values: new object[,]
                 {
                     { 1, 1, 5, "Prozivod mi je mnogo pomogao, tople preporuke.", 1 },
-                    { 2, 2, 4, "Dobar proizvod, samo je dostava trajala duže od dogovorenog.", 1 },
+                    { 2, 3, 4, "Dobar proizvod, samo je dostava trajala duže od dogovorenog.", 1 },
                     { 3, 1, 5, "Odličan proizvod.", 2 },
-                    { 4, 2, 2, "Loš ukus.", 2 },
+                    { 4, 3, 2, "Loš ukus.", 2 },
                     { 5, 3, 1, "Katastrofa.", 3 },
                     { 6, 1, 4, "Ukus nije baš najbolji ali je progres očigledan.", 4 },
                     { 7, 3, 5, "Odličan suplement.", 5 },

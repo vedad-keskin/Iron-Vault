@@ -691,6 +691,38 @@ namespace IronVault.Services.Migrations
                             DatumIsteka = new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
                             DatumUplate = new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
                             KorisnikId = 2
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 14,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 8, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 15,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 16,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 11, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 1
+                        },
+                        new
+                        {
+                            KorisnikClanarinaId = 17,
+                            ClanarinaId = 2,
+                            DatumIsteka = new DateTime(2024, 10, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumUplate = new DateTime(2024, 9, 1, 7, 15, 0, 0, DateTimeKind.Unspecified),
+                            KorisnikId = 2
                         });
                 });
 
@@ -895,7 +927,7 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             NarudzbaId = 5,
-                            DatumVrijemeNarudzbe = new DateTime(2023, 11, 7, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeNarudzbe = new DateTime(2024, 10, 7, 9, 15, 0, 0, DateTimeKind.Unspecified),
                             KorisnikId = 1,
                             Otkazano = false,
                             Sifra = "SIF-000-005",
@@ -904,7 +936,7 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             NarudzbaId = 6,
-                            DatumVrijemeNarudzbe = new DateTime(2024, 8, 8, 9, 15, 0, 0, DateTimeKind.Unspecified),
+                            DatumVrijemeNarudzbe = new DateTime(2024, 10, 8, 9, 15, 0, 0, DateTimeKind.Unspecified),
                             KorisnikId = 3,
                             Otkazano = false,
                             Sifra = "SIF-000-006",
@@ -1306,7 +1338,7 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             RecenzijaId = 2,
-                            KorisnikId = 2,
+                            KorisnikId = 3,
                             Ocjena = 4,
                             Opis = "Dobar proizvod, samo je dostava trajala duže od dogovorenog.",
                             SuplementId = 1
@@ -1322,7 +1354,7 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             RecenzijaId = 4,
-                            KorisnikId = 2,
+                            KorisnikId = 3,
                             Ocjena = 2,
                             Opis = "Loš ukus.",
                             SuplementId = 2
