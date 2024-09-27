@@ -20,7 +20,7 @@ namespace IronVault.API.Controllers
         }
 
         [HttpGet("/GetReport")]
-        [AllowAnonymous]
+        [Authorize(Roles = "Administrator")]
         public BiznisReport GetBiznisReport()
         {
             return (_service as IBiznisReportService).GetBiznisReport();
