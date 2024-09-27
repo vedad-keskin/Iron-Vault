@@ -3,9 +3,13 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:ironvault_mobile/models/korisnik.dart';
+import 'package:ironvault_mobile/models/narudzba.dart';
+import 'package:ironvault_mobile/models/narudzba_stavka.dart';
 import 'package:ironvault_mobile/models/payment.dart';
 import 'package:ironvault_mobile/providers/korisnik_provider.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/providers/narudzba_provider.dart';
+import 'package:ironvault_mobile/providers/narudzba_stavka_provider.dart';
 import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:ironvault_mobile/utils/app_constants.dart';
@@ -19,8 +23,8 @@ class StripeScreen extends StatefulWidget {
     required this.id,
     required this.items,
     required this.totalPrice,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   State<StripeScreen> createState() => _StripeScreenState();
@@ -30,11 +34,13 @@ class _StripeScreenState extends State<StripeScreen> {
   final formKey = GlobalKey<FormBuilderState>();
   KorisnikProvider? _korisnikProvider;
   CartProvider? _cartProvider;
+  NarudzbaProvider? _narudzbaProvider;
+  NarudzbaStavkaProvider? _narudzbaStavkaProvider;
 
   Korisnik? _korisnik;
   bool _isLoading = true; // Declare loading state
 
-    double amountInUsd = 0.0; // Add this variable to hold the amount in USD
+  double amountInUsd = 0.0; // Add this variable to hold the amount in USD
 
   final commonDecoration = InputDecoration(
     filled: true,
@@ -54,10 +60,12 @@ class _StripeScreenState extends State<StripeScreen> {
     super.initState();
     _korisnikProvider = context.read<KorisnikProvider>();
     _cartProvider = context.read<CartProvider>();
+    _narudzbaProvider = context.read<NarudzbaProvider>();
+    _narudzbaStavkaProvider = context.read<NarudzbaStavkaProvider>();
     loadData();
 
-    amountInUsd = widget.totalPrice * AppConstants.bamToUsdConversionRate; // Calculate the converted amount
-
+    amountInUsd = widget.totalPrice *
+        AppConstants.bamToUsdConversionRate; // Calculate the converted amount
   }
 
   Future<void> loadData() async {
@@ -86,8 +94,6 @@ class _StripeScreenState extends State<StripeScreen> {
 
   Future<void> initPaymentSheet(Map<String, dynamic> formData) async {
     try {
-
-
       final data = await createPaymentIntent(
         amount: (amountInUsd.toInt() * 100).toString(),
         currency: selectedCurrency.toString(),
@@ -133,7 +139,7 @@ class _StripeScreenState extends State<StripeScreen> {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: _isLoading
-              ? Center(
+              ? const Center(
                   child: CircularProgressIndicator()) // Show loading indicator
               : Column(
                   children: [
@@ -182,10 +188,8 @@ class _StripeScreenState extends State<StripeScreen> {
                 style: TextStyle(color: Colors.white, fontSize: 16),
               ),
               onPressed: () {
-                
-
-                Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ProfileScreen(widget.id)));
-
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => ProfileScreen(widget.id)));
               },
             ),
           ),
@@ -225,7 +229,7 @@ class _StripeScreenState extends State<StripeScreen> {
           child: buildTextField('amount', 'Full amount in USD',
               keyboardType: TextInputType.number,
               isNumeric: true,
-              initialValue: amountInUsd.toInt().toString(), 
+              initialValue: amountInUsd.toInt().toString(),
               readOnly: true // Make it read-only
               ),
         ),
@@ -295,10 +299,12 @@ class _StripeScreenState extends State<StripeScreen> {
       decoration: commonDecoration.copyWith(labelText: labelText),
       validator: isNumeric
           ? FormBuilderValidators.compose([
-              FormBuilderValidators.required(),
-              FormBuilderValidators.numeric(),
+              FormBuilderValidators.required(
+                  errorText: 'Ovo polje je obavezno.'),
+              FormBuilderValidators.numeric(
+                  errorText: 'Ovo polje je numeričko'),
             ])
-          : FormBuilderValidators.required(),
+          : FormBuilderValidators.required(errorText: 'Ovo polje je obavezno.'),
       keyboardType: keyboardType,
       initialValue: initialValue,
       readOnly: readOnly,
@@ -322,47 +328,69 @@ class _StripeScreenState extends State<StripeScreen> {
             final formData = formKey.currentState?.value;
             await initPaymentSheet(formData!);
 
+            Narudzba narudzba = Narudzba();
+
+            narudzba.datumVrijemeNarudzbe = DateTime.now();
+            narudzba.korisnikId = widget.id;
+            narudzba.status = false;
+            narudzba.otkazano = false;
+
             print(formData);
 
             try {
               await Stripe.instance.presentPaymentSheet();
+
+              await _narudzbaProvider?.insert(narudzba);
+
+              for (var i = 0; i < widget.items.length; i++) {
+                NarudzbaStavka stavka = new NarudzbaStavka();
+
+                var zadnjiNarudzbaIdByUser =
+                    await _narudzbaProvider?.GetLatestOrderIdByUserId(widget.id); // da bi dosao do narudzbeId uzet je zadnji narudrzbaId korisnika koji je upravo dodan jer je to autoincrement
+
+                stavka.kolicina = widget.items[i]["kolicina"];
+                stavka.suplementId = widget.items[i]["suplementId"];
+                stavka.narudzbaId = zadnjiNarudzbaIdByUser;
+
+
+                await _narudzbaStavkaProvider?.insert(stavka);
+              }
+
               setState(() {
                 hasDonated = true;
               });
               final snackBar = SnackBar(
-            content: const Text(
-              "Kupovina izvršena.",
-              style: TextStyle(color: Colors.white),
-            ),
-            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.green, // Set background color to red
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          );
+                content: const Text(
+                  "Kupovina izvršena.",
+                  style: TextStyle(color: Colors.white),
+                ),
+                duration: const Duration(
+                    seconds: 1), // Duration before the SnackBar disappears
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.green, // Set background color to red
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              );
 
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          _cartProvider?.clearCart();
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+              _cartProvider?.clearCart();
             } catch (e) {
-
-
               final snackBar = SnackBar(
-            content: const Text(
-              "Kupovina nije izvršena.",
-              style: TextStyle(color: Colors.white),
-            ),
-            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red, // Set background color to red
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
-            ),
-          );
+                content: const Text(
+                  "Kupovina nije izvršena.",
+                  style: TextStyle(color: Colors.white),
+                ),
+                duration: const Duration(
+                    seconds: 1), // Duration before the SnackBar disappears
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Colors.red, // Set background color to red
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+              );
 
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
-
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           }
         },

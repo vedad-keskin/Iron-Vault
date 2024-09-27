@@ -19,13 +19,13 @@ namespace IronVault.API.Controllers
            
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public override NarudzbaStavka Insert(NarudzbaStavkaInsertRequest request)
         {
             return base.Insert(request);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public override NarudzbaStavka Update(int id, NarudzbaStavkaUpdateRequest request)
         {
             return base.Update(id, request);

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:ironvault_mobile/models/search_result.dart';
 import 'package:ironvault_mobile/models/suplement.dart';
 import 'package:ironvault_mobile/providers/base_provider.dart';
 import 'package:ironvault_mobile/utils/app_constants.dart';

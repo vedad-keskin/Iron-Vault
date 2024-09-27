@@ -10,5 +10,8 @@ namespace IronVault.Services.Interfaces
 {
     public interface INarudzbaService : ICRUDService<Model.Models.Narudzba,NarudzbaSearchObject,NarudzbaInsertRequest, NarudzbaUpdateRequest>
     {
+
+        public int GetLatestOrderIdByUserId(int korisnikId);
+
     }
 }

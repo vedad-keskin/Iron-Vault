@@ -2,6 +2,7 @@
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using IronVault.Services.Interfaces;
+using IronVault.Services.SuplementStateMachine;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -79,5 +80,18 @@ namespace IronVault.Services.Methods
 
             return filteredQuery;
         }
+
+        public int GetLatestOrderIdByUserId(int korisnikId)
+        {
+            var latestOrder = Context.Narudzbas
+                .Where(x => x.KorisnikId == korisnikId)
+                .OrderBy(x => x.NarudzbaId)  // redosljed da bi moglo uzeti zadnji
+                .Last();  
+
+            return latestOrder.NarudzbaId;
+        }
+
+
+
     }
 }

@@ -19,13 +19,13 @@ namespace IronVault.API.Controllers
            
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public override Narudzba Insert(NarudzbaInsertRequest request)
         {
             return base.Insert(request);
         }
 
-        [AllowAnonymous]
+        [Authorize(Roles = "User")]
         public override Narudzba Update(int id, NarudzbaUpdateRequest request)
         {
             return base.Update(id, request);
@@ -43,6 +43,12 @@ namespace IronVault.API.Controllers
             return base.GetById(id);
         }
 
+        [HttpGet("{id}/GetLatestOrderIdByUserId")]
+        [AllowAnonymous]
+        public int GetLatestOrderIdByUserId(int id)
+        {
+            return (_service as INarudzbaService).GetLatestOrderIdByUserId(id);
+        }
 
     }
 }
