@@ -259,15 +259,28 @@ class _UplateListScreenState extends State<UplateListScreen> {
               Container(
                 width: 120,
                 child: ElevatedButton.icon(
-                  icon: Icon(Icons.star, color: Colors.white),
-                  label: Text('Ocjeni', style: TextStyle(color: Colors.white)),
+                  icon: const Icon(Icons.star, color: Colors.white),
+                  label: const Text('Ocjeni',
+                      style: TextStyle(color: Colors.white)),
                   onPressed: () {
-                    if (hasReviewed) {
-                      _showAlreadyReviewedDialog(); // Show dialog if already reviewed
-                    } else {
-                      // Trigger action to show recension details
-                      _showRecensionDialog(suplement);
-                    }
+                    // Get the existing review for the supplement if it exists
+Recenzija? existingReview;
+
+// Attempt to find the existing review
+existingReview = _recenzijeKorisnika?.result.firstWhere(
+  (recenzija) =>
+      recenzija.suplementId == suplement.suplementId &&
+      recenzija.korisnikId == widget.id,
+  orElse: () => Recenzija(), // Return a new instance if not found
+);
+
+if (existingReview?.suplementId != null) {
+  // If a review exists, show the review dialog to update the review
+  _showRecensionDialog(suplement, existingReview);
+} else {
+  // If no review exists, show the dialog to create a new review
+  _showRecensionDialog(suplement, null);
+}
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
@@ -284,136 +297,120 @@ class _UplateListScreenState extends State<UplateListScreen> {
     );
   }
 
-  void _showRecensionDialog(Suplement suplement) {
-    // Create a form key to manage the form state
-    final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
-    int _rating = 1; // Variable to store the star rating
+void _showRecensionDialog(Suplement suplement, Recenzija? existingReview) {
+  final GlobalKey<FormBuilderState> _formKey = GlobalKey<FormBuilderState>();
+  int _rating = existingReview?.ocjena ?? 1; // Use existing rating if available
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('${suplement.naziv}'),
-          content: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return FormBuilder(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Star rating
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: List.generate(5, (index) {
-                        return IconButton(
-                          icon: Icon(
-                            index < _rating ? Icons.star : Icons.star_border,
-                            color: Colors.amber,
-                          ),
-                          onPressed: () {
-                            // Update rating on star click
-                            setState(() {
-                              _rating = index + 1;
-                            });
-                          },
-                        );
-                      }),
-                    ),
-                    SizedBox(height: 10),
-                    // Additional information textbox
-                    FormBuilderTextField(
-                      name: 'opis',
-                      decoration: const InputDecoration(
-                        labelText: 'Dodatne informacije',
-                        border: OutlineInputBorder(),
-                      ),
-                      maxLines: 3, // Set to 3 lines for larger input
-                      validator: FormBuilderValidators.compose([
-                        FormBuilderValidators.required(
-                          errorText: 'Ovo polje je obavezno.',
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('${suplement.naziv}'),
+        content: StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            return FormBuilder(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // Star rating
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: List.generate(5, (index) {
+                      return IconButton(
+                        icon: Icon(
+                          index < _rating ? Icons.star : Icons.star_border,
+                          color: Colors.amber,
                         ),
-                        FormBuilderValidators.maxLength(250),
-                      ]),
+                        onPressed: () {
+                          // Update rating on star click
+                          setState(() {
+                            _rating = index + 1;
+                          });
+                        },
+                      );
+                    }),
+                  ),
+                  const SizedBox(height: 10),
+                  // Additional information textbox
+                  FormBuilderTextField(
+                    name: 'opis',
+                    initialValue: existingReview?.opis ?? '', // Populate if updating
+                    decoration: const InputDecoration(
+                      labelText: 'Dodatne informacije',
+                      border: OutlineInputBorder(),
                     ),
-                  ],
-                ),
-              );
-            },
-          ),
-          actions: [
-            TextButton(
-              style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
-              onPressed: () =>
-                  Navigator.of(context).pop(), // Cancel button first
-              child: Text('Odustani'),
-            ),
-            TextButton(
-              onPressed: () async {
-                if (_formKey.currentState?.saveAndValidate() ?? false) {
-                  var request = Map.from(_formKey.currentState!.value);
-
-                  request['ocjena'] = _rating;
-                  request['korisnikId'] = widget.id;
-                  request['suplementId'] = suplement.suplementId;
-
-                  try {
-                    // Attempt to insert the review
-                    await _recenzijaProvider?.insert(request);
-                    loadData(); // Refresh the data after successful insertion
-
-                    // Show a SnackBar after closing the dialog
-                    Navigator.of(context).pop(); // Close the dialog
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                          content: Text('Recenzija uspješno evidentirana'),
-                          duration: const Duration(
-                              seconds:
-                                  1), // Duration before the SnackBar disappears
-                          behavior: SnackBarBehavior.floating,
-                          backgroundColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          )),
-                    );
-                  } catch (e) {
-                    // Handle the error (e.g., show a message to the user)
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Došlo je do greške: $e'),
-                        backgroundColor: Colors.red,
+                    maxLines: 3, // Set to 3 lines for larger input
+                    validator: FormBuilderValidators.compose([
+                      FormBuilderValidators.required(
+                        errorText: 'Ovo polje je obavezno.',
                       ),
-                    );
-                  }
-                }
-              },
-              child: Text('Spremi'),
-            ),
-          ],
-        );
-      },
-    );
-  }
+                      FormBuilderValidators.maxLength(250),
+                    ]),
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        actions: [
+          TextButton(
+            style: ElevatedButton.styleFrom(foregroundColor: Colors.red),
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Odustani'),
+          ),
+          TextButton(
+            onPressed: () async {
+              if (_formKey.currentState != null && _formKey.currentState!.saveAndValidate()) {
+                var request = Map.from(_formKey.currentState!.value);
 
-// Function to show a dialog if the user has already reviewed the supplement
-  void _showAlreadyReviewedDialog() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Recenzija"),
-          content: const Text("Već ste napravili recenziju za ovaj suplement."),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("U redu"),
-              onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
+                request['ocjena'] = _rating;
+                request['korisnikId'] = widget.id;
+                request['suplementId'] = suplement.suplementId;
+
+                try {
+                  if (existingReview != null) {
+                    // Update the existing review
+                    await _recenzijaProvider?.update(existingReview.recenzijaId!, request);
+                  } else {
+                    // Insert a new review
+                    await _recenzijaProvider?.insert(request);
+                  }
+
+                  loadData(); // Refresh data after successful action
+
+                  Navigator.of(context).pop(); // Close the dialog
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                          'Recenzija uspješno ${existingReview != null ? 'ažurirana' : 'evidentirana'}'),
+                      duration: const Duration(seconds: 1),
+                      behavior: SnackBarBehavior.floating,
+                      backgroundColor: Colors.green,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  );
+                } catch (e) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Došlo je do greške: $e'),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+              }
+            },
+            child: Text('Spremi'),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
 
   // Placeholder widget for data to be implemented
   Widget _buildPlaceholder(String message) {
