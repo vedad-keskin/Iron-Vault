@@ -206,10 +206,10 @@ class _StripeScreenState extends State<StripeScreen> {
         children: [
           buildAmountAndCurrencyFields(),
           const SizedBox(height: 10),
-          buildTextField('name', 'Full name',
-              initialValue: '${_korisnik?.ime} ${_korisnik?.prezime}'),
+          buildTextField('name', 'Puno ime',
+              initialValue: '${_korisnik?.ime} ${_korisnik?.prezime}',placeholder: "John Doe"),
           const SizedBox(height: 10),
-          buildTextField('address', 'Adresa'),
+          buildTextField('address', 'Adresa',placeholder: "Ulica br. 1"),
           const SizedBox(height: 10),
           buildCityAndStateFields(),
           const SizedBox(height: 10),
@@ -226,7 +226,7 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('amount', 'Full amount in USD',
+          child: buildTextField('amount', 'Puni iznos u USD',
               keyboardType: TextInputType.number,
               isNumeric: true,
               initialValue: amountInUsd.toInt().toString(),
@@ -249,7 +249,7 @@ class _StripeScreenState extends State<StripeScreen> {
                 selectedCurrency = value!;
               });
             },
-            decoration: commonDecoration.copyWith(labelText: 'Currency'),
+            decoration: commonDecoration.copyWith(labelText: 'Valuta'),
           ),
         ),
       ],
@@ -261,12 +261,12 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('city', 'City'),
+          child: buildTextField('city', 'Grad',placeholder: "New York"),
         ),
         const SizedBox(width: 10),
         Expanded(
           flex: 5,
-          child: buildTextField('state', 'State (Short code)'),
+          child: buildTextField('state', 'Kanton/State (skraćeno)',placeholder: "NY"),
         ),
       ],
     );
@@ -277,39 +277,46 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('country', 'Country (Short code)'),
+          child: buildTextField('country', 'Država (skraćeno)',placeholder: "US"),
         ),
         const SizedBox(width: 10),
         Expanded(
           flex: 5,
-          child: buildTextField('pincode', 'Pincode',
-              keyboardType: TextInputType.number, isNumeric: true),
+          child: buildTextField('pincode', 'Poštanski broj',
+              keyboardType: TextInputType.number, isNumeric: true,placeholder: "123456"),
         ),
       ],
     );
   }
 
-  Widget buildTextField(String name, String labelText,
-      {TextInputType keyboardType = TextInputType.text,
-      bool isNumeric = false,
-      String? initialValue,
-      bool readOnly = false}) {
-    return FormBuilderTextField(
-      name: name,
-      decoration: commonDecoration.copyWith(labelText: labelText),
-      validator: isNumeric
-          ? FormBuilderValidators.compose([
-              FormBuilderValidators.required(
-                  errorText: 'Ovo polje je obavezno.'),
-              FormBuilderValidators.numeric(
-                  errorText: 'Ovo polje je numeričko'),
-            ])
-          : FormBuilderValidators.required(errorText: 'Ovo polje je obavezno.'),
-      keyboardType: keyboardType,
-      initialValue: initialValue,
-      readOnly: readOnly,
-    );
-  }
+Widget buildTextField(
+  String name, 
+  String labelText, {
+  TextInputType keyboardType = TextInputType.text,
+  bool isNumeric = false,
+  String? initialValue,
+  bool readOnly = false,
+  String? placeholder, // New optional parameter
+}) {
+  return FormBuilderTextField(
+    name: name,
+    decoration: commonDecoration.copyWith(
+      labelText: labelText,
+      hintText: placeholder, // Use placeholder as hintText
+    ),
+    validator: isNumeric
+        ? FormBuilderValidators.compose([
+            FormBuilderValidators.required(
+                errorText: 'Ovo polje je obavezno.'),
+            FormBuilderValidators.numeric(
+                errorText: 'Ovo polje je numeričko'),
+          ])
+        : FormBuilderValidators.required(errorText: 'Ovo polje je obavezno.'),
+    keyboardType: keyboardType,
+    initialValue: initialValue,
+    readOnly: readOnly,
+  );
+}
 
   Widget buildSubmitButton(BuildContext context) {
     return SizedBox(
