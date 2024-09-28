@@ -207,9 +207,10 @@ class _StripeScreenState extends State<StripeScreen> {
           buildAmountAndCurrencyFields(),
           const SizedBox(height: 10),
           buildTextField('name', 'Puno ime',
-              initialValue: '${_korisnik?.ime} ${_korisnik?.prezime}',placeholder: "John Doe"),
+              initialValue: '${_korisnik?.ime} ${_korisnik?.prezime}',
+              placeholder: "John Doe"),
           const SizedBox(height: 10),
-          buildTextField('address', 'Adresa',placeholder: "Ulica br. 1"),
+          buildTextField('address', 'Adresa', placeholder: "Ulica br. 1"),
           const SizedBox(height: 10),
           buildCityAndStateFields(),
           const SizedBox(height: 10),
@@ -261,12 +262,13 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('city', 'Grad',placeholder: "New York"),
+          child: buildTextField('city', 'Grad', placeholder: "New York"),
         ),
         const SizedBox(width: 10),
         Expanded(
           flex: 5,
-          child: buildTextField('state', 'Kanton/State (skraćeno)',placeholder: "NY"),
+          child: buildTextField('state', 'Kanton/State (skraćeno)',
+              placeholder: "NY"),
         ),
       ],
     );
@@ -277,46 +279,62 @@ class _StripeScreenState extends State<StripeScreen> {
       children: [
         Expanded(
           flex: 5,
-          child: buildTextField('country', 'Država (skraćeno)',placeholder: "US"),
+          child:
+              buildTextField('country', 'Država (skraćeno)', placeholder: "US"),
         ),
         const SizedBox(width: 10),
         Expanded(
           flex: 5,
           child: buildTextField('pincode', 'Poštanski broj',
-              keyboardType: TextInputType.number, isNumeric: true,placeholder: "123456"),
+              keyboardType: TextInputType.number,
+              isNumeric: true,
+              placeholder: "123456"),
         ),
       ],
     );
   }
 
-Widget buildTextField(
-  String name, 
-  String labelText, {
-  TextInputType keyboardType = TextInputType.text,
-  bool isNumeric = false,
-  String? initialValue,
-  bool readOnly = false,
-  String? placeholder, // New optional parameter
-}) {
-  return FormBuilderTextField(
-    name: name,
-    decoration: commonDecoration.copyWith(
-      labelText: labelText,
-      hintText: placeholder, // Use placeholder as hintText
-    ),
-    validator: isNumeric
-        ? FormBuilderValidators.compose([
-            FormBuilderValidators.required(
-                errorText: 'Ovo polje je obavezno.'),
-            FormBuilderValidators.numeric(
-                errorText: 'Ovo polje je numeričko'),
-          ])
-        : FormBuilderValidators.required(errorText: 'Ovo polje je obavezno.'),
-    keyboardType: keyboardType,
-    initialValue: initialValue,
-    readOnly: readOnly,
-  );
-}
+  Widget buildTextField(
+    String name,
+    String labelText, {
+    TextInputType keyboardType = TextInputType.text,
+    bool isNumeric = false,
+    String? initialValue,
+    bool readOnly = false,
+    String? placeholder, // New optional parameter
+  }) {
+    return FormBuilderTextField(
+      name: name,
+      decoration: commonDecoration.copyWith(
+        labelText: labelText,
+        hintText: placeholder, // Use placeholder as hintText
+      ),
+      validator: isNumeric
+          ? FormBuilderValidators.compose([
+              FormBuilderValidators.required(
+                  errorText: 'Ovo polje je obavezno.'),
+              FormBuilderValidators.numeric(
+                  errorText: 'Ovo polje je numeričko'),
+            ])
+          : FormBuilderValidators.compose([
+              FormBuilderValidators.required(
+                  errorText: 'Ovo polje je obavezno.'),
+              // Validator da mora sadržavati slova
+              (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Ovo polje je obavezno.';
+                }
+                if (!RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                  return 'Ovo polje mora sadržavati slova.';
+                }
+                return null; // valid input
+              },
+            ]),
+      keyboardType: keyboardType,
+      initialValue: initialValue,
+      readOnly: readOnly,
+    );
+  }
 
   Widget buildSubmitButton(BuildContext context) {
     return SizedBox(
@@ -327,7 +345,7 @@ Widget buildTextField(
           backgroundColor: Colors.blueAccent.shade400,
         ),
         child: const Text(
-          "Proceed to Pay",
+          "Prebaci me na plaćanje",
           style: TextStyle(color: Colors.white, fontSize: 16),
         ),
         onPressed: () async {
@@ -353,12 +371,12 @@ Widget buildTextField(
                 NarudzbaStavka stavka = new NarudzbaStavka();
 
                 var zadnjiNarudzbaIdByUser =
-                    await _narudzbaProvider?.GetLatestOrderIdByUserId(widget.id); // da bi dosao do narudzbeId uzet je zadnji narudrzbaId korisnika koji je upravo dodan jer je to autoincrement
+                    await _narudzbaProvider?.GetLatestOrderIdByUserId(widget
+                        .id); // da bi dosao do narudzbeId uzet je zadnji narudrzbaId korisnika koji je upravo dodan jer je to autoincrement
 
                 stavka.kolicina = widget.items[i]["kolicina"];
                 stavka.suplementId = widget.items[i]["suplementId"];
                 stavka.narudzbaId = zadnjiNarudzbaIdByUser;
-
 
                 await _narudzbaStavkaProvider?.insert(stavka);
               }
