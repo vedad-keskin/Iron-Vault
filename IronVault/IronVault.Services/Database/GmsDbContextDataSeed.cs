@@ -1013,12 +1013,6 @@ new Suplement
            new Prisustvo
            {
                PrisustvoId = 15,
-               KorisnikId = 2,
-               DatumVrijemeUlaska = new DateTime(2024, 09, 22, 21, 22, 0),
-           },
-           new Prisustvo
-           {
-               PrisustvoId = 16,
                KorisnikId = 3,
                DatumVrijemeUlaska = new DateTime(2024, 09, 22, 17, 12, 0),
            }

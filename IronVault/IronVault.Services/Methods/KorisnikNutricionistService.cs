@@ -1,4 +1,5 @@
-﻿using IronVault.Model.Requests;
+﻿using IronVault.Model;
+using IronVault.Model.Requests;
 using IronVault.Model.SearchObjects;
 using IronVault.Services.Database;
 using IronVault.Services.Interfaces;
@@ -62,6 +63,27 @@ namespace IronVault.Services.Methods
 
             base.AfterInsert(request, entity);
         }
+
+
+        public override void BeforeInsert(KorisnikNutricionistUpsertRequest request, KorisnikNutricionst entity)
+        {
+
+            var terminiTrenera = Context.KorisnikNutricionsts.Where(x => x.NutricionistId == request.NutricionistId).ToList();
+
+
+            // ako već postoji zakazani termin u tom terminu
+            if (terminiTrenera.Exists(x => x.DatumTermina.Year == request.DatumTermina.Year &&
+            x.DatumTermina.Month == request.DatumTermina.Month &&
+            x.DatumTermina.Day == request.DatumTermina.Day &&
+            x.DatumTermina.Hour == request.DatumTermina.Hour))
+            {
+                throw new UserException("Nutricionist je zauzet u tom terminu");
+            }
+
+
+            base.BeforeInsert(request, entity);
+        }
+
 
 
     }

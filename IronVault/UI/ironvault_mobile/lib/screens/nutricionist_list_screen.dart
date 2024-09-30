@@ -600,9 +600,19 @@ class _NutricionistListScreenState extends State<NutricionistListScreen> {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Greška'),
+                              title: const Text(
+                                "Nedostupno",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               content: const Text(
-                                  'Došlo je do greške prilikom zakazivanja termina'),
+                                ('Nutricionist je zauzet u tom terminu'),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {

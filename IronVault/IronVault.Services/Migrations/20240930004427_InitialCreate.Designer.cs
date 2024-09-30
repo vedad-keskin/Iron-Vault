@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronVault.Services.Migrations
 {
     [DbContext(typeof(GmsDbContext))]
-    [Migration("20240930000028_InitialCreate")]
+    [Migration("20240930004427_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -1286,12 +1286,6 @@ namespace IronVault.Services.Migrations
                         new
                         {
                             PrisustvoId = 15,
-                            DatumVrijemeUlaska = new DateTime(2024, 9, 22, 21, 22, 0, 0, DateTimeKind.Unspecified),
-                            KorisnikId = 2
-                        },
-                        new
-                        {
-                            PrisustvoId = 16,
                             DatumVrijemeUlaska = new DateTime(2024, 9, 22, 17, 12, 0, 0, DateTimeKind.Unspecified),
                             KorisnikId = 3
                         });

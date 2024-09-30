@@ -724,8 +724,7 @@ namespace IronVault.Services.Migrations
                     { 12, new DateTime(2024, 5, 3, 22, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 3, 19, 0, 0, 0, DateTimeKind.Unspecified), 2 },
                     { 13, new DateTime(2024, 5, 9, 22, 0, 0, 0, DateTimeKind.Unspecified), new DateTime(2024, 5, 9, 19, 0, 0, 0, DateTimeKind.Unspecified), 2 },
                     { 14, null, new DateTime(2024, 9, 22, 20, 52, 0, 0, DateTimeKind.Unspecified), 1 },
-                    { 15, null, new DateTime(2024, 9, 22, 21, 22, 0, 0, DateTimeKind.Unspecified), 2 },
-                    { 16, null, new DateTime(2024, 9, 22, 17, 12, 0, 0, DateTimeKind.Unspecified), 3 }
+                    { 15, null, new DateTime(2024, 9, 22, 17, 12, 0, 0, DateTimeKind.Unspecified), 3 }
                 });
 
             migrationBuilder.InsertData(

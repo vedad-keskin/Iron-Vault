@@ -593,15 +593,25 @@ class _TrenerListScreenState extends State<TrenerListScreen> {
                             );
                           },
                         );
-                      } catch (error) {
+                      } catch (e) {
                         // Show error dialog
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Greška'),
+                              title: const Text(
+                                "Nedostupno",
+                                style: TextStyle(
+                                  color: Colors.red,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                               content: const Text(
-                                  'Došlo je do greške prilikom zakazivanja termina'),
+                                ('Trener je zauzet u tom terminu'),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () {
