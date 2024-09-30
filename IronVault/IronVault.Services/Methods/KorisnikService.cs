@@ -56,8 +56,17 @@ namespace IronVault.Services.Methods
             {
                 filteredQuery = filteredQuery.Include(x => x.KorisnikUlogas).ThenInclude(x => x.Uloga);
             }
+            if (searchObject.IsNotPrisutan == true)
+            {
+                // Lista prisutnih korisnika
+                var prisutniKorisniciIds = Context.Prisustvos
+                    .Where(x => x.DatumVrijemeIzlaska == null)
+                    .Select(x => x.KorisnikId)
+                    .ToList();
 
-
+                // Filtracija da se dobiju samo korisnici koji nisu u teretani, za combo box na desktop apk
+                filteredQuery = filteredQuery.Where(x => !prisutniKorisniciIds.Contains(x.KorisnikId));
+            }
 
             filteredQuery.Include(x => x.Spol).Include(x => x.Grad);
 

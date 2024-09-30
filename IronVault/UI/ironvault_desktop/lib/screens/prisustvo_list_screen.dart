@@ -38,7 +38,9 @@ class _PrisustvoListScreenState extends State<PrisustvoListScreen> {
   Future initForm() async {
     var filter = {'korisnikPrisutan': "true"};
     result = await provider.get(filter: filter);
-    searchResult = await korisnikProvider.get();
+
+    var filterKorisnikaKojiNisuPrisutni = {'isNotPrisutan': "true"};
+    searchResult = await korisnikProvider.get(filter: filterKorisnikaKojiNisuPrisutni);
 
     setState(() {});
   }
@@ -155,96 +157,99 @@ class _PrisustvoListScreenState extends State<PrisustvoListScreen> {
     ),
   );
 
-  void _showChoiceDialog(BuildContext context) {
-    final _formKey = GlobalKey<FormBuilderState>();
+void _showChoiceDialog(BuildContext context) {
+  final _formKey = GlobalKey<FormBuilderState>();
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Odaberite korisnika'),
-          content: FormBuilder(
-            key: _formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: FormBuilderDropdown(
-                        name: 'korisnikId',
-                        decoration:
-                            commonDecoration.copyWith(labelText: "Korisnik"),
-                        items: searchResult?.result
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Odaberite korisnika'),
+        content: FormBuilder(
+          key: _formKey,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: searchResult?.result == null ||
+                            searchResult!.result.isEmpty
+                        ? const Text(
+                            'Svi korisnici su u teretani',
+                            style: TextStyle(color: Colors.red),
+                          )
+                        : FormBuilderDropdown(
+                            name: 'korisnikId',
+                            decoration: commonDecoration.copyWith(
+                                labelText: "Korisnik"),
+                            items: searchResult!.result
                                 .map((item) => DropdownMenuItem(
-                                    value: item.korisnikId.toString(),
-                                    child: Text("${item.ime} ${item.prezime}")))
-                                .toList() ??
-                            [],
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: FormBuilderValidators.compose([
-                          FormBuilderValidators.required(
-                            errorText: 'Ovo polje je obavezno.',
+                                      value: item.korisnikId.toString(),
+                                      child: Text(
+                                          "${item.ime} ${item.prezime}"),
+                                    ))
+                                .toList(),
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: 'Ovo polje je obavezno',
+                              ),
+                            ]),
                           ),
-                        ]),
-                      ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20), // Adds space between dropdown and button
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.red,
                     ),
-                  ],
-                ),
-                const SizedBox(
-                    height: 20), // Adds space between dropdown and button
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.red),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Text("Odustani")),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState?.saveAndValidate() ?? false) {
-                          // Handle form submission
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text("Odustani"),
+                  ),
+                  const SizedBox(width: 8),
+                  ElevatedButton(
+                    onPressed: searchResult?.result == null ||
+                            searchResult!.result.isEmpty
+                        ? null // Disable button if searchResult is empty
+                        : () async {
+                            if (_formKey.currentState?.saveAndValidate() ?? false) {
+                              // Handle form submission
+                              debugPrint(_formKey.currentState?.value.toString());
+                              var request = Map.from(_formKey.currentState!.value);
 
-                          debugPrint(_formKey.currentState?.value.toString());
-                          var request = Map.from(_formKey.currentState!.value);
-
-                          
-
-                          if (result!.result
-                              .where((element) =>
-                                  element.korisnikId.toString() ==
-                                  request['korisnikId'])
-                              .isNotEmpty) {
-                            ErrorDialog(
-                                context, "Korisnik je već u teretani");
-                          } else {
-                            await provider.insert(request);
-
-                            await initForm();
-
-                             Navigator.pop(context);
-                          }
-
-                          
-                        }
-                      },
-                      child: const Text('Dodaj'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+                              if (result!.result
+                                  .where((element) =>
+                                      element.korisnikId.toString() ==
+                                      request['korisnikId'])
+                                  .isNotEmpty) {
+                                ErrorDialog(context, "Korisnik je već u teretani");
+                              } else {
+                                await provider.insert(request);
+                                await initForm();
+                                Navigator.pop(context);
+                              }
+                            }
+                          },
+                    child: const Text('Dodaj'),
+                  ),
+                ],
+              ),
+            ],
           ),
-        );
-      },
-    );
-  }
+        ),
+      );
+    },
+  );
+}
+
 
   Widget _buildResultView() {
     return Expanded(
@@ -298,6 +303,7 @@ class _PrisustvoListScreenState extends State<PrisustvoListScreen> {
                   setState(() {
                     result?.result.remove(e);
                   });
+                  await initForm();
                   Navigator.of(context).pop(); // Dismiss the dialog
                 } on Exception catch (ex) {
                   showDialog(

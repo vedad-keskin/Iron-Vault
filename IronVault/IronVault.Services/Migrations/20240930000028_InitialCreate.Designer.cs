@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace IronVault.Services.Migrations
 {
     [DbContext(typeof(GmsDbContext))]
-    [Migration("20240926183551_InitialCreate")]
+    [Migration("20240930000028_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
