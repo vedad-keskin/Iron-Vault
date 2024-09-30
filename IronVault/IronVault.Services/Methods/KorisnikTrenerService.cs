@@ -65,21 +65,30 @@ namespace IronVault.Services.Methods
             base.AfterInsert(request, entity);
         }
 
+
+
         public override void BeforeInsert(KorisnikTrenerUpsertRequest request, KorisnikTrener entity)
         {
+            var terminiTrenera = Context.KorisnikTreners
+                .Where(x => x.TrenerId == request.TrenerId)
+                .ToList();
 
-            var terminiTrenera = Context.KorisnikTreners.Where(x => x.TrenerId == request.TrenerId).ToList();
+            // Racunanje pocetka i kraja zakazanog termina 
+            var newEventStart = request.DatumTermina;
+            var newEventEnd = newEventStart.AddHours(request.ZakazanoSati);
 
-
-            // ako već postoji zakazani termin u tom terminu
-            if(terminiTrenera.Exists(x=> x.DatumTermina.Year == request.DatumTermina.Year &&
-            x.DatumTermina.Month == request.DatumTermina.Month &&
-            x.DatumTermina.Day == request.DatumTermina.Day && 
-            x.DatumTermina.Hour == request.DatumTermina.Hour))
+            // Proci kroz dosadasnje termine trenera 
+            foreach (var termin in terminiTrenera)
             {
-                throw new UserException("Trener je zauzet u tom terminu");
-            }
+                var existingEventStart = termin.DatumTermina;
+                var existingEventEnd = existingEventStart.AddHours(termin.ZakazanoSati);
 
+                // Provjeravanje overlapa
+                if (newEventStart < existingEventEnd && newEventEnd > existingEventStart)
+                {
+                    throw new UserException("Trener je zauzet u tom terminu");
+                }
+            }
 
             base.BeforeInsert(request, entity);
         }
