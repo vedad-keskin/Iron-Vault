@@ -120,12 +120,13 @@ namespace IronVault.Services.Methods
             return result;
         }
 
+        // Inicijaliziranje ML-a i locka da se osigura da se MLContext inicijalizira samo jednom
 
         static MLContext mlContext = null;
         static object isLocked = new object();
         static ITransformer model = null;
 
-        public List<Model.Models.Suplement> Recommend(int id)
+        public List<Model.Models.Suplement> Recommend(int userId)
         {
             if (mlContext == null)
             {
@@ -133,13 +134,17 @@ namespace IronVault.Services.Methods
                 {
                     mlContext = new MLContext();
 
-                    var tmpData = Context.Narudzbas.Include(x=> x.NarudzbaStavkas)
+                    // uzimanje svih narudzbi
+
+                    var tmpData = Context.Narudzbas.Include(x => x.NarudzbaStavkas)
                                                    .ThenInclude(x => x.Suplement.Kategorija)
                                                    .Include(x => x.NarudzbaStavkas)
                                                    .ThenInclude(x => x.Suplement.Dobavljac)
                                                    .ToList();
 
                     var data = new List<SuplementFeatures>();
+
+                    // uzimanje suplemenata iz tih narudzbi 
 
                     foreach (var item in tmpData)
                     {
@@ -154,51 +159,70 @@ namespace IronVault.Services.Methods
                         }
                     }
 
-                    // Load data into ML.NET data view
+                    // Loadanje podataka u ML 
                     var traindata = mlContext.Data.LoadFromEnumerable(data);
 
-                    // Define the transformation pipeline
+                    // Definisanje pipeline-a i mapiranje podataka
                     var pipeline = mlContext.Transforms.Conversion.MapValueToKey(nameof(SuplementFeatures.SuplementID))
                         .Append(mlContext.Transforms.Text.FeaturizeText(nameof(SuplementFeatures.Category)))
                         .Append(mlContext.Transforms.Text.FeaturizeText(nameof(SuplementFeatures.Manufacturer)))
                         .Append(mlContext.Transforms.Concatenate("Features", nameof(SuplementFeatures.Category), nameof(SuplementFeatures.Manufacturer)))
                         .Append(mlContext.Transforms.NormalizeMinMax("Features"));
 
-                    // Fit the data transformations
+  
                     model = pipeline.Fit(traindata);
                 }
             }
 
-            // Get the target supplement
-            var targetSuplement = Context.Suplements.Include(x => x.Kategorija).Include(x => x.Dobavljac).FirstOrDefault(x => x.SuplementId == id);
+            // Dobavljanje narudzbi korisnika 
+            var userPurchases = Context.Narudzbas.Include(x => x.NarudzbaStavkas)
+                                                 .ThenInclude(x => x.Suplement)
+                                                 .Where(x => x.KorisnikId == userId)
+                                                 .SelectMany(x => x.NarudzbaStavkas)
+                                                 .ToList();
 
-            if (targetSuplement == null)
+            if (!userPurchases.Any())
             {
-                return new List<Model.Models.Suplement>();
+                // Ako korisnik nema narudzbi preporučuju su 3 najbolje ocjenjena suplementa
+                var topRatedSupplements = Context.Suplements
+                                                 .OrderByDescending(x => x.ProsjecnaOcjena)  // Order by average rating
+                                                 .Take(3)  // Take top 3 highest-rated supplements
+                                                 .ToList();
+
+                
+                return Mapper.Map<List<Model.Models.Suplement>>(topRatedSupplements);
             }
 
-            // Create prediction engine
+            // Dobivanje distinct suplemenata korisnika
+            var distinctUserSuplements = userPurchases.Select(x => x.Suplement).Distinct().ToList();
+
+            // Kreiranje engina za predikcije 
             var predictionEngine = mlContext.Model.CreatePredictionEngine<SuplementFeatures, TransformedSuplementFeatures>(model);
 
-            // Create feature vector for target supplement
-            var targetFeatures = new SuplementFeatures
+            var targetVectors = new List<TransformedSuplementFeatures>();
+
+            // Kreiranje vektora za predickiju
+            foreach (var userSupplement in distinctUserSuplements)
             {
-                SuplementID = (uint)targetSuplement.SuplementId,
-                Category = targetSuplement.Kategorija.Naziv,
-                Manufacturer = targetSuplement.Dobavljac.Naziv
-            };
+                var targetFeatures = new SuplementFeatures
+                {
+                    SuplementID = (uint)userSupplement.SuplementId,
+                    Category = userSupplement.Kategorija?.Naziv ?? "Unknown Category",  // Null check for Kategorija
+                    Manufacturer = userSupplement.Dobavljac?.Naziv ?? "Unknown Manufacturer"  // Null check for Dobavljac
+                };
 
-            var targetVector = predictionEngine.Predict(targetFeatures);
+                var targetVector = predictionEngine.Predict(targetFeatures);
+                targetVectors.Add(targetVector);
+            }
 
-            // Get all other supplements
-            var suplements = Context.Suplements.Where(x => x.SuplementId != id).ToList();
-            var predictionResult = new List<(Database.Suplement, float)>();
+            // Traženje suplemenata koje korisnik nije ranije kupio da bi se našla najbolja predikcija 
+            var suplements = Context.Suplements.Where(x => !distinctUserSuplements.Contains(x)).ToList();
+            var predictionResult = new List<(Database.Suplement, float)>(); // List of (Supplement, similarity score)
 
             foreach (var suplement in suplements)
             {
-                // Perform null checks to avoid NullReferenceException
-                var category = suplement.Kategorija != null ? suplement.Kategorija.Naziv : "Unknown Category";
-                var manufacturer = suplement.Dobavljac != null ? suplement.Dobavljac.Naziv : "Unknown Manufacturer";
+                var category = suplement.Kategorija?.Naziv ?? "Unknown Category";
+                var manufacturer = suplement.Dobavljac?.Naziv ?? "Unknown Manufacturer";
 
                 var supplementFeatures = new SuplementFeatures
                 {
@@ -209,9 +233,9 @@ namespace IronVault.Services.Methods
 
                 var supplementVector = predictionEngine.Predict(supplementFeatures);
 
-                // Compute similarity based on content features
-                var similarityScore = CosineSimilarity(targetVector.Features, supplementVector.Features);
-                predictionResult.Add((suplement, similarityScore));
+                // Compute the maximum similarity score between target vectors and current supplement
+                float maxSimilarity = targetVectors.Max(tv => CosineSimilarity(tv.Features, supplementVector.Features));
+                predictionResult.Add((suplement, maxSimilarity));
             }
 
             // Return top 3 similar supplements
@@ -219,6 +243,8 @@ namespace IronVault.Services.Methods
 
             return Mapper.Map<List<Model.Models.Suplement>>(finalResult);
         }
+
+        // Računanje sličnosti preko cosine similarity
 
         private float CosineSimilarity(float[] vectorA, float[] vectorB)
         {
