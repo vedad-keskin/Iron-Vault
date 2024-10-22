@@ -34,7 +34,10 @@ namespace IronVault.Services.Methods
 
             filteredQuery = filteredQuery.Include(x => x.Dobavljac).Include(x => x.Kategorija);
 
-
+            if (!string.IsNullOrWhiteSpace(search?.StateMachine))
+            {
+                filteredQuery = filteredQuery.Where(x => x.StateMachine == search.StateMachine);
+            }
             if (!string.IsNullOrWhiteSpace(search?.FTS))
             {
                 filteredQuery = filteredQuery.Where(x => x.Naziv.Contains(search.FTS));

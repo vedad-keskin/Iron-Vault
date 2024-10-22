@@ -9,6 +9,7 @@ namespace IronVault.Model.SearchObjects
         public string? FTS { get; set; }
         public string? Kategorija { get; set; }
         public string? Dobavljac { get; set; }
+        public string? StateMachine { get; set; }
 
     }
 }

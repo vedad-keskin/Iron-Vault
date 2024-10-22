@@ -37,7 +37,11 @@ class _SuplementListScreenState extends State<SuplementListScreen> {
   }
 
   Future loadData() async {
-    var tmpData = await _suplementProvider?.get();
+    var filter = {
+      'stateMachine': 'active',
+    };
+
+    var tmpData = await _suplementProvider?.get(filter: filter);
     setState(() {
       data = tmpData;
       _isLoading = false; // Set loading to false when data is loaded
@@ -217,12 +221,12 @@ List<Widget> _buildSuplementCardList() {
                     children: [
                       const Icon(
                         Icons.circle, 
-                        size: 33,
+                        size: 34,
                         color: Colors.blue,
                       ),
                       Icon(
                         Icons.question_mark, 
-                        size: 23,
+                        size: 22,
                         color: Colors.white,
                         shadows: [
                           Shadow(
