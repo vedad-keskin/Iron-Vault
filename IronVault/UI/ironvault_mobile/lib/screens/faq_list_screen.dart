@@ -41,7 +41,7 @@ class _FaqListScreenState extends State<FaqListScreen> {
   Widget build(BuildContext context) {
     return MasterScreen(
       "FAQ",
-      index: 5,
+      index: 6,
       id: widget.id,
       child: _isLoading
           ? LoadingScreen()

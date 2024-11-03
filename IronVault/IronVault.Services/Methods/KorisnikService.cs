@@ -172,7 +172,7 @@ namespace IronVault.Services.Methods
             return this.Mapper.Map<Model.Models.Korisnik>(entity);
         }
 
-        // za dobivanje Id korisnika preko username-a
+        // za dobivanje Id korisnika preko username-a za dobivanje ID korisnika bilo gdje u flutter app 
         public int GetUserId(string username)
         {
             var entity = Context.Korisniks.FirstOrDefault(x => x.KorisnickoIme == username);
