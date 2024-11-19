@@ -8,6 +8,7 @@ import 'package:ironvault_mobile/screens/profile_screen.dart';
 import 'package:ironvault_mobile/screens/nutricionist_list_screen.dart';
 import 'package:ironvault_mobile/screens/suplement_list_screen.dart';
 import 'package:ironvault_mobile/providers/cart_provider.dart';
+import 'package:ironvault_mobile/screens/tracker_screen.dart';
 import 'package:ironvault_mobile/screens/trener_list_screen.dart';
 import 'package:ironvault_mobile/screens/uplate_list_screen.dart';
 import 'package:provider/provider.dart';
@@ -88,6 +89,10 @@ return Scaffold(
             icon: Icon(Icons.logout),
             label: 'Odjava',
           ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_month_outlined),
+            label: 'Tracker',
+          ),
         ],
       ),
     );
@@ -132,6 +137,10 @@ return Scaffold(
         // Logout action
         _cartProvider?.clearCart(); // Čiščenje korpe nakon logouta
         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+        break;
+             case 8:
+
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => TrackerScreen(widget.id)));
         break;
     }
   }

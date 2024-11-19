@@ -21,6 +21,7 @@ import 'package:ironvault_mobile/providers/order_provider.dart';
 import 'package:ironvault_mobile/providers/recenzija_provider.dart';
 import 'package:ironvault_mobile/providers/seminar_provider.dart';
 import 'package:ironvault_mobile/providers/suplement_provider.dart';
+import 'package:ironvault_mobile/providers/tracker_provider.dart';
 import 'package:ironvault_mobile/providers/trener_provider.dart';
 import 'package:ironvault_mobile/providers/trener_seminar_provider.dart';
 import 'package:ironvault_mobile/screens/profile_screen.dart';
@@ -72,6 +73,8 @@ void main() async {
           create: (_) => NarudzbaStavkaProvider()),
       ChangeNotifierProvider<RecenzijaProvider>(
           create: (_) => RecenzijaProvider()),
+           ChangeNotifierProvider<TrackerProvider>(
+          create: (_) => TrackerProvider()),
     ],
     child: const MyApp(),
   ));

@@ -115,90 +115,90 @@ class _CartScreenState extends State<CartScreen> {
     );
   }
 
-Widget _buildTotalPriceLabel() {
-  double totalPrice = _calculateTotalPrice();
-  return Padding(
-    padding: const EdgeInsets.only(right: 10.0), // Add right padding
-    child: Align(
-      alignment: Alignment.centerRight, // Align to the right
-      child: Text(
-        "Ukupno za uplatiti ${totalPrice.toStringAsFixed(2)} KM",
-        textAlign: TextAlign.end, // Ensure text is aligned to the right
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-          color: Colors.grey, // Set text color to gray
+  Widget _buildTotalPriceLabel() {
+    double totalPrice = _calculateTotalPrice();
+    return Padding(
+      padding: const EdgeInsets.only(right: 10.0), // Add right padding
+      child: Align(
+        alignment: Alignment.centerRight, // Align to the right
+        child: Text(
+          "Ukupno za uplatiti ${totalPrice.toStringAsFixed(2)} KM",
+          textAlign: TextAlign.end, // Ensure text is aligned to the right
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+            color: Colors.grey, // Set text color to gray
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget _buildBuyButton() {
-  return SizedBox(
-    width: double.infinity,
-    child: TextButton(
-      onPressed: () {
-        // Check if the cart is empty
-        if (_cartProvider.cart.items.isEmpty) {
-          // Show a styled red Snackbar if the cart is empty
-          final snackBar = SnackBar(
-            content: const Text(
-              "Korpa je prazna! Dodajte proizvode prije kupovine.",
-              style: TextStyle(color: Colors.white),
-            ),
-            duration: const Duration(seconds: 1), // Duration before the SnackBar disappears
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red, // Set background color to red
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8),
+  Widget _buildBuyButton() {
+    return SizedBox(
+      width: double.infinity,
+      child: TextButton(
+        onPressed: () {
+          // Check if the cart is empty
+          if (_cartProvider.cart.items.isEmpty) {
+            // Show a styled red Snackbar if the cart is empty
+            final snackBar = SnackBar(
+              content: const Text(
+                "Korpa je prazna! Dodajte proizvode prije kupovine.",
+                style: TextStyle(color: Colors.white),
+              ),
+              duration: const Duration(
+                  seconds: 1), // Duration before the SnackBar disappears
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.red, // Set background color to red
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+            );
+
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            return; // Prevent navigation
+          }
+
+          List<Map> items = [];
+          _cartProvider.cart.items.forEach((item) {
+            items.add({
+              "suplementId": item.suplement.suplementId,
+              "kolicina": item.count,
+            });
+          });
+
+          // Calculate total price
+          double totalPrice = _calculateTotalPrice();
+
+          // Navigate to StripeScreen and pass the order items and total price
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => StripeScreen(
+                id: widget.id,
+                items: items,
+                totalPrice: totalPrice, // Pass the total price
+              ),
             ),
           );
-
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
-          return; // Prevent navigation
-        }
-
-        List<Map> items = [];
-        _cartProvider.cart.items.forEach((item) {
-          items.add({
-            "suplementId": item.suplement.suplementId,
-            "kolicina": item.count,
-          });
-        });
-
-        // Calculate total price
-        double totalPrice = _calculateTotalPrice();
-
-        // Navigate to StripeScreen and pass the order items and total price
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => StripeScreen(
-              id: widget.id,
-              items: items,
-              totalPrice: totalPrice, // Pass the total price
-            ),
+        },
+        style: TextButton.styleFrom(
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+          padding: const EdgeInsets.symmetric(vertical: 14),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.zero,
           ),
-        );
-      },
-      style: TextButton.styleFrom(
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 14),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.zero,
+        ),
+        child: const Text(
+          "Kupi",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
-      child: const Text(
-        "Kupi",
-        style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    ),
-  );
-}
-
+    );
+  }
 }

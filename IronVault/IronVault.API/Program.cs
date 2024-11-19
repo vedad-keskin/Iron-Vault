@@ -38,6 +38,7 @@ builder.Services.AddTransient<IBiznisReportService, BiznisReportService>();
 builder.Services.AddTransient<IKorisnikTrenerService, KorisnikTrenerService>();
 builder.Services.AddTransient<IKorisnikNutricionistService, KorisnikNutricionistService>();
 builder.Services.AddTransient<IEmailService, EmailService>();
+builder.Services.AddTransient<ITrackerService, TrackerService>();
 
 builder.Services.AddTransient<BaseSuplementState>();
 builder.Services.AddTransient<InitialSuplementState>();
@@ -109,7 +110,7 @@ using (var scope = app.Services.CreateScope())
     if (pendingMigrations)
     {
 
-        dataContext.Database.Migrate();
+        //dataContext.Database.Migrate();
 
 
     }

@@ -11,7 +11,6 @@ String formatNumber(dynamic) {
   return f.format(dynamic);
 }
 
-
 Image imageFromString(String input) {
   return Image.memory(base64Decode(input));
 }
@@ -44,6 +43,152 @@ Image imageFromString(String input) {
       
   //   );
   // }
+
+
+// -----------  dtp 
+
+
+  // Widget _buildDateTimePicker() {
+  //   return Row(
+  //     children: [
+  //       Expanded(
+  //         child: Padding(
+  //           padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+  //           child: FormBuilderDateTimePicker(
+  //             name: 'datumVazenja',
+  //             controller: _dateController,
+  //             initialValue: _dateController.text.isNotEmpty
+  //                 ? DateFormat('d MMM yyyy').parse(_dateController.text)
+  //                 : null,
+  //             inputType: InputType.both,
+  //             format: DateFormat('d MMM yyyy'),
+  //             decoration: InputDecoration(
+  //               labelText: "Datum i vrijeme",
+  //               prefixIcon: Icon(Icons.calendar_today),
+  //               filled: true,
+  //               fillColor: Colors.grey[200],
+  //               border: OutlineInputBorder(
+  //                 borderRadius: BorderRadius.circular(10.0),
+  //                 borderSide: BorderSide.none,
+  //               ),
+  //               focusedBorder: OutlineInputBorder(
+  //                 borderRadius: BorderRadius.circular(10.0),
+  //                 borderSide: const BorderSide(color: Colors.blue),
+  //               ),
+  //             ),
+  //             onChanged: (value) {
+  //               // Update the text controller whenever the date is selected
+  //               _dateController.text =
+  //                   value != null ? DateFormat('d MMM yyyy').format(value) : '';
+  //             },
+  //           ),
+  //         ),
+  //       ),
+  //       Container(
+  //         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+  //         child: IconButton(
+  //           icon: _isLoading
+  //               ? CircularProgressIndicator()
+  //               : Icon(Icons.arrow_forward_ios_outlined),
+  //           onPressed: () async {
+  //             if (_dateController.text.isNotEmpty) {
+  //               setState(() {
+  //                 _isLoading = true; // Set loading to true while searching
+  //               });
+  //               var tmpData = await _fitPasosProvider
+  //                   ?.get(filter: {'datumVazenja': _dateController.text});
+  //               setState(() {
+  //                 data = tmpData;
+  //                 _isLoading = false; // Set loading to false after data is loaded
+  //               });
+  //             }
+  //           },
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
+
+
+// --------------- combo search
+
+
+
+// Widget _buildDropdown() {
+//   return Row(
+//     children: [
+//       Expanded(
+//         child: Padding(
+//           padding: const EdgeInsets.fromLTRB(15, 15, 0, 15),
+//           child: FormBuilderDropdown<String>(
+//             name: 'status',
+//             initialValue: _statusController.text.isNotEmpty
+//                 ? _statusController.text
+//                 : null,
+//             decoration: InputDecoration(
+//               labelText: 'Status',
+//               prefixIcon: Icon(Icons.filter_list),
+//               filled: true,
+//               fillColor: Colors.grey[200],
+//               border: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(10.0),
+//                 borderSide: BorderSide.none,
+//               ),
+//               focusedBorder: OutlineInputBorder(
+//                 borderRadius: BorderRadius.circular(10.0),
+//                 borderSide: const BorderSide(color: Colors.blue),
+//               ),
+//             ),
+//             items: [
+//               DropdownMenuItem(
+//                 value: 'U toku',
+//                 child: Text('U toku'),
+//               ),
+//               DropdownMenuItem(
+//                 value: 'Realizovana',
+//                 child: Text('Realizovana'),
+//               ),
+//                        DropdownMenuItem(
+//                 value: 'Istekla',
+//                 child: Text('Istekla'),
+//               ),
+//             ],
+//             onChanged: (value) {
+//               // Update the controller whenever a new value is selected
+//               _statusController.text = value ?? '';
+//             },
+//           ),
+//         ),
+//       ),
+//       Container(
+//         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+//         child: IconButton(
+//           icon: _isLoading
+//               ? CircularProgressIndicator()
+//               : Icon(Icons.arrow_forward_ios_outlined),
+//           onPressed: () async {
+//             if (_statusController.text.isNotEmpty) {
+//               setState(() {
+//                 _isLoading = true; // Set loading to true while searching
+//               });
+//               var tmpData = await _toDo4924Provider
+//                   ?.get(filter: {'status': _statusController.text});
+//               setState(() {
+//                 data = tmpData;
+//                 _isLoading = false; // Set loading to false after data is loaded
+//               });
+//             }
+//           },
+//         ),
+//       ),
+//     ],
+//   );
+// }
+
+
+
+
+
 
 
 
@@ -279,6 +424,9 @@ Image imageFromString(String input) {
 // }
 
 
+
+
+
 //   Widget _saveRow() {
 //     return Row(
 //       mainAxisAlignment: MainAxisAlignment.end,
@@ -386,7 +534,83 @@ Image imageFromString(String input) {
 
 
 
+
+
+
+
+
+
+
+
+
+// ------------ > status 
+
+
+            // Column(
+            //   children: [
+            //     FormBuilderDropdown(
+            //       name: 'aktivan',
+            //       decoration: commonDecoration.copyWith(labelText: "Aktivan"),
+            //       items: [
+            //         DropdownMenuItem(
+            //           value: 'aktivan',
+            //           child: Text("Aktivan"),
+            //         ),
+            //         DropdownMenuItem(
+            //           value: 'neaktivan',
+            //           child: Text("Neaktivan"),
+            //         ),
+            //       ],
+            //       autovalidateMode: AutovalidateMode.onUserInteraction,
+            //       validator: FormBuilderValidators.compose([
+            //         FormBuilderValidators.required(
+            //           errorText: 'Ovo polje je obavezno',
+            //         ),
+            //       ]),
+            //     ),
+            //   ],
+            // ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // -----------  footer text
+
+
+
+
 
 
 
