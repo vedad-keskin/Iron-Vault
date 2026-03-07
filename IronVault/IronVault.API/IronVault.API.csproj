@@ -6,6 +6,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>b0ac4a43-09eb-44c4-ae38-995a8b7f70c4</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <!-- Suppress nullable/obsolete warnings for cleaner Render build (older codebase) -->
+    <NoWarn>$(NoWarn);CS8618;CS8600;CS8602;CS8603;CS8604;CS8625;CS8629;CS0109;CS0618;CS1998;SYSLIB0045</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

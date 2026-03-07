@@ -16,7 +16,7 @@ class SuplementProvider extends BaseProvider<Suplement> {
 
   Future<Suplement> Activate(int id) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'Suplement/$id/activate';
@@ -38,7 +38,7 @@ class SuplementProvider extends BaseProvider<Suplement> {
 
   Future<Suplement> Edit(int id) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'Suplement/$id/edit';
@@ -61,7 +61,7 @@ class SuplementProvider extends BaseProvider<Suplement> {
 
  Future<Suplement> Hide(int id) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'Suplement/$id/hide';

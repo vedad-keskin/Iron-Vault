@@ -16,7 +16,7 @@ class KorisnikProvider extends BaseProvider<Korisnik> {
 
    Future<int> GetUserId(String username) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'Korisnik/$username/getUserId';

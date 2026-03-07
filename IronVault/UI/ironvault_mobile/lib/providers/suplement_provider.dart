@@ -16,7 +16,7 @@ class SuplementProvider extends BaseProvider<Suplement> {
 
  Future<List<Suplement>> Recommend(int id) async {
   var url = const String.fromEnvironment("baseUrl",
-      defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+      defaultValue: AppConstants.apiBaseUrl);
 
   url += 'Suplement/$id/recommend';
 
@@ -38,7 +38,7 @@ class SuplementProvider extends BaseProvider<Suplement> {
 
  Future<List<Suplement>> GetDistinctBought(int id) async {
   var url = const String.fromEnvironment("baseUrl",
-      defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+      defaultValue: AppConstants.apiBaseUrl);
 
   url += 'Suplement/$id/distinctBought';
 

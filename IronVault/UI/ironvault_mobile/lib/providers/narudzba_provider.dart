@@ -15,7 +15,7 @@ class NarudzbaProvider extends BaseProvider<Narudzba> {
 
   Future<int> GetLatestOrderIdByUserId(int korisnikId) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
     url += 'Narudzba/$korisnikId/GetLatestOrderIdByUserId';
 

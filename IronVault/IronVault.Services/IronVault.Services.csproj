@@ -4,6 +4,8 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <!-- Suppress nullable/obsolete warnings for cleaner Render build (older codebase) -->
+    <NoWarn>$(NoWarn);CS8618;CS8600;CS8602;CS8603;CS8604;CS8625;CS8629;CS1998;SYSLIB0045</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>

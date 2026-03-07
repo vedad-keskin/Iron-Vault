@@ -15,7 +15,7 @@ class BiznisReportProvider extends BaseProvider<BizniReport> {
 
   Future<BizniReport> GetBiznisReport() async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'GetReport';

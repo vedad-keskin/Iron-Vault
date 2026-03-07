@@ -16,7 +16,7 @@ class TrackerProvider extends BaseProvider<Tracker> {
 
   Future<SearchResult<Tracker>> GetAllTracker({dynamic filter}) async {
     var url = const String.fromEnvironment("baseUrl",
-        defaultValue: "${AppConstants.baseUrl}${AppConstants.apiPort}/");
+        defaultValue: AppConstants.apiBaseUrl);
 
 
     url += 'GetAllTracker';

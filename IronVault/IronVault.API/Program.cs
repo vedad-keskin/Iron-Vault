@@ -133,13 +133,19 @@ var app = builder.Build();
 
 app.UseCors();
 
+// Health endpoint for Render/load balancers (no auth required)
+app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow }))
+   .AllowAnonymous();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+// Skip HTTPS redirect in production when behind Render's proxy (avoids "Failed to determine the https port" warning)
+if (!app.Environment.IsProduction())
+    app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
