@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.API", "IronVault.API\IronVault.API.csproj", "{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Model", "IronVault.Model\IronVault.Model.csproj", "{44673936-DCD6-46D5-8ED4-735737423D20}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.Services", "IronVault.Services\IronVault.Services.csproj", "{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{44673936-DCD6-46D5-8ED4-735737423D20} = {44673936-DCD6-46D5-8ED4-735737423D20}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F546F59F-F7A1-4011-AF5C-2C4D754AED00}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		Dockerfile = Dockerfile
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IronVault.RabbitMQ", "IronVault.RabbitMQ\IronVault.RabbitMQ.csproj", "{628D5DB0-6FA9-48A2-90BB-B330B1515B44}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05AFEE45-C7CE-480F-8C5D-E56EDE8C434D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44673936-DCD6-46D5-8ED4-735737423D20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44673936-DCD6-46D5-8ED4-735737423D20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44673936-DCD6-46D5-8ED4-735737423D20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44673936-DCD6-46D5-8ED4-735737423D20}.Release|Any CPU.Build.0 = Release|Any CPU
+		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{298E0B2A-82C4-4881-8A0C-6AEB0AD3C4D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{628D5DB0-6FA9-48A2-90BB-B330B1515B44}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5CA89B32-C21B-42A7-93FD-BDAAEF4C2FF0}
+	EndGlobalSection
+EndGlobal
