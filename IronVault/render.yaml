@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ironvault-api
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DB_MODE
+        sync: false
+      - key: DB_SUPABASE_HOST
+        sync: false
+      - key: DB_SUPABASE_PORT
+        value: "5432"
+      - key: DB_SUPABASE_NAME
+        value: postgres
+      - key: DB_SUPABASE_USER
+        sync: false
+      - key: DB_SUPABASE_PASSWORD
+        sync: false
+      - key: FRONTEND_URL
+        sync: false
+      - key: RABBITMQ__HOST
+        sync: false
+      - key: RABBITMQ__USERNAME
+        sync: false
+      - key: RABBITMQ__PASSWORD
+        sync: false

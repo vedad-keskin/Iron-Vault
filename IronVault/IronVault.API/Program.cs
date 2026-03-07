@@ -10,7 +10,42 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
+AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+DotNetEnv.Env.TraversePath().Load();
+var connectionString = BuildPostgresConnectionString();
+
+static string BuildPostgresConnectionString()
+{
+    var mode = Environment.GetEnvironmentVariable("DB_MODE")?.Trim().ToLowerInvariant();
+    string? host, port, name, user, password;
+    if (mode == "supabase")
+    {
+        host = Environment.GetEnvironmentVariable("DB_SUPABASE_HOST");
+        port = Environment.GetEnvironmentVariable("DB_SUPABASE_PORT");
+        name = Environment.GetEnvironmentVariable("DB_SUPABASE_NAME");
+        user = Environment.GetEnvironmentVariable("DB_SUPABASE_USER");
+        password = Environment.GetEnvironmentVariable("DB_SUPABASE_PASSWORD");
+    }
+    else
+    {
+        host = Environment.GetEnvironmentVariable("DB_HOST");
+        port = Environment.GetEnvironmentVariable("DB_PORT");
+        name = Environment.GetEnvironmentVariable("DB_NAME");
+        user = Environment.GetEnvironmentVariable("DB_USER");
+        password = Environment.GetEnvironmentVariable("DB_PASSWORD");
+    }
+    port = string.IsNullOrWhiteSpace(port) ? "5432" : port;
+    if (string.IsNullOrWhiteSpace(host) || string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(user) || string.IsNullOrWhiteSpace(password))
+        return "Host=localhost;Port=5432;Database=IronVault;Username=postgres;Password=postgres";
+    var cs = $"Host={host};Port={port};Database={name};Username={user};Password={password}";
+    if (mode == "supabase") cs += ";SSL Mode=Require";
+    return cs;
+}
+
 var builder = WebApplication.CreateBuilder(args);
+
+var port = Environment.GetEnvironmentVariable("PORT") ?? "5130";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
 
 // Add services to the container.
 builder.Services.AddTransient<ISuplementService, SuplementService>();
@@ -74,9 +109,19 @@ builder.Services.AddSwaggerGen(c =>
 
 });
 
-var connectionString = builder.Configuration.GetConnectionString("IronVaultConnection");
-builder.Services.AddDbContext<GmsDbContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDatabaseServices(connectionString);
+
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        var frontendUrl = Environment.GetEnvironmentVariable("FRONTEND_URL");
+        if (!string.IsNullOrWhiteSpace(frontendUrl))
+            policy.WithOrigins(frontendUrl.TrimEnd('/')).AllowAnyMethod().AllowAnyHeader();
+        else
+            policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+    });
+});
 
 builder.Services.AddMapster();
 
@@ -86,7 +131,8 @@ builder.Services.AddAuthentication("BasicAuthentication")
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+app.UseCors();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -99,21 +145,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-
 using (var scope = app.Services.CreateScope())
 {
-    var dataContext = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
-
-
-    var pendingMigrations = dataContext.Database.GetPendingMigrations().Any();
-
-    if (pendingMigrations)
-    {
-
-        //dataContext.Database.Migrate();
-
-
-    }
+    var context = scope.ServiceProvider.GetRequiredService<GmsDbContext>();
+    await context.Database.ExecuteSqlRawAsync(
+        "CREATE TABLE IF NOT EXISTS \"__EFMigrationsHistory\" (\"MigrationId\" varchar(150) NOT NULL PRIMARY KEY, \"ProductVersion\" varchar(32) NOT NULL);");
+    await context.Database.MigrateAsync();
 }
 
 app.Run();

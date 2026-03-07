@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -8,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace IronVault.Services.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialPostgres : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,11 +18,11 @@ namespace IronVault.Services.Migrations
                 name: "Clanarina",
                 columns: table => new
                 {
-                    ClanarinaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ClanarinaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false),
                     Cijena = table.Column<float>(type: "real", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Opis = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,9 +33,9 @@ namespace IronVault.Services.Migrations
                 name: "Dobavljac",
                 columns: table => new
                 {
-                    DobavljacID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DobavljacID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -45,10 +46,10 @@ namespace IronVault.Services.Migrations
                 name: "FAQ",
                 columns: table => new
                 {
-                    FAQID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Pitanje = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Odgovor = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    FAQID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Pitanje = table.Column<string>(type: "text", nullable: false),
+                    Odgovor = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -59,9 +60,9 @@ namespace IronVault.Services.Migrations
                 name: "Grad",
                 columns: table => new
                 {
-                    GradID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    GradID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,9 +73,9 @@ namespace IronVault.Services.Migrations
                 name: "Kategorija",
                 columns: table => new
                 {
-                    KategorijaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    KategorijaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,13 +86,13 @@ namespace IronVault.Services.Migrations
                 name: "Nutricionist",
                 columns: table => new
                 {
-                    NutricionistID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    NutricionistID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Ime = table.Column<string>(type: "text", nullable: false),
+                    Prezime = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    BrojTelefona = table.Column<string>(type: "text", nullable: false),
+                    Slika = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -102,11 +103,11 @@ namespace IronVault.Services.Migrations
                 name: "Seminar",
                 columns: table => new
                 {
-                    SeminarID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Tema = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Predavac = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Datum = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    SeminarID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Tema = table.Column<string>(type: "text", nullable: false),
+                    Predavac = table.Column<string>(type: "text", nullable: false),
+                    Datum = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,9 +118,9 @@ namespace IronVault.Services.Migrations
                 name: "Spol",
                 columns: table => new
                 {
-                    SpolID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    SpolID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,13 +131,13 @@ namespace IronVault.Services.Migrations
                 name: "Trener",
                 columns: table => new
                 {
-                    TrenerID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                    TrenerID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Ime = table.Column<string>(type: "text", nullable: false),
+                    Prezime = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    BrojTelefona = table.Column<string>(type: "text", nullable: false),
+                    Slika = table.Column<byte[]>(type: "bytea", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -147,10 +148,10 @@ namespace IronVault.Services.Migrations
                 name: "Uloga",
                 columns: table => new
                 {
-                    UlogaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    UlogaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false),
+                    Opis = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -161,17 +162,17 @@ namespace IronVault.Services.Migrations
                 name: "Suplement",
                 columns: table => new
                 {
-                    SuplementID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SuplementID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Naziv = table.Column<string>(type: "text", nullable: false),
                     Cijena = table.Column<float>(type: "real", nullable: false),
                     Gramaza = table.Column<float>(type: "real", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    StateMachine = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProsjecnaOcjena = table.Column<double>(type: "float", nullable: true),
-                    DobavljacID = table.Column<int>(type: "int", nullable: false),
-                    KategorijaID = table.Column<int>(type: "int", nullable: false)
+                    Opis = table.Column<string>(type: "text", nullable: false),
+                    Slika = table.Column<byte[]>(type: "bytea", nullable: true),
+                    StateMachine = table.Column<string>(type: "text", nullable: true),
+                    ProsjecnaOcjena = table.Column<double>(type: "double precision", nullable: true),
+                    DobavljacID = table.Column<int>(type: "integer", nullable: false),
+                    KategorijaID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -192,10 +193,10 @@ namespace IronVault.Services.Migrations
                 name: "Nutricionist_Seminar",
                 columns: table => new
                 {
-                    Nutricionist_SeminarID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NutricionistID = table.Column<int>(type: "int", nullable: false),
-                    SeminarID = table.Column<int>(type: "int", nullable: false)
+                    Nutricionist_SeminarID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NutricionistID = table.Column<int>(type: "integer", nullable: false),
+                    SeminarID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -216,23 +217,23 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik",
                 columns: table => new
                 {
-                    KorisnikID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Ime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Prezime = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    KorisnickoIme = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LozinkaHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LozinkaSalt = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Slika = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    BrojTelefona = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Ime = table.Column<string>(type: "text", nullable: false),
+                    Prezime = table.Column<string>(type: "text", nullable: false),
+                    KorisnickoIme = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    LozinkaHash = table.Column<string>(type: "text", nullable: false),
+                    LozinkaSalt = table.Column<string>(type: "text", nullable: false),
+                    Slika = table.Column<byte[]>(type: "bytea", nullable: true),
+                    BrojTelefona = table.Column<string>(type: "text", nullable: false),
                     Visina = table.Column<float>(type: "real", nullable: false),
                     Tezina = table.Column<float>(type: "real", nullable: false),
-                    Razina = table.Column<int>(type: "int", nullable: true),
-                    VrijemeUTeretani = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SatiUTeretani = table.Column<int>(type: "int", nullable: true),
-                    GradID = table.Column<int>(type: "int", nullable: false),
-                    SpolID = table.Column<int>(type: "int", nullable: false)
+                    Razina = table.Column<int>(type: "integer", nullable: true),
+                    VrijemeUTeretani = table.Column<string>(type: "text", nullable: true),
+                    SatiUTeretani = table.Column<int>(type: "integer", nullable: true),
+                    GradID = table.Column<int>(type: "integer", nullable: false),
+                    SpolID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -253,10 +254,10 @@ namespace IronVault.Services.Migrations
                 name: "Trener_Seminar",
                 columns: table => new
                 {
-                    Trener_SeminarID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TrenerID = table.Column<int>(type: "int", nullable: false),
-                    SeminarID = table.Column<int>(type: "int", nullable: false)
+                    Trener_SeminarID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TrenerID = table.Column<int>(type: "integer", nullable: false),
+                    SeminarID = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,12 +278,12 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik_Clanarina",
                 columns: table => new
                 {
-                    Korisnik_ClanarinaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    ClanarinaID = table.Column<int>(type: "int", nullable: false),
-                    DatumUplate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DatumIsteka = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Korisnik_ClanarinaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    ClanarinaID = table.Column<int>(type: "integer", nullable: false),
+                    DatumUplate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DatumIsteka = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -303,12 +304,12 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik_Nutricionst",
                 columns: table => new
                 {
-                    Korisnik_NutricionistID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    NutricionistID = table.Column<int>(type: "int", nullable: false),
-                    DatumTermina = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ZakazanoSati = table.Column<int>(type: "int", nullable: false)
+                    Korisnik_NutricionistID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    NutricionistID = table.Column<int>(type: "integer", nullable: false),
+                    DatumTermina = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ZakazanoSati = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -329,12 +330,12 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik_Trener",
                 columns: table => new
                 {
-                    Korisnik_TrenerID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    TrenerID = table.Column<int>(type: "int", nullable: false),
-                    DatumTermina = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    ZakazanoSati = table.Column<int>(type: "int", nullable: false)
+                    Korisnik_TrenerID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    TrenerID = table.Column<int>(type: "integer", nullable: false),
+                    DatumTermina = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    ZakazanoSati = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -355,11 +356,11 @@ namespace IronVault.Services.Migrations
                 name: "Korisnik_Uloga",
                 columns: table => new
                 {
-                    Korisnik_UlogaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    UlogaID = table.Column<int>(type: "int", nullable: false),
-                    DatumIzmjene = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Korisnik_UlogaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    UlogaID = table.Column<int>(type: "integer", nullable: false),
+                    DatumIzmjene = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -380,13 +381,13 @@ namespace IronVault.Services.Migrations
                 name: "Narudzba",
                 columns: table => new
                 {
-                    NarudzbaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    Sifra = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DatumVrijemeNarudzbe = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: true),
-                    Otkazano = table.Column<bool>(type: "bit", nullable: true)
+                    NarudzbaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    Sifra = table.Column<string>(type: "text", nullable: true),
+                    DatumVrijemeNarudzbe = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Status = table.Column<bool>(type: "boolean", nullable: true),
+                    Otkazano = table.Column<bool>(type: "boolean", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -402,11 +403,11 @@ namespace IronVault.Services.Migrations
                 name: "Prisustvo",
                 columns: table => new
                 {
-                    PrisustvoID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    DatumVrijemeUlaska = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DatumVrijemeIzlaska = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    PrisustvoID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    DatumVrijemeUlaska = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    DatumVrijemeIzlaska = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -422,12 +423,12 @@ namespace IronVault.Services.Migrations
                 name: "Recenzija",
                 columns: table => new
                 {
-                    RecenzijaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    KorisnikID = table.Column<int>(type: "int", nullable: false),
-                    SuplementID = table.Column<int>(type: "int", nullable: false),
-                    Ocjena = table.Column<int>(type: "int", nullable: false),
-                    Opis = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    RecenzijaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    KorisnikID = table.Column<int>(type: "integer", nullable: false),
+                    SuplementID = table.Column<int>(type: "integer", nullable: false),
+                    Ocjena = table.Column<int>(type: "integer", nullable: false),
+                    Opis = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -448,11 +449,11 @@ namespace IronVault.Services.Migrations
                 name: "Narudzba_Stavka",
                 columns: table => new
                 {
-                    Narudzba_StavkaID = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    NarudzbaID = table.Column<int>(type: "int", nullable: false),
-                    SuplementID = table.Column<int>(type: "int", nullable: false),
-                    Kolicina = table.Column<int>(type: "int", nullable: false)
+                    Narudzba_StavkaID = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    NarudzbaID = table.Column<int>(type: "integer", nullable: false),
+                    SuplementID = table.Column<int>(type: "integer", nullable: false),
+                    Kolicina = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

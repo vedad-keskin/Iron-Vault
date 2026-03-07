@@ -3,8 +3,8 @@ using System;
 using IronVault.Services.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -17,30 +17,30 @@ namespace IronVault.Services.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.13")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+                .HasAnnotation("ProductVersion", "9.0.4")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("IronVault.Services.Database.Clanarina", b =>
                 {
                     b.Property<int>("ClanarinaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ClanarinaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ClanarinaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ClanarinaId"));
 
                     b.Property<float>("Cijena")
                         .HasColumnType("real");
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Opis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("ClanarinaId");
 
@@ -74,14 +74,14 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("DobavljacId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DobavljacID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DobavljacId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("DobavljacId"));
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("DobavljacId");
 
@@ -144,18 +144,18 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("Faqid")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("FAQID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Faqid"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Faqid"));
 
                     b.Property<string>("Odgovor")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Pitanje")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("Faqid");
 
@@ -198,14 +198,14 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("GradId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("GradID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GradId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("GradId"));
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("GradId");
 
@@ -388,14 +388,14 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KategorijaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KategorijaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KategorijaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KategorijaId"));
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("KategorijaId");
 
@@ -428,55 +428,55 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KorisnikId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KorisnikId"));
 
                     b.Property<string>("BrojTelefona")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("GradId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("GradID");
 
                     b.Property<string>("Ime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("KorisnickoIme")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LozinkaHash")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("LozinkaSalt")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Prezime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int?>("Razina")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int?>("SatiUteretani")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SatiUTeretani");
 
                     b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<int>("SpolId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SpolID");
 
                     b.Property<float>("Tezina")
@@ -486,7 +486,7 @@ namespace IronVault.Services.Migrations
                         .HasColumnType("real");
 
                     b.Property<string>("VrijemeUteretani")
-                        .HasColumnType("nvarchar(max)")
+                        .HasColumnType("text")
                         .HasColumnName("VrijemeUTeretani");
 
                     b.HasKey("KorisnikId");
@@ -560,23 +560,23 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KorisnikClanarinaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Korisnik_ClanarinaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikClanarinaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KorisnikClanarinaId"));
 
                     b.Property<int>("ClanarinaId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("ClanarinaID");
 
                     b.Property<DateTime>("DatumIsteka")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DatumUplate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.HasKey("KorisnikClanarinaId");
@@ -730,24 +730,24 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KorisnikNutricionistId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Korisnik_NutricionistID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikNutricionistId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KorisnikNutricionistId"));
 
                     b.Property<DateTime>("DatumTermina")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.Property<int>("NutricionistId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("NutricionistID");
 
                     b.Property<int>("ZakazanoSati")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("KorisnikNutricionistId");
 
@@ -762,24 +762,24 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KorisnikTrenerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Korisnik_TrenerID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikTrenerId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KorisnikTrenerId"));
 
                     b.Property<DateTime>("DatumTermina")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.Property<int>("TrenerId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrenerID");
 
                     b.Property<int>("ZakazanoSati")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.HasKey("KorisnikTrenerId");
 
@@ -794,20 +794,20 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("KorisnikUlogaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Korisnik_UlogaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("KorisnikUlogaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("KorisnikUlogaId"));
 
                     b.Property<DateTime>("DatumIzmjene")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.Property<int>("UlogaId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("UlogaID");
 
                     b.HasKey("KorisnikUlogaId");
@@ -860,26 +860,26 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("NarudzbaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("NarudzbaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NarudzbaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NarudzbaId"));
 
                     b.Property<DateTime>("DatumVrijemeNarudzbe")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.Property<bool?>("Otkazano")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Sifra")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<bool?>("Status")
-                        .HasColumnType("bit");
+                        .HasColumnType("boolean");
 
                     b.HasKey("NarudzbaId");
 
@@ -948,20 +948,20 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("NarudzbaStavkaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Narudzba_StavkaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NarudzbaStavkaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NarudzbaStavkaId"));
 
                     b.Property<int>("Kolicina")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<int>("NarudzbaId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("NarudzbaID");
 
                     b.Property<int>("SuplementId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SuplementID");
 
                     b.HasKey("NarudzbaStavkaId");
@@ -1056,29 +1056,29 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("NutricionistId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("NutricionistID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NutricionistId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NutricionistId"));
 
                     b.Property<string>("BrojTelefona")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Ime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Prezime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.HasKey("NutricionistId");
 
@@ -1109,17 +1109,17 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("NutricionistSeminarId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Nutricionist_SeminarID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("NutricionistSeminarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("NutricionistSeminarId"));
 
                     b.Property<int>("NutricionistId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("NutricionistID");
 
                     b.Property<int>("SeminarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SeminarID");
 
                     b.HasKey("NutricionistSeminarId");
@@ -1161,19 +1161,19 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("PrisustvoId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("PrisustvoID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PrisustvoId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PrisustvoId"));
 
                     b.Property<DateTime?>("DatumVrijemeIzlaska")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<DateTime>("DatumVrijemeUlaska")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.HasKey("PrisustvoId");
@@ -1292,24 +1292,24 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("RecenzijaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("RecenzijaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RecenzijaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("RecenzijaId"));
 
                     b.Property<int>("KorisnikId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KorisnikID");
 
                     b.Property<int>("Ocjena")
-                        .HasColumnType("int");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Opis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<int>("SuplementId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SuplementID");
 
                     b.HasKey("RecenzijaId");
@@ -1391,21 +1391,21 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("SeminarId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SeminarID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SeminarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SeminarId"));
 
                     b.Property<DateTime>("Datum")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Predavac")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Tema")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("SeminarId");
 
@@ -1460,14 +1460,14 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("SpolId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SpolID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SpolId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SpolId"));
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("SpolId");
 
@@ -1490,41 +1490,41 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("SuplementId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SuplementID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SuplementId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("SuplementId"));
 
                     b.Property<float>("Cijena")
                         .HasColumnType("real");
 
                     b.Property<int>("DobavljacId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("DobavljacID");
 
                     b.Property<float>("Gramaza")
                         .HasColumnType("real");
 
                     b.Property<int>("KategorijaId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("KategorijaID");
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Opis")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<double?>("ProsjecnaOcjena")
-                        .HasColumnType("float");
+                        .HasColumnType("double precision");
 
                     b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.Property<string>("StateMachine")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("SuplementId");
 
@@ -1643,29 +1643,29 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("TrenerId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrenerID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrenerId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TrenerId"));
 
                     b.Property<string>("BrojTelefona")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Ime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Prezime")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<byte[]>("Slika")
-                        .HasColumnType("varbinary(max)");
+                        .HasColumnType("bytea");
 
                     b.HasKey("TrenerId");
 
@@ -1696,17 +1696,17 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("TrenerSeminarId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("Trener_SeminarID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TrenerSeminarId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("TrenerSeminarId"));
 
                     b.Property<int>("SeminarId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("SeminarID");
 
                     b.Property<int>("TrenerId")
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("TrenerID");
 
                     b.HasKey("TrenerSeminarId");
@@ -1748,17 +1748,17 @@ namespace IronVault.Services.Migrations
                 {
                     b.Property<int>("UlogaId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("integer")
                         .HasColumnName("UlogaID");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UlogaId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UlogaId"));
 
                     b.Property<string>("Naziv")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.Property<string>("Opis")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text");
 
                     b.HasKey("UlogaId");
 

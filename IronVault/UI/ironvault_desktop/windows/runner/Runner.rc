@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "ironvault_desktop" "\0"
+            VALUE "FileDescription", "Iron Vault Admin" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "ironvault_desktop" "\0"
+            VALUE "InternalName", "Iron Vault Admin" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "ironvault_desktop.exe" "\0"
-            VALUE "ProductName", "ironvault_desktop" "\0"
+            VALUE "OriginalFilename", "Iron Vault Admin.exe" "\0"
+            VALUE "ProductName", "Iron Vault Admin" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

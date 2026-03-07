@@ -1,20 +1,19 @@
 version: '3'
 services:
-#mssql docker
-  ironvault-sql:
-    image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+  postgres:
+    image: postgres:16-alpine
     restart: unless-stopped
     environment:
-      - ACCEPT_EULA=Y
-      - SA_PASSWORD=${SQL__PASSWORD}
-      - MSSQL_PID=${SQL__PID}
+      - POSTGRES_DB=${DB_NAME:-IronVault}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-your_password_here}
     ports:
-      - 1401:1433
-    expose:
-      - 1433
+      - 5432:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     networks:
       - ironvault2024
-  
+
   rabbitmq:
     image: rabbitmq:3.12.1-management
     container_name: rabbitmq
@@ -42,30 +41,37 @@ services:
       - RABBITMQ_VIRTUALHOST=/
     depends_on:
       - rabbitmq
-      - ironvault-sql
       - ironvault-api
     networks:
       - ironvault2024
     ports:
       - 7111:80
 
-
   ironvault-api:
     restart: unless-stopped
     build:
       context: .
     environment:
-      - ConnectionStrings:IronVaultConnection=Server=ironvault-sql,1433;Database=${SQL__DATABASE};User=${SQL__USER};Password=${SQL__PASSWORD};ConnectRetryCount=0; TrustServerCertificate=True
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ENVIRONMENT=Development
+      - DB_MODE=local
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-IronVault}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-your_password_here}
+      - RABBITMQ__HOST=rabbitmq
+      - RABBITMQ__USERNAME=${RABBITMQ__USERNAME}
+      - RABBITMQ__PASSWORD=${RABBITMQ__PASSWORD}
     ports:
-      - 5039:44340
+      - 5130:5130
     networks:
       - ironvault2024
-    links:
-      - ironvault-sql
     depends_on:
-      - ironvault-sql
-      
+      - postgres
+
+volumes:
+  postgres_data:
+
 networks:
   ironvault2024:
-    driver: bridge      
+    driver: bridge
