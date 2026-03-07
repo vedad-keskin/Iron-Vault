@@ -133,9 +133,9 @@ var app = builder.Build();
 
 app.UseCors();
 
-// Health endpoint for Render/load balancers (no auth required)
-app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow }))
-   .AllowAnonymous();
+// Anonymous endpoints so Render/default health checks get 200 and deploy completes (no auth)
+app.MapGet("/", () => Results.Ok(new { status = "ok", service = "IronVault.API" })).AllowAnonymous();
+app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow })).AllowAnonymous();
 
 if (app.Environment.IsDevelopment())
 {
