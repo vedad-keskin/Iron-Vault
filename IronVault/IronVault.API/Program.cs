@@ -133,9 +133,18 @@ var app = builder.Build();
 
 app.UseCors();
 
-// Anonymous endpoints so Render/default health checks get 200 and deploy completes (no auth)
-app.MapGet("/", () => Results.Ok(new { status = "ok", service = "IronVault.API" })).AllowAnonymous();
-app.MapGet("/health", () => Results.Ok(new { status = "ok", timestamp = DateTime.UtcNow })).AllowAnonymous();
+// Short-circuit health probes BEFORE auth so Render gets 200 and completes the deploy
+app.Use(async (context, next) =>
+{
+    if (context.Request.Path == "/" || context.Request.Path == "/health")
+    {
+        context.Response.StatusCode = 200;
+        context.Response.ContentType = "application/json";
+        await context.Response.WriteAsync("{\"status\":\"ok\"}");
+        return;
+    }
+    await next();
+});
 
 if (app.Environment.IsDevelopment())
 {

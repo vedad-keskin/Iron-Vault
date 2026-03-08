@@ -75,6 +75,8 @@ flutter_launcher_icons:
 
 dependency_overrides:
   intl: 0.20.2
+  win32: ^5.5.1
+  flutter_plugin_android_lifecycle: ^2.0.28
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
