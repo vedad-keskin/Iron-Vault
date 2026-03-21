@@ -1,0 +1,74 @@
+name: Iron Vault — Keep Supabase Alive
+
+# Scheduled pings so Render cold-starts less often and Supabase sees DB activity.
+# BASE_URL must match the Flutter apps’ production API host (no trailing slash for curl paths):
+#   UI/ironvault_desktop/lib/utils/app_constants.dart — apiBaseUrl
+#   UI/ironvault_mobile/lib/utils/app_constants.dart — apiBaseUrl
+#
+# Schedule (UTC):
+#   12:00 — wake ping (root URL; Swagger is not enabled in Production on this API)
+#   12:05 — 3 DB pings on [AllowAnonymous] list endpoints
+#   12:10 — same DB pings again
+# Controllers: GradController, UlogaController, SpolController — GET list is [AllowAnonymous].
+on:
+  schedule:
+    - cron: "0 12 * * *"   # 12:00 — wake Render
+    - cron: "5 12 * * *"   # 12:05 — DB pings
+    - cron: "10 12 * * *"  # 12:10 — DB pings
+  workflow_dispatch:        # manual trigger from Actions tab
+
+env:
+  # Same host as ironvault_desktop / ironvault_mobile apiBaseUrl — omit trailing slash.
+  BASE_URL: https://iron-vault.onrender.com
+
+jobs:
+
+  # ── 12:00 job ── wake Render, don't fail on 503 ────────────────────────────
+  wake:
+    name: "12:00 — Wake Render backend"
+    runs-on: ubuntu-latest
+    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '0 12 * * *'
+    steps:
+      - name: Ping root (cold start expected)
+        run: |
+          echo "Sending wake-up ping to $BASE_URL ..."
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$BASE_URL/" || true)
+          echo "Response: HTTP $HTTP_CODE"
+          if [ "$HTTP_CODE" = "503" ] || [ "$HTTP_CODE" = "502" ] || [ "$HTTP_CODE" = "000" ]; then
+            echo "⚠️  Backend waking up (expected on first ping). Boot triggered."
+          else
+            echo "✅ Backend responded — HTTP $HTTP_CODE"
+          fi
+
+  # ── 12:05 & 12:10 jobs ── 3 DB pings on public endpoints ─────────────────
+  db-ping:
+    name: "DB ping — ${{ github.event.schedule }}"
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.schedule == '5 12 * * *' ||
+      github.event.schedule == '10 12 * * *'
+    steps:
+      - name: GET /Grad (AllowAnonymous — queries Grad table)
+        run: |
+          HTTP_CODE=$(curl -s -o response.json -w "%{http_code}" --max-time 60 \
+            "$BASE_URL/Grad?Page=1&PageSize=1")
+          echo "HTTP $HTTP_CODE — $(cat response.json | head -c 200)"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ] \
+            && echo "✅ /Grad OK" || (echo "❌ /Grad failed (HTTP $HTTP_CODE)" && exit 1)
+
+      - name: GET /Uloga (AllowAnonymous — queries Uloga table)
+        run: |
+          HTTP_CODE=$(curl -s -o response.json -w "%{http_code}" --max-time 60 \
+            "$BASE_URL/Uloga?Page=1&PageSize=1")
+          echo "HTTP $HTTP_CODE — $(cat response.json | head -c 200)"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ] \
+            && echo "✅ /Uloga OK" || (echo "❌ /Uloga failed (HTTP $HTTP_CODE)" && exit 1)
+
+      - name: GET /Spol (AllowAnonymous — queries Spol table)
+        run: |
+          HTTP_CODE=$(curl -s -o response.json -w "%{http_code}" --max-time 60 \
+            "$BASE_URL/Spol?Page=1&PageSize=1")
+          echo "HTTP $HTTP_CODE — $(cat response.json | head -c 200)"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 400 ] \
+            && echo "✅ /Spol OK" || (echo "❌ /Spol failed (HTTP $HTTP_CODE)" && exit 1)

@@ -150,3 +150,29 @@ docker-compose up -d
 - RabbitMQ: ports 5672, 15672 (management)
 
 Set Flutter apps’ baseUrl to `http://localhost:5130/` (desktop) or `http://10.0.2.2:5130/` (Android emulator) when testing locally.
+
+## 6. GitHub Actions (keep-alive)
+
+### Workflow (`.github/workflows/keep-alive.yml`)
+
+Scheduled pings reduce **Render** cold starts and generate light activity against **Supabase** (PostgreSQL) via real API calls.
+
+| Time (UTC) | Job       | Action |
+|------------|-----------|--------|
+| 12:00      | `wake`    | `GET /` — wake cold Render instance (503/502 is OK) |
+| 12:05      | `db-ping` | `GET /Grad`, `/Uloga`, `/Spol` with `Page=1&PageSize=1` (all **AllowAnonymous** on list in IronVault.API) |
+| 12:10      | `db-ping` | Same three endpoints again |
+
+Run manually: **Actions → Iron Vault — Keep Supabase Alive → Run workflow**.
+
+**`BASE_URL`** must match the Flutter production API host (no trailing slash in the workflow):
+
+- `UI/ironvault_desktop/lib/utils/app_constants.dart` — `apiBaseUrl`
+- `UI/ironvault_mobile/lib/utils/app_constants.dart` — `apiBaseUrl`
+- `.github/workflows/keep-alive.yml` — `env.BASE_URL` (default: `https://iron-vault.onrender.com`)
+
+> **Note:** Production API does not expose Swagger; the wake job uses **`GET /`** instead of `/swagger`.
+
+**Optional:** add a [repository variable](https://docs.github.com/en/actions/learn-github-actions/variables) `IRONVAULT_API_BASE_URL` and in the workflow set `env: BASE_URL: ${{ vars.IRONVAULT_API_BASE_URL }}` instead of a hard-coded URL.
+
+Ensure `.github` lives at the **root of the Git repository** you push to GitHub (if your repo root is this `IronVault` folder, the path is already correct).
